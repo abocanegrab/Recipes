@@ -1,0 +1,73 @@
+--************Saltar del Ultimo registro al Primero y Viceversa**********************
+
+
+--ejemplo
+procedure pPrevItemBaseDatos(nombreTabla : string);
+begin
+    g_TotalRegistros:=fCantidadItemsEnTabla(nombreTabla);
+    g_TotalPaginas := g_TotalRegistros / g_ItemsPorPagina;
+	 if (g_PaginaActual <= 1) then
+        g_PaginaActual := g_TotalPaginas;
+    else
+        g_PaginaActual:= g_PaginaActual - 1;
+    end if;
+end;
+
+procedure pNextItemBaseDatos(nombreTabla : string);
+begin
+    g_TotalRegistros:=fCantidadItemsEnTabla(nombreTabla);
+    g_TotalPaginas := g_TotalRegistros / g_ItemsPorPagina;
+	 if (g_PaginaActual >= g_TotalPaginas) then
+        g_PaginaActual := 1;
+    else
+        g_PaginaActual:= g_PaginaActual + 1;
+    end if;
+end;
+
+
+--*********Procedimientos de Ir adelante y atras
+
+procedure pIrAdelante;
+begin
+    if (g_PantallaActiva = tPantallaMantenimientoReceta) then
+        pNextItemBaseDatos("Receta");
+        pMuestrareceta;
+    elsif (g_PantallaActiva = tPantallaMantenimientoInsumo) then
+        pNextItemBaseDatos("Insumo");
+        pMuestraInsumo;
+    end if;
+end;
+
+procedure pIrAtras;
+begin
+    if (g_PantallaActiva = tPantallaMantenimientoReceta) then
+        pPrevItemBaseDatos("Receta");
+        pMuestrareceta;
+    elsif (g_PantallaActiva = tPantallaMantenimientoInsumo) then
+        pPrevItemBaseDatos("Insumo");
+        pMuestraInsumo;
+    end if;
+end;
+
+--*********Funcionamiento de Botones Flechas**********
+
+handler NavleftKeyPressed;
+begin
+    pIrAtras;
+end;
+
+handler NavRightKeyPressed;
+begin  
+    pIrAdelante;
+end;
+
+handler NavUpKeyPressed;
+begin
+    pIrAtras;
+end;
+
+handler NavDownKeyPressed;
+begin 
+    pIrAdelante;
+end;  
+
