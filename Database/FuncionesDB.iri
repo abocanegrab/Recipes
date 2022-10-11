@@ -1,0 +1,139 @@
+procedure pLoggerDB(Origen:string;Error:string);
+sql : string;
+conexion : integer;
+sResultado : SysCode;
+begin
+	sql := "Insert into Log (Id, Origen, Error, Fecha) values (";
+	sql := sql + "(select ifnull(MAX(Id),0) + 1 from Log ),";
+	sql := sql + "'"+ Origen + "', ";
+	sql := sql + "'"+ Error + "', ";
+	sql := sql + DTToString(SystemTime) + ")";
+
+	sResultado := DbExec(sql, conexion);
+	if (sResultado <> SysOk) then
+		pMostrarYLimpiar(DBErrMsg+":"+ SysCodeToString(sResultado));
+		return;
+	end if;
+	
+	pMostrarYLimpiar("Se Inserto el log correctamente");
+end;
+
+-- DELETE
+procedure pDeleteItemTabla (NombreTabla:string; id:integer);
+sql : string;
+conexion : integer;
+sResultado : SysCode;
+
+begin
+	sql:="delete from "+ NombreTabla;
+	sql:=sql + " where id="+ IntegerToString(id,0);
+
+	sResultado := DbExec(sql, conexion);
+	if (sResultado <> SysOk or conexion = 0) then
+		pLoggerDB("pDeleteItemTabla",DBErrMsg);
+		return;
+	end if;
+
+	pMostrarYLimpiar("Se eliminó con éxito el registro con Id "+IntegerToString(id,0));
+end;
+
+function fExisteDatosEnTabla (NombreTabla:string) : BooleanType;
+sql : string;
+conexion : integer;
+sResultado : SysCode;
+cantidad :integer;
+begin
+	sql:="select count(1) from "+ NombreTabla;
+	sResultado := DbExec(sql, conexion);
+	if (sResultado <> SysOk or conexion = 0) then
+			pLoggerDB("fExisteDatosEnTabla",DBErrMsg);
+			return BoolFalse;
+	end if;
+
+	DbColumnInt(conexion,1,cantidad);
+	DbFinalize(conexion);
+	if (cantidad=0) then
+		return BoolFalse;
+	else
+		return BoolTrue;
+	end if;
+end;
+
+
+function fCantidadItemsEnTabla (NombreTabla:string) : integer;
+sql : string;
+conexion : integer;
+sResultado : SysCode;
+cantidad :integer:=0;
+begin
+	sql:="select count(1) from "+ NombreTabla;
+	sResultado := DbExec(sql, conexion);
+    --Primero verificamos que la consulta sea diferente de OK. Esto es error
+    if(sResultado<>SysOk) then 
+        pLoggerDB("fCantidadItemsEnTabla",DBErrMsg);
+        return cantidad;
+    end if;
+    
+    -- Luego verificamos que la conexión sea = 0. Eso quiere decir que no hay datos para recuperar
+    if (conexion=0) then
+        return cantidad;
+    end if;
+
+    -- Caso contrario, tomamos los datos y los leemos.
+	DbColumnInt(conexion,1,cantidad);
+	DbFinalize(conexion);
+	return cantidad;
+end;
+
+procedure pDeleteOldItemTabla (NombreTabla:string);
+sql : string;
+conexion : integer;
+sResultado : SysCode;
+
+begin
+	sql:="delete from "+ NombreTabla;
+	sql:=sql + " where id in (select id from "+ NombreTabla;
+	sql:=sql + " ORDER by id asc limit 1)";
+	sResultado := DbExec(sql, conexion);
+	if (sResultado <> SysOk) then
+		pLoggerDB("pDeleteOldItemTabla",DBErrMsg);
+		return;
+	end if;
+	pMostrarYLimpiar("Se eliminó con éxito el registro con Id");
+end;
+
+
+function fValidaEspacioTabla(tabla:String; maxItemTabla:integer):BooleanType;
+CantidadItemTabla:integer;
+begin
+	CantidadItemTabla:=fCantidadItemsEnTabla(tabla);
+	if(CantidadItemTabla<maxItemTabla) then
+		return BoolTrue;
+	else
+		return BoolFalse;
+	end if;
+end;
+
+
+function fGetNextId (Tabla:string; MaxRecords:integer)  : integer;
+sql : string;
+conexion : integer;
+sResultado : SysCode;
+id : integer;
+
+begin
+sql := "select ifnull(MAX(Id),0) + 1 from "+Tabla;
+id:=0;
+	if(fValidaEspacioTabla(Tabla, MaxRecords) = BoolFalse) then
+            pDeleteOldItemTabla(Tabla);
+    End if;
+    sResultado := DbExec(sql, conexion);
+	if (sResultado <> SysOk or conexion = 0) then
+		pLoggerDB("fGetNextId",DBErrMsg);
+		return id ;
+	end if;
+	-- comenzamos a leer la informacion
+	DbColumnInt(conexion, 1, id);
+	DbFinalize(conexion);
+	return id;
+end;

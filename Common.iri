@@ -1,0 +1,7 @@
+procedure pMostrarYLimpiar(valor : string);
+begin
+	DisplayStatus(valor);
+	SetTimer(1, 400);
+	SetTimerMode(1, TimerOneShot);
+	StartTimer(1);
+end;
