@@ -1,0 +1,61 @@
+procedure pPostReceta(entidad : TypMantGenerico);
+sql : string;
+conexion : integer;
+sResultado : SysCode;
+id : integer;
+l_Nombretabla:string:="Receta";
+begin
+    id := fGetNextId(l_Nombretabla,CONST_MAX_DB_RECETA);
+    sql := "Insert into Recetas (Id, Codigo, Nombre) values (";
+    sql := sql + IntegerToString(id, 0) + ",";
+    sql := sql + "'"+ entidad.Codigo + "', ";
+    sql := sql + "'" +entidad.Nombre + "')";
+
+    sResultado := DbExec(sql, conexion);
+    if (sResultado <> SysOk) then
+        pMostrarYLimpiar("No se pudo agregar el Registro");
+        return;
+    end if;
+    pMostrarYLimpiar("Se agrego correctamente");
+end;
+
+
+function fListaReceta : TypArrayReceta;
+sql : string;
+conexion : integer;
+sResultado : SysCode;
+listado : TypArrayReceta;
+indice : integer;
+begin
+    sql := "select * from Receta limit "+IntegerToString(g_ItemsPorPagina,0);
+    sql :=sql + " Offset "+IntegerToString(g_PaginaActual - 1, 0);
+
+    sResultado := DbExec(sql, conexion);
+    --Primero verificamos que la consulta sea diferente de OK. Esto es error
+    if(sResultado<>SysOk) then 
+        pMostrarYLimpiar("Error al Listar");
+        return listado;
+    end if;
+    
+    -- Luego verificamos que la conexión sea = 0. Eso quiere decir que no hay datos para recuperar
+    if (conexion=0) then
+        return listado;
+    end if;
+
+    -- Caso contrario, tomamos los datos y los leemos.
+
+    indice := 0;
+    while sResultado = SysOk 
+    loop
+        indice := indice +1;
+        DbColumnInt(conexion, 1, listado[indice].Id); 
+        DbColumnString(conexion, 2, listado[indice].Codigo); 
+        DbColumnString(conexion, 3, listado[indice].Nombre);  
+        sResultado := DbNext(conexion);  
+    end loop;
+
+    DbFinalize(conexion);
+    pMostrarYLimpiar("Se listo correctamente");
+
+    return listado;
+end;

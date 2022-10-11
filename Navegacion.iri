@@ -1,0 +1,11 @@
+elsif EventWidget=lbl21 or EventWidget=lbl30 or 
+    EventWidget=lbl31     then 
+    pMuestraPntMenuPrincipal;
+elsif EventWidget=lbl23 then 
+    pMuestraPntProcesoDePesaje;
+elsif EventWidget=lbl22 then 
+    pMuestraPntMantenimientoReceta;
+    pMuestraReceta;
+elsif EventWidget=lbl24 then 
+    pMuestraPntMantenimientoInsumo;
+    pMuestraInsumo;

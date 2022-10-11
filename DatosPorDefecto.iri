@@ -1,0 +1,57 @@
+procedure pAlmacenarDatosInicialReceta;
+hayDatos: BooleanType;
+begin
+    hayDatos:=fExisteDatosEnTabla("Receta");
+    if (hayDatos=BoolTrue) then
+        return;
+    end if;
+    t_MantGenerico.Codigo:="1";
+    t_MantGenerico.Nombre:="RECETA LIGERA";
+    pPostReceta(t_MantGenerico);
+    t_MantGenerico.Codigo:="2";
+    t_MantGenerico.Nombre:="RECETA CACERA";
+    pPostReceta(t_MantGenerico);
+    t_MantGenerico.Codigo:="3";
+    t_MantGenerico.Nombre:="RECETA PREMIUM";
+    pPostReceta(t_MantGenerico);
+    t_MantGenerico.Codigo:="4";
+    t_MantGenerico.Nombre:="RECETA REFORMULADA";
+    pPostReceta(t_MantGenerico);
+end;
+
+procedure pAlmacenarDatosInicialInsumo;
+hayDatos: BooleanType;
+begin
+    hayDatos:=fExisteDatosEnTabla("Insumo");
+    if (hayDatos=BoolTrue) then
+        return;
+    end if;
+        t_MantGenerico.Codigo:="1";
+        t_MantGenerico.Nombre:="ARENA";
+        pPostInsumo(t_MantGenerico);
+        t_MantGenerico.Codigo:="2";
+        t_MantGenerico.Nombre:="CEMENTO";
+        pPostInsumo(t_MantGenerico);
+        t_MantGenerico.Codigo:="3";
+        t_MantGenerico.Nombre:="ESPEZANTE";
+        pPostInsumo(t_MantGenerico);
+        t_MantGenerico.Codigo:="4";
+        t_MantGenerico.Nombre:="AGUA";
+        pPostInsumo(t_MantGenerico);
+        t_MantGenerico.Codigo:="5";
+        t_MantGenerico.Nombre:="COLORANTE";
+        pPostInsumo(t_MantGenerico);
+        t_MantGenerico.Codigo:="6";
+        t_MantGenerico.Nombre:="PIEDRA EN POLVO";
+        pPostInsumo(t_MantGenerico);
+        t_MantGenerico.Codigo:="7";
+        t_MantGenerico.Nombre:="ADITIVOS";
+        pPostInsumo(t_MantGenerico);
+end;
+
+
+procedure pAlmacenarDatosInicial;
+begin
+	pAlmacenarDatosInicialReceta;
+	pAlmacenarDatosInicialInsumo;
+end;
