@@ -29,10 +29,10 @@ end;
 
 procedure pIrAdelante;
 begin
-    if (g_PantallaActiva = tPantallaMantenimientoReceta) then
+    if (g_PantallaActiva = tPntMantReceta) then
         pNextItemBaseDatos("Receta");
-        pMuestrareceta;
-    elsif (g_PantallaActiva = tPantallaMantenimientoInsumo) then
+        pMuestraReceta;
+    elsif (g_PantallaActiva = tPntMantInsumo) then
         pNextItemBaseDatos("Insumo");
         pMuestraInsumo;
     end if;
@@ -40,10 +40,10 @@ end;
 
 procedure pIrAtras;
 begin
-    if (g_PantallaActiva = tPantallaMantenimientoReceta) then
+    if (g_PantallaActiva = tPntMantReceta) then
         pPrevItemBaseDatos("Receta");
-        pMuestrareceta;
-    elsif (g_PantallaActiva = tPantallaMantenimientoInsumo) then
+        pMuestraReceta;
+    elsif (g_PantallaActiva = tPntMantInsumo) then
         pPrevItemBaseDatos("Insumo");
         pMuestraInsumo;
     end if;
@@ -63,11 +63,11 @@ end;
 
 handler NavUpKeyPressed;
 begin
-    pIrAtras;
+    pIrAdelante;
 end;
 
 handler NavDownKeyPressed;
 begin 
-    pIrAdelante;
+    pIrAtras;
 end;  
 

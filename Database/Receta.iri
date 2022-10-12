@@ -6,7 +6,7 @@ id : integer;
 l_Nombretabla:string:="Receta";
 begin
     id := fGetNextId(l_Nombretabla,CONST_MAX_DB_RECETA);
-    sql := "Insert into Recetas (Id, Codigo, Nombre) values (";
+    sql := "Insert into Receta (Id, Codigo, Nombre) values (";
     sql := sql + IntegerToString(id, 0) + ",";
     sql := sql + "'"+ entidad.Codigo + "', ";
     sql := sql + "'" +entidad.Nombre + "')";
@@ -20,6 +20,57 @@ begin
 end;
 
 
+procedure pPutReceta(entidad : TypMantGenerico);
+sql : string;
+conexion : integer;
+sResultado : SysCode;
+
+begin
+	sql:="Update Receta set ";
+	sql:=sql + "codigo='" + entidad.Codigo+ "',";
+	sql:=sql + "nombre='" + entidad.Nombre + "' ";
+	sql:=sql + "where id="+IntegerToString(entidad.Id,0);
+			
+	sResultado := DbExec(sql, conexion);
+	if (sResultado <> SysOk) then
+		pLoggerDB("pPutReceta",DBErrMsg);
+		return;
+	end if;
+
+	pMostrarYLimpiar("Se actualizo con Éxito");
+end;
+
+function fGetReceta(Id : integer) : TypReceta;
+sql : string;
+conexion : integer;
+sResultado : SysCode;
+Receta : TypReceta;
+begin
+    sql:="select * from Receta where id = ";
+    sql:=sql + IntegerToString(Id, 0);
+
+    sResultado := DbExec(sql, conexion);
+    --Primero verificamos que la consulta sea diferente de OK. Esto es error
+    if(sResultado<>SysOk) then 
+        pLoggerDB("fGetReceta",DBErrMsg);
+        return Receta;
+    end if;
+    
+    -- Luego verificamos que la conexión sea = 0. Eso quiere decir que no hay datos para recuperar
+    if (conexion=0) then
+        return Receta;
+    end if;
+
+    -- Caso contrario, tomamos los datos y los leemos.
+    DbColumnInt(conexion, 1, Receta.Id); 
+    DbColumnString(conexion, 2, Receta.Codigo); 
+    DbColumnString(conexion, 3, Receta.Nombre);  
+    sResultado := DbNext(conexion);  
+    DbFinalize(conexion);
+    pMostrarYLimpiar("Se obtuvo correctamente");
+    return Receta;
+end;
+
 function fListaReceta : TypArrayReceta;
 sql : string;
 conexion : integer;
@@ -27,7 +78,7 @@ sResultado : SysCode;
 listado : TypArrayReceta;
 indice : integer;
 begin
-    sql := "select * from Receta limit "+IntegerToString(g_ItemsPorPagina,0);
+    sql := "select * from Receta order by Id Desc limit "+IntegerToString(g_ItemsPorPagina,0);
     sql :=sql + " Offset "+IntegerToString(g_PaginaActual - 1, 0);
 
     sResultado := DbExec(sql, conexion);

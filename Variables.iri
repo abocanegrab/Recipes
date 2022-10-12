@@ -1,54 +1,25 @@
 g_Receta: Stored  TypReceta;
+t_Receta: TypReceta;
 g_ListaReceta: TypArrayReceta;
 
 g_Insumo: Stored TypInsumo;
+t_Insumo: TypInsumo;
 g_ListaInsumo: TypArrayInsumo;
 
 t_MantGenerico : TypMantGenerico;
 
 
-
-	g_FechaOrden:string;
-  g_FechaEntrega:string;
-  g_NroOrdenPesado:string;
-  g_NumeroReceta:integer;
-	g_NombreReceta:string;
-  g_CodInsumo01:string;
-  g_CodInsumo02:string;
-  g_CodInsumo03:string;
-  g_CodInsumo04:string;
-  g_CodInsumo05:string;
-  g_CodInsumo06:string;
-  g_CodInsumo07:string;
-  
-  g_Cantidad01:real;
-  g_Cantidad02:real;
-	g_Cantidad03:real;
-	g_Cantidad04:real;
-	g_Cantidad05:real;
-	g_Cantidad06:real;
-	g_Cantidad07:real;
-
-  g_NombreInsumo01:String;
-  g_NombreInsumo02:String;
-  g_NombreInsumo03:String;
-  g_NombreInsumo04:String;
-  g_NombreInsumo05:String;
-  g_NombreInsumo06:String;
-  g_NombreInsumo07:String;
-
-
-
 type TypPantalla is (
-	tPantallaProcesoDePesaje,
-	tPantallaMenuPrincipal,
-	tPantallaMantenimientoReceta,
-	tPantallaMantenimientoInsumo
+	tPntProcesoDePesaje,
+  tPntMenuMant,
+	tPntMenuPrincipal,
+	tPntMantReceta,
+	tPntMantInsumo,
+  tPntMenuReportes,
+  tPntConfiguracion
 	);
 
 g_PantallaActiva : TypPantalla;
-
-
 
 
 --Variable que almacena el Id del Registro a mostrar en Mantenimiento de Datos
@@ -58,3 +29,29 @@ g_PaginaActual : integer;
 g_TotalPaginas : integer;
 g_TieneDatos : BooleanType;
 g_TotalRegistros : integer;
+
+
+g_NombreMenuMantto : string;
+
+t_IdSeleccionadoDeTabla:integer:=0;
+
+
+--variables para el llenado de los datos por grupos Mantenimientos
+
+type TypMantenimiento is (
+	tMantInicio, 
+	tMantCodigo,
+	tMantNombre
+);
+
+g_PasoMant : TypMantenimiento;
+
+--Variables Tipos para las operaciones CRUD
+
+Type TypTipoMantenimiento is (
+	tipoMantAgregar,
+	tipoMantEditar,
+	tipoMantEliminar
+);
+
+g_TipoMant : TypTipoMantenimiento;

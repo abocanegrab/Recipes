@@ -19,6 +19,58 @@ begin
     pMostrarYLimpiar("Se agrego correctamente");
 end;
 
+procedure pPutInsumo(entidad : TypMantGenerico);
+sql : string;
+conexion : integer;
+sResultado : SysCode;
+
+begin
+	sql:="Update Insumo set ";
+	sql:=sql + "codigo='" + entidad.Codigo+ "',";
+	sql:=sql + "nombre='" + entidad.Nombre + "' ";
+	sql:=sql + "where id="+IntegerToString(entidad.Id,0);
+			
+	sResultado := DbExec(sql, conexion);
+	if (sResultado <> SysOk) then
+		pLoggerDB("pPutInsumo",DBErrMsg);
+		return;
+	end if;
+
+	pMostrarYLimpiar("Se actualizo con Éxito");
+end;
+
+function fGetInsumo(Id : integer) : TypInsumo;
+sql : string;
+conexion : integer;
+sResultado : SysCode;
+Insumo : TypInsumo;
+begin
+    sql:="select * from Insumo where id = ";
+    sql:=sql + IntegerToString(Id, 0);
+
+    sResultado := DbExec(sql, conexion);
+    --Primero verificamos que la consulta sea diferente de OK. Esto es error
+    if(sResultado<>SysOk) then 
+        pLoggerDB("fGetInsumo",DBErrMsg);
+        return Insumo;
+    end if;
+    
+    -- Luego verificamos que la conexión sea = 0. Eso quiere decir que no hay datos para recuperar
+    if (conexion=0) then
+        return Insumo;
+    end if;
+
+    -- Caso contrario, tomamos los datos y los leemos.
+    DbColumnInt(conexion, 1, Insumo.Id); 
+    DbColumnString(conexion, 2, Insumo.Codigo); 
+    DbColumnString(conexion, 3, Insumo.Nombre);  
+    sResultado := DbNext(conexion);  
+    DbFinalize(conexion);
+    pMostrarYLimpiar("Se obtuvo correctamente");
+    return Insumo;
+end;
+
+
 
 function fListaInsumo : TypArrayInsumo;
 sql : string;
@@ -27,7 +79,7 @@ sResultado : SysCode;
 listado : TypArrayInsumo;
 indice : integer;
 begin
-    sql := "select * from Insumo limit "+IntegerToString(g_ItemsPorPagina,0);
+    sql := "select * from Insumo order by Id Desc limit "+IntegerToString(g_ItemsPorPagina,0);
     sql :=sql + " Offset "+IntegerToString(g_PaginaActual - 1, 0);
 
     sResultado := DbExec(sql, conexion);
