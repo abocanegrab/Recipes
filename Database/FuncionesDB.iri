@@ -137,3 +137,55 @@ id:=0;
 	DbFinalize(conexion);
 	return id;
 end;
+
+function fExisteCodigoEnTabla (NombreTabla:string; Codigo:string) : BooleanType;
+sql : string;
+conexion : integer;
+sResultado : SysCode;
+cantidad :integer;
+begin
+	sql:="select count(1) from "+ NombreTabla+" where Codigo='"+Codigo+"' ";
+	sResultado := DbExec(sql, conexion);
+	if (sResultado <> SysOk or conexion = 0) then
+			pLoggerDB("fExisteCodigoEnTabla",DBErrMsg);
+			--return BoolTrue;
+	end if;
+
+	DbColumnInt(conexion,1,cantidad);
+	DbFinalize(conexion);
+	if (cantidad=0) then
+		return BoolFalse;
+	else
+		return BoolTrue;
+	end if;
+end;
+
+function fGetUltimoRegistroEnTabla(Tabla:string) : TypMantGenerico;
+sql : string;
+conexion : integer;
+sResultado : SysCode;
+Registro : TypMantGenerico;
+begin
+    sql:="select * from "+Tabla+" where Id in (select max(Id) from "+Tabla+")";
+    	
+    sResultado := DbExec(sql, conexion);
+    --Primero verificamos que la consulta sea diferente de OK. Esto es error
+    if(sResultado<>SysOk) then 
+        pLoggerDB("fGetUltimoRegistroEnTabla",DBErrMsg);
+        return Registro;
+    end if;
+    
+    -- Luego verificamos que la conexión sea = 0. Eso quiere decir que no hay datos para recuperar
+    if (conexion=0) then
+        return Registro;
+    end if;
+
+    -- Caso contrario, tomamos los datos y los leemos.
+    DbColumnInt(conexion, 1, Registro.Id); 
+    DbColumnString(conexion, 2, Registro.Codigo); 
+    DbColumnString(conexion, 3, Registro.Nombre);  
+    sResultado := DbNext(conexion);  
+    DbFinalize(conexion);
+    pMostrarYLimpiar("Se obtuvo correctamente");
+    return Registro;
+end;

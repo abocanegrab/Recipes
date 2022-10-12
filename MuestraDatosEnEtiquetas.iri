@@ -24,48 +24,17 @@ begin
 end;
 
 
-procedure pPasarDatosAEtiquetas;
+procedure pMuestraRegistroIngresado(Tabla:string);
+l_registro:TypMantGenerico;
 begin
-    SetLabelText(lbl4, g_FechaOrden);
-    SetLabelText(lbl6, g_FechaEntrega);
-    SetLabelText(lbl20, g_NroOrdenPesado);
-    SetLabelText(lbl18,IntegerToString(g_NumeroReceta,0));
-	SetLabelText(lbl16, g_NombreReceta);
-    SetLabelText(lbl13, g_NombreInsumo01);
-    SetLabelText(lbl14, RealToString(g_Cantidad01,4,2));
-    SetLabelText(lbl11, g_NombreInsumo02);
-    SetLabelText(lbl12, RealToString(g_Cantidad02,4,2));
-	SetLabelText(lbl9, g_NombreInsumo03);
-    SetLabelText(lbl10, RealToString(g_Cantidad03,4,2));
-	SetLabelText(lbl7, g_NombreInsumo04);
-    SetLabelText(lbl8, RealToString(g_Cantidad04,4,2));
-	SetLabelText(lbl48, g_NombreInsumo05);
-    SetLabelText(lbl49, RealToString(g_Cantidad05,4,2));
-	SetLabelText(lbl46, g_NombreInsumo06);
-    SetLabelText(lbl47, RealToString(g_Cantidad06,4,2));
-	SetLabelText(lbl44, g_NombreInsumo07);
-    SetLabelText(lbl45, RealToString(g_Cantidad07,4,2));
+l_registro:=fGetUltimoRegistroEnTabla(Tabla);
+	if (g_NombreMenuMantto=CONST_RECETA_LABEL)   then
+		SetLabelText(lbl28,l_registro.Codigo);
+		SetLabelText(lbl29,l_registro.Nombre);
+	elsif (g_NombreMenuMantto=CONST_INSUMO_LABEL)   then
+		SetLabelText(lbl35,l_registro.Codigo);
+		SetLabelText(lbl36,l_registro.Nombre);
+	end if;
 end;
 
-procedure pLimpiarEtiquetas;
-begin
-    SetLabelText(lbl4, "");
-    SetLabelText(lbl6, "");
-    SetLabelText(lbl20,"");
-    SetLabelText(lbl18,"");
-	SetLabelText(lbl16,"");
-    SetLabelText(lbl13,"");
-    SetLabelText(lbl14,"");
-    SetLabelText(lbl11,"");
-    SetLabelText(lbl12,"");
-	SetLabelText(lbl9, "");
-    SetLabelText(lbl10,"");
-	SetLabelText(lbl7, "");
-    SetLabelText(lbl8, "");
-	SetLabelText(lbl48,"");
-    SetLabelText(lbl49,"");
-	SetLabelText(lbl46,"");
-    SetLabelText(lbl47,"");
-	SetLabelText(lbl44,"");
-    SetLabelText(lbl45,"");
-end;
+

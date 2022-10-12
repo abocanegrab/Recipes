@@ -1,0 +1,16 @@
+procedure pEliminarRegistroDB(id:integer);
+begin
+if (g_TipoMant = tipoMantEliminar) then
+	PromptUser("¿Esta seguro de eliminar el registro?");
+	if EventKey = EnterKey then
+		if (g_NombreMenuMantto = CONST_RECETA_LABEL) then
+			pDeleteItemTabla("Receta",id);
+			pMuestraReceta;
+		elsif (g_NombreMenuMantto = CONST_INSUMO_LABEL) then
+			pDeleteItemTabla("Insumo",id);
+			pMuestraInsumo;
+		end if;
+	end if;
+end if;
+
+end;
