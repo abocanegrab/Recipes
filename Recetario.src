@@ -1,18 +1,20 @@
 program Recetario;
 
+#include Constantes.iri
+#include Recetario.iri
 #include EntidadesDB.iri
 #include Variables.iri
-#include Recetario.iri
 #include Common.iri
-#include Constantes.iri
-#include NombrePantallas.iri
 #include Database/FuncionesDB.iri
 #include Database/Receta.iri
 #include Database/Insumo.iri
-#include Procedimientos.iri
 #include MuestraDatosEnEtiquetas.iri
+#include Database/ModificacionesDB.iri
 #include NavegacionFlechasFisicas.iri
 #include DatosPorDefecto.iri
+#include NombrePantallas.iri
+#include Procedimientos.iri
+#include Flow/FlowMantenimientoDatos.iri
 
 
 handler widgetClicked;
@@ -24,54 +26,22 @@ begin
     end if;
 end;
 
-procedure StartServer;
-sCode : SysCode;
+handler UserEntry;
+LocalEntry : string;
 begin
-    sCode := StartFTPServer;
-    if (sCode = SysOk) then
-        DisplayStatus("Server activo");
-        SetTimerMode(1, TimerContinuous);
-        SetTimer(1, 300);
-        StartTimer(1);
-    else
-        DisplayStatus(SysCodeToString(sCode));
-    end if;    
+	LocalEntry := GetEntry;
+	if EventKey = EnterKey then
+		if	(g_PantallaActiva = tPntMantReceta or 
+			g_PantallaActiva = tPntMantInsumo) then
+			pMantenimientoDatos(LocalEntry);
+		end if;
+	end if;
 end;
 
-handler Timer1Trip;
-sCode : SysCode;
-lineaText : string;
-
 begin
-    sCode := FileExists("Ordenes.txt", FTP);
-    if (sCode = SysOk) then
-        FileOpen("Ordenes.txt", FTP, FileRead);
-        
-        while sCode = SysOk
-        loop
-            sCode := ReadLn(lineaText);
-            pValidaValorDeLinea(lineaText);
-        end loop;
-        
-        FileClose;
-        FileDelete("Ordenes.txt", FTP);
-        
-    else
-        DisplayStatus(SysCodeToString(sCode));
-    end if;
-
-pPasarDatosAEtiquetas;
-
-end;
-
-
-
-begin
-    StartServer;
     pAlmacenarDatosInicial;
     pMuestraPntProcesoDePesaje;
-    pPasarDatosAEtiquetas;
+    
 
-
-    DisplayStatus("Hola Inicio");    
+    DisplayStatus("ProgramaCargado");    
 end Recetario;

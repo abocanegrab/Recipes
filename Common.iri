@@ -5,3 +5,30 @@ begin
 	SetTimerMode(1, TimerOneShot);
 	StartTimer(1);
 end;
+
+
+function fDatoIntVacio(valor : integer):string;
+begin
+	if (valor = 0) then
+		return "";
+	end if;
+	
+	return IntegerToString(valor, 0);
+end;
+
+
+function fValidaDatoVacio(valor : string):BooleanType;
+begin
+	if (len(valor)=0 or valor="" or valor=" " or valor="  " or valor="   ") then
+		return BoolTrue;
+	end if;
+	
+	return BoolFalse;
+end;
+
+
+
+function FormatString (valor : string;longitud : integer):string;
+begin
+    return Left$(valor + Space$(100), longitud);
+end;

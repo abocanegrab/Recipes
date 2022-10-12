@@ -2,26 +2,41 @@
 procedure pMuestraPntProcesoDePesaje;
 begin
 	SelectScreen(1);
-	g_PantallaActiva:=tPantallaProcesoDePesaje;
+	g_PantallaActiva:=tPntProcesoDePesaje;
 end;
 
-
-procedure pMuestraPntMenuPrincipal;
+procedure pMuestraPntMenuMantenimiento;
 begin
 	SelectScreen(2);
-	g_PantallaActiva:=tPantallaMenuPrincipal;
+	g_PantallaActiva:=tPntMenuMant;
 end;
-
 
 procedure pMuestraPntMantenimientoReceta;
 begin
 	SelectScreen(3);
-	g_PantallaActiva:=tPantallaMantenimientoReceta;
+	g_PantallaActiva:=tPntMantReceta;
 end;
-
 
 procedure pMuestraPntMantenimientoInsumo;
 begin
 	SelectScreen(4);
-	g_PantallaActiva:=tPantallaMantenimientoInsumo;
+	g_PantallaActiva:=tPntMantInsumo;
+end;
+
+procedure pMuestraPntMenuPrincipal;
+begin
+	SelectScreen(5);
+	g_PantallaActiva:=tPntMenuPrincipal;
+end;
+
+procedure pMuestraPntMenuReportes;
+begin
+	SelectScreen(6);
+	g_PantallaActiva:=tPntMenuReportes;
+end;
+
+procedure pMuestraPntConfiguracion;
+begin
+	SelectScreen(7);
+	g_PantallaActiva:=tPntConfiguracion;
 end;

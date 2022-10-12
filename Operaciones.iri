@@ -1,2 +1,21 @@
-elsif EventWidget=lbl25 then    
-pCrearArchivoTxt;
+    --Programacion del Boton Agregar en Pantalla Mantenimientos Datos 
+
+    elsif EventWidget=lbl38 or EventWidget=lbl41 then
+		g_TipoMant := tipoMantAgregar;
+		g_PasoMant := tMantInicio;
+		pMantenimientoDatos("");
+    
+	--Programacion del Boton Editar en Pantalla Mantenimientos Datos
+
+	elsif EventWidget=lbl42 or EventWidget=lbl39 then
+		g_TipoMant := tipoMantEditar;
+		g_PasoMant := tMantInicio;
+		pMantenimientoDatos("");
+
+  --Programacion del Boton Eliminar en Pantalla Mantenimientos Datos
+	
+	elsif EventWidget=lbl40 or EventWidget=lbl43 then
+		g_TipoMant := tipoMantEliminar;
+	--Se pasa como parametro el Id que está en pantalla en ese momento
+		pEliminarRegistroDB(t_IdSeleccionadoDeTabla);
+

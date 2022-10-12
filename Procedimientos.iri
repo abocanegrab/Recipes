@@ -1,72 +1,66 @@
-
-procedure pCrearArchivoTxt;
-l_NombreArchivo: string;
+Procedure pMuestraPromptMant;
+l_entry : string;
+l_mensaje : string;
 begin
-    l_NombreArchivo:="ArchivoCreado1280_"+DTTostring(SystemTime)+".txt";
+	if (g_PasoMant=tMantInicio) then
+		if (g_TipoMant = tipoMantAgregar) then
+			l_entry:="";
+			l_mensaje:="Ingrese Codigo de "+ g_NombreMenuMantto;
+		elsif (g_TipoMant = tipoMantEditar) then
+			if (g_NombreMenuMantto = CONST_RECETA_LABEL) then
+				l_entry := g_Receta.Codigo;
+				l_mensaje:="Ingrese Codigo de "+ g_NombreMenuMantto;
+			elsif (g_NombreMenuMantto = CONST_INSUMO_LABEL) then
+				l_entry := g_Insumo.Codigo;
+				l_mensaje:="Ingrese Codigo de "+ g_NombreMenuMantto;
+			end if;
+		end if;
+		SetEntry(l_entry);
+		PromptUser(l_mensaje);
 
- if (FileExists(l_NombreArchivo,FTP)=SysOk) then
-    FileDelete(l_NombreArchivo,FTP);
-    FileClose;
- end if;
-
-FileOpen(l_NombreArchivo,FTP,FileCreate);
-FileWriteLn("Operacion:");
-FileWriteLn("Especie:");
-FileWriteLn("Uso:");
-FileWriteLn("TipoTransporte:");
-FileWriteLn("Embarcacion:");
-
-FileClose;
-DisplayStatus("Se creo el archivo");
+	elsif(g_PasoMant=tMantCodigo) then
+		if (g_TipoMant = tipoMantAgregar) then
+			l_entry:="";
+			l_mensaje:="Ingrese Nombre de "+ g_NombreMenuMantto;
+		elsif (g_TipoMant = tipoMantEditar) then
+			if (g_NombreMenuMantto = CONST_RECETA_LABEL) then
+				l_entry := g_Receta.Nombre;
+				l_mensaje:="Ingrese Nombre de "+ g_NombreMenuMantto;
+			elsif (g_NombreMenuMantto = CONST_INSUMO_LABEL) then
+				l_entry := g_Insumo.Nombre;
+				l_mensaje:="Ingrese Nombre de "+ g_NombreMenuMantto;
+			end if;
+		end if;
+		SetEntry(l_entry);
+		PromptUser(l_mensaje);
+	end if;
 end;
 
 
-procedure pValidaValorDeLinea (valor : string);
+procedure pGuardaMant;
 begin
-    if Left$(valor, 3)="FCO" then
-        g_FechaOrden:=Right$(valor, Len(valor)-4);
-    elsif Left$(valor, 3)="FEO" then
-        g_FechaEntrega:=Right$(valor, Len(valor)-4);
-    elsif Left$(valor, 3)="NOP" then
-        g_NroOrdenPesado:=Right$(valor, Len(valor)-4);
-    elsif Left$(valor, 3)="NUR" then
-        g_NumeroReceta:=StringToInteger(Right$(valor, Len(valor)-4));
-    elsif Left$(valor, 3)="NOR" then
-        g_NombreReceta:=Right$(valor, Len(valor)-4);
-    elsif Left$(valor, 3)="C01" then
-        g_CodInsumo01:=Right$(valor, Len(valor)-4);
-        g_NombreInsumo01:=fGetNombreInsumoByCodigo(g_CodInsumo01);
-    elsif Left$(valor, 3)="Q01" then
-        g_Cantidad01:=StringToReal(Right$(valor, Len(valor)-4));
-    elsif Left$(valor, 3)="C02" then
-        g_CodInsumo02:=Right$(valor, Len(valor)-4);
-        g_NombreInsumo02:=fGetNombreInsumoByCodigo(g_CodInsumo02);
-    elsif Left$(valor, 3)="Q02" then
-        g_Cantidad02:=StringToReal(Right$(valor, Len(valor)-4));
-    elsif Left$(valor, 3)="C03" then
-        g_CodInsumo03:=Right$(valor, Len(valor)-4);
-        g_NombreInsumo03:=fGetNombreInsumoByCodigo(g_CodInsumo03);
-    elsif Left$(valor, 3)="Q03" then
-        g_Cantidad03:=StringToReal(Right$(valor, Len(valor)-4));
-    elsif Left$(valor, 3)="C04" then
-        g_CodInsumo04:=Right$(valor, Len(valor)-4);
-        g_NombreInsumo04:=fGetNombreInsumoByCodigo(g_CodInsumo04);
-    elsif Left$(valor, 3)="Q04" then
-        g_Cantidad04:=StringToReal(Right$(valor, Len(valor)-4));
-    elsif Left$(valor, 3)="C05" then
-        g_CodInsumo05:=Right$(valor, Len(valor)-4);
-        g_NombreInsumo05:=fGetNombreInsumoByCodigo(g_CodInsumo05);
-    elsif Left$(valor, 3)="Q05" then
-        g_Cantidad05:=StringToReal(Right$(valor, Len(valor)-4));
-    elsif Left$(valor, 3)="C06" then
-        g_CodInsumo06:=Right$(valor, Len(valor)-4);
-        g_NombreInsumo06:=fGetNombreInsumoByCodigo(g_CodInsumo06);
-    elsif Left$(valor, 3)="Q06" then
-        g_Cantidad06:=StringToReal(Right$(valor, Len(valor)-4));
-    elsif Left$(valor, 3)="C07" then
-        g_CodInsumo07:=Right$(valor, Len(valor)-4);
-        g_NombreInsumo07:=fGetNombreInsumoByCodigo(g_CodInsumo07);
-    elsif Left$(valor, 3)="Q07" then
-        g_Cantidad07:=StringToReal(Right$(valor, Len(valor)-4));
-    end if;
+	if  g_NombreMenuMantto =CONST_RECETA_LABEL then
+		if g_TipoMant = tipoMantAgregar then
+			pPostReceta(t_MantGenerico);
+			pMuestraRegistroIngresado(CONST_RECETA_LABEL);
+		elsif g_TipoMant = tipoMantEditar then
+			pPutReceta(t_MantGenerico);
+		end if;
+	elsif g_NombreMenuMantto = CONST_INSUMO_LABEL then
+		if g_TipoMant = tipoMantAgregar then
+			pPostInsumo(t_MantGenerico);
+			pMuestraRegistroIngresado(CONST_INSUMO_LABEL);
+		elsif g_TipoMant = tipoMantEditar then
+			pPutInsumo(t_MantGenerico);
+		end if;
+	end if;
+end;
+
+Procedure pGuardarTemporal(valor:string);
+begin
+	if(g_PasoMant = tMantCodigo) then 
+		t_MantGenerico.Codigo:=valor;
+	elsif(g_PasoMant = tMantNombre) then
+		t_MantGenerico.Nombre:=valor;  
+	end if;
 end;

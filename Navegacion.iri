@@ -1,11 +1,20 @@
-elsif EventWidget=lbl21 or EventWidget=lbl30 or 
-    EventWidget=lbl31     then 
+elsif EventWidget=lbl21 or EventWidget=lbl23 or
+EventWidget=lbl65 or EventWidget=lbl66 then
     pMuestraPntMenuPrincipal;
-elsif EventWidget=lbl23 then 
-    pMuestraPntProcesoDePesaje;
-elsif EventWidget=lbl22 then 
+elsif EventWidget=lbl22 then
+    g_NombreMenuMantto:=CONST_RECETA_LABEL;
     pMuestraPntMantenimientoReceta;
     pMuestraReceta;
-elsif EventWidget=lbl24 then 
+elsif EventWidget=lbl24 then
+    g_NombreMenuMantto:=CONST_INSUMO_LABEL;
     pMuestraPntMantenimientoInsumo;
     pMuestraInsumo;
+elsif EventWidget=lbl30 or EventWidget=lbl31 or 
+    EventWidget=lbl59 then
+    pMuestraPntMenuMantenimiento;
+elsif EventWidget=lbl60 then
+    pMuestraPntProcesoDePesaje;
+elsif EventWidget=lbl61 then
+    pMuestraPntMenuReportes;
+elsif EventWidget=lbl63 then
+    pMuestraPntConfiguracion;
