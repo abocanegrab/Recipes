@@ -6,17 +6,22 @@ g_Insumo: Stored TypInsumo;
 t_Insumo: TypInsumo;
 g_ListaInsumo: TypArrayInsumo;
 
+g_DtReceta: Stored TypDtReceta;
+t_DtReceta: TypDtReceta;
+g_ListaDtReceta: TypArrayDtReceta;
+
+
 t_MantGenerico : TypMantGenerico;
 
 
 type TypPantalla is (
 	tPntProcesoDePesaje,
-  tPntMenuMant,
+  	tPntMenuMant,
 	tPntMenuPrincipal,
 	tPntMantReceta,
 	tPntMantInsumo,
-  tPntMenuReportes,
-  tPntConfiguracion
+  	tPntMenuReportes,
+  	tPntConfiguracion
 	);
 
 g_PantallaActiva : TypPantalla;
@@ -34,6 +39,7 @@ g_TotalRegistros : integer;
 g_NombreMenuMantto : string;
 
 t_IdSeleccionadoDeTabla:integer:=0;
+g_IdRecetaActual:integer;
 
 
 --variables para el llenado de los datos por grupos Mantenimientos
@@ -55,3 +61,22 @@ Type TypTipoMantenimiento is (
 );
 
 g_TipoMant : TypTipoMantenimiento;
+
+
+type TypMantItemReceta is (
+	tMIR_Inicio, 
+	tMIR_Receta,
+	tMIR_Insumo,
+	tMIR_Peso,
+	tMIR_Activo
+);
+
+g_PasoItemReceta : TypMantItemReceta;
+
+type TypNivelMantDeReceta is (
+	tNMDR_Cabecera, 
+	tNMDR_Detalle
+);
+
+g_PasoNivelMantDeReceta : TypNivelMantDeReceta;
+

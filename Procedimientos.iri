@@ -64,3 +64,66 @@ begin
 		t_MantGenerico.Nombre:=valor;  
 	end if;
 end;
+
+--****Programacion del insert de item de las recetas
+
+Procedure pMuestraPromptMantItemReceta;
+l_entry : string;
+l_mensaje : string;
+begin
+	if (g_PasoItemReceta=tMIR_Inicio) then
+		if (g_TipoMant = tipoMantAgregar) then
+			l_entry:="";
+			l_mensaje:="Ingrese el Codigo del Insumo";
+		elsif (g_TipoMant = tipoMantEditar) then
+			l_entry :=IntegerToString(g_DtReceta.IdInsumo,0);
+			l_mensaje:="Ingrese el Codigo del Insumo";
+		end if;
+		SetEntry(l_entry);
+		PromptUser(l_mensaje);
+	elsif (g_PasoItemReceta=tMIR_Insumo) then
+		if (g_TipoMant = tipoMantAgregar) then
+			l_entry:="";
+			l_mensaje:="Ingrese el Peso del Insumo";
+		elsif (g_TipoMant = tipoMantEditar) then
+			l_entry := RealToString(g_DtReceta.Peso,0,4);
+			l_mensaje:="Ingrese el Peso del Insumo";
+		end if;
+		SetEntry(l_entry);
+		PromptUser(l_mensaje);
+	elsif (g_PasoItemReceta=tMIR_Peso) then
+		if (g_TipoMant = tipoMantAgregar) then
+			l_entry:="";
+			l_mensaje:="Indique si estara Activo el Insumo";
+		elsif (g_TipoMant = tipoMantEditar) then
+			l_entry := IntegerToString(g_DtReceta.Activo,0);
+			l_mensaje:="Indique si estara Activo el Insumo";
+		end if;
+		SetEntry(l_entry);
+		PromptUser(l_mensaje);
+	end if;
+end;
+
+
+procedure pGuardaMantItemReceta;
+begin
+	if g_TipoMant = tipoMantAgregar then
+		pPostDtReceta(t_DtReceta);
+	elsif g_TipoMant = tipoMantEditar then
+		pPutDtReceta(t_DtReceta);
+	end if;
+	pMuestraReceta;
+	pMuestraItemsReceta;
+end;
+
+Procedure pGuardarTemporalItemReceta(valor:string);
+begin
+	t_DtReceta.IdReceta:=g_IdRecetaActual;
+	if(g_PasoItemReceta = tMIR_Insumo) then 
+		t_DtReceta.IdInsumo:=StringToInteger(valor);
+	elsif(g_PasoItemReceta = tMIR_Peso) then 
+		t_DtReceta.Peso:=StringToReal(valor);
+	elsif(g_PasoItemReceta = tMIR_Activo) then 
+		t_DtReceta.Activo:=StringToInteger(valor);
+	end if;
+end;

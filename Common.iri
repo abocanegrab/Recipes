@@ -27,7 +27,6 @@ begin
 end;
 
 
-
 function FormatString (valor : string;longitud : integer):string;
 begin
     return Left$(valor + Space$(100), longitud);

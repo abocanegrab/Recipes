@@ -8,6 +8,7 @@ program Recetario;
 #include Database/FuncionesDB.iri
 #include Database/Receta.iri
 #include Database/Insumo.iri
+#include Database/DtReceta.iri
 #include MuestraDatosEnEtiquetas.iri
 #include Database/ModificacionesDB.iri
 #include NavegacionFlechasFisicas.iri
@@ -31,9 +32,14 @@ LocalEntry : string;
 begin
 	LocalEntry := GetEntry;
 	if EventKey = EnterKey then
-		if	(g_PantallaActiva = tPntMantReceta or 
-			g_PantallaActiva = tPntMantInsumo) then
+		if	(g_PantallaActiva = tPntMantInsumo) then
 			pMantenimientoDatos(LocalEntry);
+		elsif (g_PantallaActiva = tPntMantReceta) then
+			if (g_PasoNivelMantDeReceta=tNMDR_Detalle) then
+				pMantenimientoItemReceta(LocalEntry);
+			else
+				pMantenimientoDatos(LocalEntry);
+			end if;
 		end if;
 	end if;
 end;
@@ -43,5 +49,5 @@ begin
     pMuestraPntProcesoDePesaje;
     
 
-    DisplayStatus("ProgramaCargado");    
+    --DisplayStatus("ProgramaCargado");    
 end Recetario;

@@ -13,10 +13,10 @@ begin
 
     sResultado := DbExec(sql, conexion);
     if (sResultado <> SysOk) then
-        pMostrarYLimpiar("No se pudo agregar el Registro");
+        pLoggerDB("pPostInsumo",DBErrMsg);
         return;
     end if;
-    pMostrarYLimpiar("Se agrego correctamente");
+    --pMostrarYLimpiar("Se agrego correctamente");
 end;
 
 procedure pPutInsumo(entidad : TypMantGenerico);
@@ -79,13 +79,13 @@ sResultado : SysCode;
 listado : TypArrayInsumo;
 indice : integer;
 begin
-    sql := "select * from Insumo order by Id Desc limit "+IntegerToString(g_ItemsPorPagina,0);
+    sql := "select * from Insumo order by Id asc limit "+IntegerToString(g_ItemsPorPagina,0);
     sql :=sql + " Offset "+IntegerToString(g_PaginaActual - 1, 0);
 
     sResultado := DbExec(sql, conexion);
     --Primero verificamos que la consulta sea diferente de OK. Esto es error
     if(sResultado<>SysOk) then 
-        pMostrarYLimpiar("Error al Listar");
+        pLoggerDB("fListaInsumo",DBErrMsg);
         return listado;
     end if;
     
@@ -107,7 +107,7 @@ begin
     end loop;
 
     DbFinalize(conexion);
-    pMostrarYLimpiar("Se listo correctamente");
+    --pMostrarYLimpiar("Se listo correctamente");
 
     return listado;
 end;
@@ -137,4 +137,31 @@ begin
     DbFinalize(conexion);
     pMostrarYLimpiar("Se obtuvo correctamente");
     return Nombre;
+end;
+
+function fGetIdInsumoByCodigo(Codigo : string) : integer;
+sql : string;
+conexion : integer;
+sResultado : SysCode;
+IdInsumo : integer:=0;
+begin
+    sql:="select Id from Insumo where Codigo='"+Codigo+"' limit 1";
+    sResultado := DbExec(sql, conexion);
+    --Primero verificamos que la consulta sea diferente de OK. Esto es error
+    if(sResultado<>SysOk) then 
+        pLoggerDB("fGetIdInsumoByCodigo",DBErrMsg);
+        return IdInsumo;
+    end if;
+    
+    -- Luego verificamos que la conexión sea = 0. Eso quiere decir que no hay datos para recuperar
+    if (conexion=0) then
+       pLoggerDB("fGetIdInsumoByCodigo","No Hay Datos para Recuperar Codigo:"+Codigo+" Y "+IntegerToString(IdInsumo,0));
+        return IdInsumo;
+    end if;
+
+    DbColumnInt(conexion, 1, IdInsumo);  
+    sResultado := DbNext(conexion);  
+    DbFinalize(conexion);
+    pMostrarYLimpiar("Se obtuvo correctamente");
+    return IdInsumo;
 end;
