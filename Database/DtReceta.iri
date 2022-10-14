@@ -1,0 +1,126 @@
+procedure pPostDtReceta(entidad : TypDtReceta);
+sql : string;
+conexion : integer;
+sResultado : SysCode;
+id : integer;
+l_Nombretabla:string:="DtReceta";
+begin
+    id := fGetNextId(l_Nombretabla,CONST_MAX_DB_DETALLERECETA);
+    sql := "Insert into DtReceta (Id, IdReceta,IdInsumo,Peso,Activo) values (";
+    sql := sql + IntegerToString(id, 0) + ",";
+    sql := sql + IntegerToString(entidad.IdReceta,0) + ", ";
+    sql := sql + IntegerToString(entidad.IdInsumo,0) + ", ";
+    sql := sql + RealToString(entidad.Peso,0,4) + ", ";
+    sql := sql + IntegerToString(entidad.Activo,0) + ")";
+
+    sResultado := DbExec(sql, conexion);
+    if (sResultado <> SysOk) then
+        pLoggerDB("pPostDtReceta",DBErrMsg);
+        return;
+    end if;
+    --pMostrarYLimpiar("Se agrego correctamente");
+end;
+
+procedure pPutDtReceta(entidad : TypDtReceta);
+sql : string;
+conexion : integer;
+sResultado : SysCode;
+
+begin
+	sql:="Update DtReceta set ";
+	sql:=sql + "IdReceta='" + IntegerToString(entidad.IdReceta,0)+ "',";
+    sql:=sql + "IdInsumo='" + IntegerToString(entidad.IdInsumo,0)+ "',";
+    sql:=sql + "Peso='" + RealToString(entidad.Peso,0,4)+ "',";
+    sql:=sql + "Activo='" + IntegerToString(entidad.Activo,0)+ "',";
+    sql:=sql + "where id="+IntegerToString(entidad.Id,0);
+			
+	sResultado := DbExec(sql, conexion);
+	if (sResultado <> SysOk) then
+		pLoggerDB("pPutDtReceta",DBErrMsg);
+		return;
+	end if;
+
+	pMostrarYLimpiar("Se actualizo con Éxito");
+end;
+
+function fGetDtReceta(Id : integer) : TypDtReceta;
+sql : string;
+conexion : integer;
+sResultado : SysCode;
+DtReceta : TypDtReceta;
+begin
+    sql:="select * from DtReceta where id = ";
+    sql:=sql + IntegerToString(Id, 0);
+
+    sResultado := DbExec(sql, conexion);
+    --Primero verificamos que la consulta sea diferente de OK. Esto es error
+    if(sResultado<>SysOk) then 
+        pLoggerDB("fGetDtReceta",DBErrMsg);
+        return DtReceta;
+    end if;
+    
+    -- Luego verificamos que la conexión sea = 0. Eso quiere decir que no hay datos para recuperar
+    if (conexion=0) then
+        return DtReceta;
+    end if;
+
+    -- Caso contrario, tomamos los datos y los leemos.
+    DbColumnInt(conexion, 1, DtReceta.Id); 
+    DbColumnInt(conexion, 2, DtReceta.IdReceta); 
+    DbColumnInt(conexion, 3, DtReceta.IdInsumo);  
+    DbColumnReal(conexion, 4, DtReceta.Peso); 
+    DbColumnInt(conexion, 5, DtReceta.Activo);  
+    sResultado := DbNext(conexion);  
+    DbFinalize(conexion);
+    pMostrarYLimpiar("Se obtuvo correctamente");
+    return DtReceta;
+end;
+
+
+
+function fListaDtReceta(IdReceta:integer) : TypArrayDtReceta;
+sql : string;
+conexion : integer;
+sResultado : SysCode;
+listado : TypArrayDtReceta;
+indice : integer;
+begin
+    sql := "SELECT Insumo.Codigo,Receta.Codigo, Insumo.Nombre, DtReceta.Peso, DtReceta.Activo ";
+    sql := sql + "FROM DtReceta INNER JOIN "; 
+    sql := sql + "Insumo ON DtReceta.IdInsumo = Insumo.Id INNER JOIN ";
+    sql := sql + "Receta ON DtReceta.IdReceta = receta.Id ";
+    sql := sql + "WHERE (dtReceta.Activo = 1) AND (Receta.Id ="+IntegerToString(IdReceta,0)+")";
+    --sql := sql + "order by i.Nombre Desc limit "+IntegerToString(g_ItemsPorPagina,0);
+    --sql :=sql + " Offset "+IntegerToString(g_PaginaActual - 1, 0);
+
+    sResultado := DbExec(sql, conexion);
+    --Primero verificamos que la consulta sea diferente de OK. Esto es error
+    if(sResultado<>SysOk) then 
+        pLoggerDB("fListaDtReceta",DBErrMsg);
+        return listado;
+    end if;
+    
+    -- Luego verificamos que la conexión sea = 0. Eso quiere decir que no hay datos para recuperar
+    if (conexion=0) then
+        return listado;
+    end if;
+
+    -- Caso contrario, tomamos los datos y los leemos.
+
+    indice := 0;
+    while sResultado = SysOk 
+    loop
+        indice := indice +1;
+        DbColumnString(conexion, 1, listado[indice].CodInsumo); 
+        DbColumnString(conexion, 2, listado[indice].CodReceta); 
+        DbColumnString(conexion, 3, listado[indice].NombreInsumo); 
+        DbColumnReal(conexion, 4, listado[indice].Peso); 
+        DbColumnInt(conexion, 5, listado[indice].Activo);  
+        sResultado := DbNext(conexion);  
+    end loop;
+
+    DbFinalize(conexion);
+    --pMostrarYLimpiar("Se listo correctamente");
+
+    return listado;
+end;

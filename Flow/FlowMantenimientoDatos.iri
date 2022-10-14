@@ -23,3 +23,33 @@ elsif (g_PasoMant = tMantNombre) then
 	end if;
 end if;
 end;
+
+procedure pMantenimientoItemReceta(userInput : string);
+l_IdInsumo:integer;
+begin
+	if (g_PasoItemReceta = tMIR_Inicio) then
+		pMuestraPromptMantItemReceta;
+		g_PasoItemReceta := tMIR_Insumo;
+	elsif (g_PasoItemReceta = tMIR_Insumo) then
+		if (fCantidadItemsEnDtReceta(g_IdRecetaActual)>=5) then
+			pMostrarYLimpiar("Cantidad de Item completo en Receta");
+		else
+			l_IdInsumo:=fGetIdInsumoByCodigo(userInput);
+			if (l_IdInsumo<>0 AND fExisteCodigoEnReceta(g_IdRecetaActual,l_IdInsumo)=BoolFalse) then
+				pGuardarTemporalItemReceta(IntegerToString(l_IdInsumo,0));
+				pMuestraPromptMantItemReceta;
+				g_PasoItemReceta := tMIR_Peso;
+			else
+				pMuestraPromptMantItemReceta;
+				g_PasoItemReceta:=tMIR_Inicio;
+			end if;
+		end if;
+	elsif (g_PasoItemReceta = tMIR_Peso) then
+		pGuardarTemporalItemReceta(userInput);
+		pMuestraPromptMantItemReceta;
+		g_PasoItemReceta := tMIR_Activo;
+	elsif (g_PasoItemReceta = tMIR_Activo) then
+		pGuardarTemporalItemReceta(userInput);
+		pGuardaMantItemReceta;
+	end if;
+end;

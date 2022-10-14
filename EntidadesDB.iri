@@ -22,3 +22,18 @@ type TypMantGenerico is record
 	Codigo : string;
 	Nombre: string;
 end record;
+
+
+type TypDtReceta is record
+        Id: Integer;
+  IdReceta: Integer;
+  CodReceta: String;
+  NombreReceta: String;
+  IdInsumo: Integer;
+  CodInsumo: String;
+  NombreInsumo : String;
+      Peso: Real;
+    Activo: Integer;
+end record;
+
+type TypArrayDtReceta is array[10] of TypDtReceta;

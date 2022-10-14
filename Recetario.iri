@@ -187,6 +187,12 @@ lbl87     : constant integer := 87;
 lbl88     : constant integer := 88;
 lbl89     : constant integer := 89;
 lbl90     : constant integer := 90;
+lbl91     : constant integer := 91;
+lbl92     : constant integer := 92;
+lbl93     : constant integer := 93;
+lbl94     : constant integer := 94;
+lbl95     : constant integer := 95;
+lbl96     : constant integer := 96;
 
 USBPRN    : constant string := "USBPRN";
 ADVPRN    : constant string := "ADVPRN";

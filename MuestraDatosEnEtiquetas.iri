@@ -8,6 +8,7 @@ begin
 		SetLabelText(lbl28,g_ListaReceta[g_IndexRegistro].Codigo);
 		SetLabelText(lbl29,g_ListaReceta[g_IndexRegistro].Nombre);
 	end if;
+	g_IdRecetaActual:=g_ListaReceta[g_IndexRegistro].Id;
 end;
 
 
@@ -37,4 +38,192 @@ l_registro:=fGetUltimoRegistroEnTabla(Tabla);
 	end if;
 end;
 
+procedure pLimpiarRegistrosDtReceta;
+begin
+	SetLabelText(lbl92,"");
+	SetLabelText(lbl75,"");
+	SetLabelText(lbl68,"");
+	SetLabelText(lbl91,"");
+	SetLabelText(lbl74,"");
+	SetLabelText(lbl64,"");
+	SetLabelText(lbl96,"");
+	SetLabelText(lbl79,"");
+	SetLabelText(lbl73,"");
+	SetLabelText(lbl95,"");
+	SetLabelText(lbl78,"");
+	SetLabelText(lbl72,"");
+	SetLabelText(lbl94,"");
+	SetLabelText(lbl77,"");
+	SetLabelText(lbl71,"");
 
+--Campos de Item
+	SetWidgetVisibility(lbl92,Voff);
+	SetWidgetVisibility(lbl75,Voff);
+	SetWidgetVisibility(lbl68,Voff);
+	SetWidgetVisibility(lbl91,Voff);
+	SetWidgetVisibility(lbl74,Voff);
+	SetWidgetVisibility(lbl64,Voff);
+	SetWidgetVisibility(lbl96,Voff);
+	SetWidgetVisibility(lbl79,Voff);
+	SetWidgetVisibility(lbl73,Voff);
+	SetWidgetVisibility(lbl95,Voff);
+	SetWidgetVisibility(lbl78,Voff);
+	SetWidgetVisibility(lbl72,Voff);
+	SetWidgetVisibility(lbl94,Voff);
+	SetWidgetVisibility(lbl77,Voff);
+	SetWidgetVisibility(lbl71,Voff);
+
+	SetWidgetVisibility(lbl80, Voff);
+	SetWidgetVisibility(lbl86, Voff);
+	SetWidgetVisibility(lbl81, Voff);
+	SetWidgetVisibility(lbl85, Voff);
+	SetWidgetVisibility(lbl82, Voff);
+	SetWidgetVisibility(lbl89, Voff);
+	SetWidgetVisibility(lbl83, Voff);
+	SetWidgetVisibility(lbl88, Voff);
+	SetWidgetVisibility(lbl84, Voff);
+	SetWidgetVisibility(lbl87, Voff);
+end;
+
+
+procedure pMuestraItemsReceta;
+l_CantidadItemReceta:integer;
+l_index:integer;
+begin
+	pLimpiarRegistrosDtReceta;
+	l_CantidadItemReceta:=fCantidadItemsEnDtReceta(g_IdRecetaActual);
+    g_ListaDtReceta:=fListaDtReceta(g_IdRecetaActual);
+
+	if (l_CantidadItemReceta<=0) then
+		pLimpiarRegistrosDtReceta;
+	else
+		if l_CantidadItemReceta=1 then
+		SetWidgetVisibility(lbl92,Von);
+		SetWidgetVisibility(lbl75,Von);
+		SetWidgetVisibility(lbl68,Von);
+			SetLabelText(lbl92,g_ListaDtReceta[1].CodInsumo);
+			SetLabelText(lbl75,g_ListaDtReceta[1].NombreInsumo);
+			SetLabelText(lbl68,RealToString(g_ListaDtReceta[1].Peso,4,4));
+			SetWidgetVisibility(lbl80, Von);
+			SetWidgetVisibility(lbl86, Von);
+		elsif l_CantidadItemReceta=2 then
+		SetWidgetVisibility(lbl92,Von);
+		SetWidgetVisibility(lbl75,Von);
+		SetWidgetVisibility(lbl68,Von);
+		SetWidgetVisibility(lbl91,Von);
+		SetWidgetVisibility(lbl74,Von);
+		SetWidgetVisibility(lbl64,Von);
+			SetLabelText(lbl92,g_ListaDtReceta[1].CodInsumo);
+			SetLabelText(lbl75,g_ListaDtReceta[1].NombreInsumo);
+			SetLabelText(lbl68,RealToString(g_ListaDtReceta[1].Peso,4,4));
+			SetLabelText(lbl91,g_ListaDtReceta[2].CodInsumo);
+			SetLabelText(lbl74,g_ListaDtReceta[2].NombreInsumo);
+			SetLabelText(lbl64,RealToString(g_ListaDtReceta[2].Peso,4,4));
+			SetWidgetVisibility(lbl80, Von);
+			SetWidgetVisibility(lbl86, Von);
+			SetWidgetVisibility(lbl81, Von);
+			SetWidgetVisibility(lbl85, Von);
+		
+		elsif l_CantidadItemReceta=3 then
+		SetWidgetVisibility(lbl92,Von);
+		SetWidgetVisibility(lbl75,Von);
+		SetWidgetVisibility(lbl68,Von);
+		SetWidgetVisibility(lbl91,Von);
+		SetWidgetVisibility(lbl74,Von);
+		SetWidgetVisibility(lbl64,Von);
+		SetWidgetVisibility(lbl96,Von);
+		SetWidgetVisibility(lbl79,Von);
+		SetWidgetVisibility(lbl73,Von);
+			SetLabelText(lbl92,g_ListaDtReceta[1].CodInsumo);
+			SetLabelText(lbl75,g_ListaDtReceta[1].NombreInsumo);
+			SetLabelText(lbl68,RealToString(g_ListaDtReceta[1].Peso,4,4));
+			SetLabelText(lbl91,g_ListaDtReceta[2].CodInsumo);
+			SetLabelText(lbl74,g_ListaDtReceta[2].NombreInsumo);
+			SetLabelText(lbl64,RealToString(g_ListaDtReceta[2].Peso,4,4));
+			SetLabelText(lbl96,g_ListaDtReceta[3].CodInsumo);
+			SetLabelText(lbl79,g_ListaDtReceta[3].NombreInsumo);
+			SetLabelText(lbl73,RealToString(g_ListaDtReceta[3].Peso,4,4));
+			SetWidgetVisibility(lbl80, Von);
+			SetWidgetVisibility(lbl86, Von);
+			SetWidgetVisibility(lbl81, Von);
+			SetWidgetVisibility(lbl85, Von);
+			SetWidgetVisibility(lbl82, Von);
+			SetWidgetVisibility(lbl89, Von);
+
+		elsif l_CantidadItemReceta=4 then
+		SetWidgetVisibility(lbl92,Von);
+		SetWidgetVisibility(lbl75,Von);
+		SetWidgetVisibility(lbl68,Von);
+		SetWidgetVisibility(lbl91,Von);
+		SetWidgetVisibility(lbl74,Von);
+		SetWidgetVisibility(lbl64,Von);
+		SetWidgetVisibility(lbl96,Von);
+		SetWidgetVisibility(lbl79,Von);
+		SetWidgetVisibility(lbl73,Von);
+		SetWidgetVisibility(lbl95,Von);
+		SetWidgetVisibility(lbl78,Von);
+		SetWidgetVisibility(lbl72,Von);
+			SetLabelText(lbl92,g_ListaDtReceta[1].CodInsumo);
+			SetLabelText(lbl75,g_ListaDtReceta[1].NombreInsumo);
+			SetLabelText(lbl68,RealToString(g_ListaDtReceta[1].Peso,4,4));
+			SetLabelText(lbl91,g_ListaDtReceta[2].CodInsumo);
+			SetLabelText(lbl74,g_ListaDtReceta[2].NombreInsumo);
+			SetLabelText(lbl64,RealToString(g_ListaDtReceta[2].Peso,4,4));
+			SetLabelText(lbl96,g_ListaDtReceta[3].CodInsumo);
+			SetLabelText(lbl79,g_ListaDtReceta[3].NombreInsumo);
+			SetLabelText(lbl73,RealToString(g_ListaDtReceta[3].Peso,4,4));
+			SetLabelText(lbl95,g_ListaDtReceta[4].CodInsumo);
+			SetLabelText(lbl78,g_ListaDtReceta[4].NombreInsumo);
+			SetLabelText(lbl72,RealToString(g_ListaDtReceta[4].Peso,4,4));
+			SetWidgetVisibility(lbl80, Von);
+			SetWidgetVisibility(lbl86, Von);
+			SetWidgetVisibility(lbl81, Von);
+			SetWidgetVisibility(lbl85, Von);
+			SetWidgetVisibility(lbl82, Von);
+			SetWidgetVisibility(lbl89, Von);
+			SetWidgetVisibility(lbl83, Von);
+			SetWidgetVisibility(lbl88, Von);
+		elsif l_CantidadItemReceta=5 then
+		SetWidgetVisibility(lbl92,Von);
+		SetWidgetVisibility(lbl75,Von);
+		SetWidgetVisibility(lbl68,Von);
+		SetWidgetVisibility(lbl91,Von);
+		SetWidgetVisibility(lbl74,Von);
+		SetWidgetVisibility(lbl64,Von);
+		SetWidgetVisibility(lbl96,Von);
+		SetWidgetVisibility(lbl79,Von);
+		SetWidgetVisibility(lbl73,Von);
+		SetWidgetVisibility(lbl95,Von);
+		SetWidgetVisibility(lbl78,Von);
+		SetWidgetVisibility(lbl72,Von);
+		SetWidgetVisibility(lbl94,Von);
+		SetWidgetVisibility(lbl77,Von);
+		SetWidgetVisibility(lbl71,Von);
+			SetLabelText(lbl92,g_ListaDtReceta[1].CodInsumo);
+			SetLabelText(lbl75,g_ListaDtReceta[1].NombreInsumo);
+			SetLabelText(lbl68,RealToString(g_ListaDtReceta[1].Peso,4,4));
+			SetLabelText(lbl91,g_ListaDtReceta[2].CodInsumo);
+			SetLabelText(lbl74,g_ListaDtReceta[2].NombreInsumo);
+			SetLabelText(lbl64,RealToString(g_ListaDtReceta[2].Peso,4,4));
+			SetLabelText(lbl96,g_ListaDtReceta[3].CodInsumo);
+			SetLabelText(lbl79,g_ListaDtReceta[3].NombreInsumo);
+			SetLabelText(lbl73,RealToString(g_ListaDtReceta[3].Peso,4,4));
+			SetLabelText(lbl95,g_ListaDtReceta[4].CodInsumo);
+			SetLabelText(lbl78,g_ListaDtReceta[4].NombreInsumo);
+			SetLabelText(lbl72,RealToString(g_ListaDtReceta[4].Peso,4,4));
+			SetLabelText(lbl94,g_ListaDtReceta[5].CodInsumo);
+			SetLabelText(lbl77,g_ListaDtReceta[5].NombreInsumo);
+			SetLabelText(lbl71,RealToString(g_ListaDtReceta[5].Peso,4,4));
+			SetWidgetVisibility(lbl80, Von);
+			SetWidgetVisibility(lbl86, Von);
+			SetWidgetVisibility(lbl81, Von);
+			SetWidgetVisibility(lbl85, Von);
+			SetWidgetVisibility(lbl82, Von);
+			SetWidgetVisibility(lbl89, Von);
+			SetWidgetVisibility(lbl83, Von);
+			SetWidgetVisibility(lbl88, Von);
+			SetWidgetVisibility(lbl84, Von);
+			SetWidgetVisibility(lbl87, Von);
+		end if;
+	end if;
+end;

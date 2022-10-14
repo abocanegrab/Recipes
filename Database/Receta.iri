@@ -13,10 +13,10 @@ begin
 
     sResultado := DbExec(sql, conexion);
     if (sResultado <> SysOk) then
-        pMostrarYLimpiar("No se pudo agregar el Registro");
+        pLoggerDB("pPostReceta",DBErrMsg);
         return;
     end if;
-    pMostrarYLimpiar("Se agrego correctamente");
+    --pMostrarYLimpiar("Se agrego correctamente");
 end;
 
 
@@ -67,7 +67,7 @@ begin
     DbColumnString(conexion, 3, Receta.Nombre);  
     sResultado := DbNext(conexion);  
     DbFinalize(conexion);
-    pMostrarYLimpiar("Se obtuvo correctamente");
+    --pMostrarYLimpiar("Se obtuvo correctamente");
     return Receta;
 end;
 
@@ -78,13 +78,13 @@ sResultado : SysCode;
 listado : TypArrayReceta;
 indice : integer;
 begin
-    sql := "select * from Receta order by Id Desc limit "+IntegerToString(g_ItemsPorPagina,0);
+    sql := "select * from Receta order by Id asc  limit "+IntegerToString(g_ItemsPorPagina,0);
     sql :=sql + " Offset "+IntegerToString(g_PaginaActual - 1, 0);
 
     sResultado := DbExec(sql, conexion);
     --Primero verificamos que la consulta sea diferente de OK. Esto es error
     if(sResultado<>SysOk) then 
-        pMostrarYLimpiar("Error al Listar");
+    pLoggerDB("fListaReceta",DBErrMsg);
         return listado;
     end if;
     
@@ -106,7 +106,7 @@ begin
     end loop;
 
     DbFinalize(conexion);
-    pMostrarYLimpiar("Se listo correctamente");
+    --pMostrarYLimpiar("Se listo correctamente");
 
     return listado;
 end;
