@@ -3,6 +3,7 @@
     elsif EventWidget=lbl38 or EventWidget=lbl41 then
 		g_TipoMant := tipoMantAgregar;
 		g_PasoMant := tMantInicio;
+		g_PasoNivelMantDeReceta:=tNMDR_Cabecera;
 		pMantenimientoDatos("");
     
 	--Programacion del Boton Editar en Pantalla Mantenimientos Datos
@@ -19,3 +20,12 @@
 	--Se pasa como parametro el Id que está en pantalla en ese momento
 		pEliminarRegistroDB(t_IdSeleccionadoDeTabla);
 
+
+    --Programacion del Boton Agregar Insumo en la Pantalla Mantenimientos Receta
+
+    elsif EventWidget=lbl90 then
+		g_TipoMant := tipoMantAgregar;
+		g_PasoItemReceta := tMIR_Inicio;
+		g_PasoNivelMantDeReceta:=tNMDR_Detalle;
+		pMantenimientoItemReceta("");
+    

@@ -32,6 +32,8 @@ begin
     if (g_PantallaActiva = tPntMantReceta) then
         pNextItemBaseDatos("Receta");
         pMuestraReceta;
+        pMuestraItemsReceta;
+        
     elsif (g_PantallaActiva = tPntMantInsumo) then
         pNextItemBaseDatos("Insumo");
         pMuestraInsumo;
@@ -43,6 +45,8 @@ begin
     if (g_PantallaActiva = tPntMantReceta) then
         pPrevItemBaseDatos("Receta");
         pMuestraReceta;
+        pMuestraItemsReceta;
+        
     elsif (g_PantallaActiva = tPntMantInsumo) then
         pPrevItemBaseDatos("Insumo");
         pMuestraInsumo;

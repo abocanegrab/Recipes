@@ -5,16 +5,16 @@ begin
     if (hayDatos=BoolTrue) then
         return;
     end if;
-    t_MantGenerico.Codigo:="1";
+    t_MantGenerico.Codigo:="R001";
     t_MantGenerico.Nombre:="RECETA LIGERA";
     pPostReceta(t_MantGenerico);
-    t_MantGenerico.Codigo:="2";
+    t_MantGenerico.Codigo:="R002";
     t_MantGenerico.Nombre:="RECETA CACERA";
     pPostReceta(t_MantGenerico);
-    t_MantGenerico.Codigo:="3";
+    t_MantGenerico.Codigo:="R003";
     t_MantGenerico.Nombre:="RECETA PREMIUM";
     pPostReceta(t_MantGenerico);
-    t_MantGenerico.Codigo:="4";
+    t_MantGenerico.Codigo:="R004";
     t_MantGenerico.Nombre:="RECETA REFORMULADA";
     pPostReceta(t_MantGenerico);
 end;
@@ -26,32 +26,75 @@ begin
     if (hayDatos=BoolTrue) then
         return;
     end if;
-        t_MantGenerico.Codigo:="1";
+        t_MantGenerico.Codigo:="INS001";
         t_MantGenerico.Nombre:="ARENA";
         pPostInsumo(t_MantGenerico);
-        t_MantGenerico.Codigo:="2";
+        t_MantGenerico.Codigo:="INS002";
         t_MantGenerico.Nombre:="CEMENTO";
         pPostInsumo(t_MantGenerico);
-        t_MantGenerico.Codigo:="3";
+        t_MantGenerico.Codigo:="INS003";
         t_MantGenerico.Nombre:="ESPEZANTE";
         pPostInsumo(t_MantGenerico);
-        t_MantGenerico.Codigo:="4";
+        t_MantGenerico.Codigo:="INS004";
         t_MantGenerico.Nombre:="AGUA";
         pPostInsumo(t_MantGenerico);
-        t_MantGenerico.Codigo:="5";
+        t_MantGenerico.Codigo:="INS005";
         t_MantGenerico.Nombre:="COLORANTE";
         pPostInsumo(t_MantGenerico);
-        t_MantGenerico.Codigo:="6";
+        t_MantGenerico.Codigo:="INS006";
         t_MantGenerico.Nombre:="PIEDRA EN POLVO";
         pPostInsumo(t_MantGenerico);
-        t_MantGenerico.Codigo:="7";
+        t_MantGenerico.Codigo:="INS007";
         t_MantGenerico.Nombre:="ADITIVOS";
         pPostInsumo(t_MantGenerico);
 end;
+
+procedure pAlmacenarDatosInicialDtReceta;
+hayDatos: BooleanType;
+begin
+    hayDatos:=fExisteDatosEnTabla("DtReceta");
+    if (hayDatos=BoolTrue) then
+        return;
+    end if;
+    t_DtReceta.IdReceta:=2;
+    t_DtReceta.IdInsumo:=1;
+    t_DtReceta.Peso:=150.20;
+    t_DtReceta.Activo:=1;
+    pPostDtReceta(t_DtReceta);
+    t_DtReceta.IdReceta:=2;
+    t_DtReceta.IdInsumo:=2;
+    t_DtReceta.Peso:=200.20;
+    t_DtReceta.Activo:=1;
+    pPostDtReceta(t_DtReceta);
+    t_DtReceta.IdReceta:=2;
+    t_DtReceta.IdInsumo:=3;
+    t_DtReceta.Peso:=250.20;
+    t_DtReceta.Activo:=1;
+    pPostDtReceta(t_DtReceta);
+    t_DtReceta.IdReceta:=2;
+    t_DtReceta.IdInsumo:=4;
+    t_DtReceta.Peso:=300.20;
+    t_DtReceta.Activo:=1;
+    pPostDtReceta(t_DtReceta);
+    
+    t_DtReceta.IdReceta:=1;
+    t_DtReceta.IdInsumo:=1;
+    t_DtReceta.Peso:=334.20;
+    t_DtReceta.Activo:=1;
+    pPostDtReceta(t_DtReceta);
+    t_DtReceta.IdReceta:=1;
+    t_DtReceta.IdInsumo:=2;
+    t_DtReceta.Peso:=7.20;
+    t_DtReceta.Activo:=1;
+    pPostDtReceta(t_DtReceta);
+    
+end;
+
 
 
 procedure pAlmacenarDatosInicial;
 begin
 	pAlmacenarDatosInicialReceta;
 	pAlmacenarDatosInicialInsumo;
+    pAlmacenarDatosInicialDtReceta;
 end;

@@ -5,6 +5,8 @@ elsif EventWidget=lbl22 then
     g_NombreMenuMantto:=CONST_RECETA_LABEL;
     pMuestraPntMantenimientoReceta;
     pMuestraReceta;
+    --pMuestraItemRecetaVacio;
+    pMuestraItemsReceta;
 elsif EventWidget=lbl24 then
     g_NombreMenuMantto:=CONST_INSUMO_LABEL;
     pMuestraPntMantenimientoInsumo;
