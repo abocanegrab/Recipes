@@ -46,6 +46,8 @@ begin
 		elsif g_TipoMant = tipoMantEditar then
 			pPutReceta(t_MantGenerico);
 		end if;
+			--pMuestraReceta;
+			
 	elsif g_NombreMenuMantto = CONST_INSUMO_LABEL then
 		if g_TipoMant = tipoMantAgregar then
 			pPostInsumo(t_MantGenerico);
