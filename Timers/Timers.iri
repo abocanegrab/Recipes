@@ -1,0 +1,42 @@
+handler Timer1Trip;
+sCode : SysCode;
+lineaText : string;
+
+l_estadosCode:string;
+
+begin
+    sCode := FileExists("Receta.txt", FTP);
+    if (sCode = SysOk) then
+		l_estadosCode:=SysCodeToString(sCode);
+		FileOpen("Receta.txt", FTP, FileRead);
+		sCode := ReadLn(lineaText);
+		pMostrarYLimpiar("Datos en Receta.txt: "+lineaText);            
+		FileClose;
+		FileDelete("Receta.txt", FTP);
+	end if;
+
+
+--pPasarDatosAEtiquetas;
+
+end;
+
+handler Timer2Trip;
+sCode : SysCode;
+lineaText : string;
+
+l_estadosCode:string;
+
+begin
+    sCode := FileExists("Insumo.txt", FTP);
+    if (sCode = SysOk) then
+		l_estadosCode:=SysCodeToString(sCode);
+		FileOpen("Insumo.txt", FTP, FileRead);
+		sCode := ReadLn(lineaText);
+		pMostrarYLimpiar("Datos en Insumo.txt: "+lineaText);            
+		FileClose;
+		FileDelete("Insumo.txt", FTP);
+	end if;
+
+--pPasarDatosAEtiquetas;
+
+end;
