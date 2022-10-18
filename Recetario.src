@@ -5,6 +5,9 @@ program Recetario;
 #include EntidadesDB.iri
 #include Variables.iri
 #include Common.iri
+#include FTPServer/FTPServer.iri
+#include FTPServer/FuncionesFTP.iri
+#include Timers/Timers.iri
 #include Database/FuncionesDB.iri
 #include Database/Receta.iri
 #include Database/Insumo.iri
@@ -45,6 +48,7 @@ begin
 end;
 
 begin
+	pStartServer;
     pAlmacenarDatosInicial;
     pMuestraPntProcesoDePesaje;
     

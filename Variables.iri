@@ -80,3 +80,10 @@ type TypNivelMantDeReceta is (
 
 g_PasoNivelMantDeReceta : TypNivelMantDeReceta;
 
+
+g_embarcacion:string;
+g_especie:string;
+g_fecha:string;
+g_operacion:string;
+g_uso:string;
+g_tipotransporte:string;
