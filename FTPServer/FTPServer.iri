@@ -3,16 +3,16 @@ sCode : SysCode;
 begin
     sCode := StartFTPServer;
     if (sCode = SysOk) then
-        DisplayStatus("Server activo");
-        SetTimerMode(1, TimerContinuous);
-        SetTimer(1, 300);
-        StartTimer(1);
+        pMostrarYLImpiar("Server activo");
+        --SetTimerMode(1, TimerContinuous);
+        --SetTimer(1, 300);
+        --StartTimer(1);
 
         SetTimerMode(2, TimerContinuous);
         SetTimer(2, 300);
         StartTimer(2);
 
     else
-        DisplayStatus(SysCodeToString(sCode));
+        pLoggerDB("pStartServer",SysCodeToString(sCode));
     end if;    
 end;

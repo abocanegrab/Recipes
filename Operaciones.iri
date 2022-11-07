@@ -6,19 +6,30 @@
 		g_PasoNivelMantDeReceta:=tNMDR_Cabecera;
 		pMantenimientoDatos("");
     
-	--Programacion del Boton Editar en Pantalla Mantenimientos Datos
+--Programacion del Boton Agregar en Pantalla Mantenimientos Datos de Balanza 
 
-	elsif EventWidget=lbl42 or EventWidget=lbl39 then
+    elsif EventWidget=lbl104 then
+		g_TipoMant := tipoMantAgregar;
+		g_PasoMant := tMantInicio;
+		pMantenimientoDatos("");
+    
+
+	--Programacion del Boton Editar en Pantalla Mantenimientos Balanza, Insumo y Receta
+
+	elsif EventWidget=lbl42 or EventWidget=lbl39 
+		or EventWidget=lbl105 then
 		g_TipoMant := tipoMantEditar;
 		g_PasoMant := tMantInicio;
 		pMantenimientoDatos("");
 
   --Programacion del Boton Eliminar en Pantalla Mantenimientos Datos
 	
-	elsif EventWidget=lbl40 or EventWidget=lbl43 then
+	elsif EventWidget=lbl40 or EventWidget=lbl43 
+		or EventWidget=lbl106 then
 		g_TipoMant := tipoMantEliminar;
 	--Se pasa como parametro el Id que está en pantalla en ese momento
-		pEliminarRegistroDB(t_IdSeleccionadoDeTabla);
+		pMuestraPromptEliminar;
+		--pEliminarRegistroDB(g_IdItemActual);
 
 
     --Programacion del Boton Agregar Insumo en la Pantalla Mantenimientos Receta
@@ -29,3 +40,27 @@
 		g_PasoNivelMantDeReceta:=tNMDR_Detalle;
 		pMantenimientoItemReceta("");
     
+	elsif EventWidget=lbl86 then
+		g_TipoMant := tipoMantEliminarItemReceta;
+		g_IdItemRecetaAEliminar:=g_ItemDetReceta01;
+		pMuestraPromptEliminarItemReceta;
+		
+	elsif EventWidget=lbl85 then
+		g_TipoMant := tipoMantEliminarItemReceta;
+		g_IdItemRecetaAEliminar:=g_ItemDetReceta02;
+		pMuestraPromptEliminarItemReceta;
+		
+	elsif EventWidget=lbl89 then
+		g_TipoMant := tipoMantEliminarItemReceta;
+		g_IdItemRecetaAEliminar:=g_ItemDetReceta03;
+		pMuestraPromptEliminarItemReceta;
+	
+	elsif EventWidget=lbl88 then
+		g_TipoMant := tipoMantEliminarItemReceta;
+		g_IdItemRecetaAEliminar:=g_ItemDetReceta04;
+		pMuestraPromptEliminarItemReceta;
+
+	elsif EventWidget=lbl87 then
+		g_TipoMant := tipoMantEliminarItemReceta;
+		g_IdItemRecetaAEliminar:=g_ItemDetReceta05;
+		pMuestraPromptEliminarItemReceta;

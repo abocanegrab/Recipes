@@ -1,42 +1,41 @@
-handler Timer1Trip;
-sCode : SysCode;
-lineaText : string;
+--handler Timer1Trip;
+--sCode : SysCode;
+--lineaText : string;
 
-l_estadosCode:string;
-
-begin
-    sCode := FileExists("Receta.txt", FTP);
-    if (sCode = SysOk) then
-		l_estadosCode:=SysCodeToString(sCode);
-		FileOpen("Receta.txt", FTP, FileRead);
-		sCode := ReadLn(lineaText);
-		pMostrarYLimpiar("Datos en Receta.txt: "+lineaText);            
-		FileClose;
-		FileDelete("Receta.txt", FTP);
-	end if;
-
-
---pPasarDatosAEtiquetas;
-
-end;
+--begin
+--	g_TablaActual:=CONST_RECETA_LABEL;
+--    sCode := FileExists("Receta.txt", FTP);
+--    if (sCode = SysOk) then
+--		FileOpen("Receta.txt", FTP, FileRead);
+--		while sCode = SysOk
+--        loop
+--            sCode := ReadLn(lineaText);
+--            pValidaValorDeLinea(lineaText);
+--        end loop;
+--
+--		FileClose;
+--		FileDelete("Receta.txt", FTP);
+--	end if;
+--end;
 
 handler Timer2Trip;
 sCode : SysCode;
 lineaText : string;
-
-l_estadosCode:string;
-
+l_contador:integer:=0;
 begin
+	g_TipoOperacionCRUD:="";
+	g_TablaActual:=CONST_INSUMO_LABEL;
     sCode := FileExists("Insumo.txt", FTP);
     if (sCode = SysOk) then
-		l_estadosCode:=SysCodeToString(sCode);
 		FileOpen("Insumo.txt", FTP, FileRead);
-		sCode := ReadLn(lineaText);
-		pMostrarYLimpiar("Datos en Insumo.txt: "+lineaText);            
+		while sCode = SysOk
+        loop
+			sCode := ReadLn(lineaText);
+            pValidaValorDeLinea(lineaText);
+			l_contador:=l_contador+1;
+        end loop;
+		pMostrarYLimpiar("Datos en Insumo.txt: "+lineaText+IntegerToString(l_contador,0));
 		FileClose;
 		FileDelete("Insumo.txt", FTP);
 	end if;
-
---pPasarDatosAEtiquetas;
-
 end;

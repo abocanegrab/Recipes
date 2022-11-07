@@ -4,8 +4,11 @@ if (g_PasoMant = tMantInicio) then
 	pMuestraPromptMant;
 	g_PasoMant := tMantCodigo;
 elsif (g_PasoMant = tMantCodigo) then
-	if (fValidaDatoVacio(userInput)=boolfalse and 
-		fExisteCodigoEnTabla(g_NombreMenuMantto,userInput)=boolfalse) then
+	if (fValidaDatoVacio(userInput)=boolfalse) then
+		if (g_TipoMant=tipoMantAgregar AND fExisteCodigoEnTabla(g_NombreMenuMantto,userInput)=booltrue) then
+			pMostrarYLimpiar("El Codigo Ingresado ya Existe");
+		return;
+		end if;
 		pGuardarTemporal(userInput);
 		pMuestraPromptMant;
 		g_PasoMant := tMantNombre;
@@ -31,11 +34,11 @@ begin
 		pMuestraPromptMantItemReceta;
 		g_PasoItemReceta := tMIR_Insumo;
 	elsif (g_PasoItemReceta = tMIR_Insumo) then
-		if (fCantidadItemsEnDtReceta(g_IdRecetaActual)>=5) then
+		if (fCantidadItemsEnDtReceta(g_IdItemActual)>=5) then
 			pMostrarYLimpiar("Cantidad de Item completo en Receta");
 		else
 			l_IdInsumo:=fGetIdInsumoByCodigo(userInput);
-			if (l_IdInsumo<>0 AND fExisteCodigoEnReceta(g_IdRecetaActual,l_IdInsumo)=BoolFalse) then
+			if (l_IdInsumo<>0 AND fExisteCodigoEnReceta(g_IdItemActual,l_IdInsumo)=BoolFalse) then
 				pGuardarTemporalItemReceta(IntegerToString(l_IdInsumo,0));
 				pMuestraPromptMantItemReceta;
 				g_PasoItemReceta := tMIR_Peso;

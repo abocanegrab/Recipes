@@ -1,16 +1,42 @@
+Procedure pMuestraPromptEliminar;
+begin
+if (g_TipoMant = tipoMantEliminar) then
+	if g_NombreMenuMantto = CONST_INSUMO_LABEL then
+		PromptUser("¿Desea Desctivar el Insumo? ");
+	else
+		PromptUser("¿Desea eliminar el registro?");
+	end if;
+end if;
+end;
+
+Procedure pMuestraPromptEliminarItemReceta;
+begin
+	if (g_TipoMant = tipoMantEliminarItemReceta) then
+		PromptUser("¿Desea eliminar el Item de la Receta?");
+	end if;
+end;
+
+
+
 procedure pEliminarRegistroDB(id:integer);
 begin
 if (g_TipoMant = tipoMantEliminar) then
-	PromptUser("¿Esta seguro de eliminar el registro?");
-	if EventKey = EnterKey then
-		if (g_NombreMenuMantto = CONST_RECETA_LABEL) then
+	if (g_NombreMenuMantto = CONST_RECETA_LABEL) then
+		if fCantidadItemsEnDtReceta(Id)=0 then
 			pDeleteItemTabla("Receta",id);
 			pMuestraReceta;
-		elsif (g_NombreMenuMantto = CONST_INSUMO_LABEL) then
-			pDeleteItemTabla("Insumo",id);
-			pMuestraInsumo;
+		else
+			pMostrarYLimpiar("Debe eliminar los Items Primero");
 		end if;
+		--pDeleteItemTabla("Receta",id);
+		--pMuestraReceta;
+	elsif (g_NombreMenuMantto = CONST_INSUMO_LABEL) then
+		pDesactivarItemInsumo(id);
+		pMuestraInsumo;
+	elsif (g_NombreMenuMantto = CONST_BALANZA_LABEL) then
+		pDeleteItemTabla("Balanza",id);
+		pMuestraBalanza;
 	end if;
 end if;
-
 end;
+

@@ -5,15 +5,16 @@ program Recetario;
 #include EntidadesDB.iri
 #include Variables.iri
 #include Common.iri
-#include FTPServer/FTPServer.iri
-#include FTPServer/FuncionesFTP.iri
-#include Timers/Timers.iri
 #include Database/FuncionesDB.iri
 #include Database/Receta.iri
 #include Database/Insumo.iri
+#include Database/Balanza.iri
 #include Database/DtReceta.iri
 #include MuestraDatosEnEtiquetas.iri
 #include Database/ModificacionesDB.iri
+#include FTPServer/FTPServer.iri
+#include FTPServer/FuncionesFTP.iri
+#include Timers/Timers.iri
 #include NavegacionFlechasFisicas.iri
 #include DatosPorDefecto.iri
 #include NombrePantallas.iri
@@ -24,7 +25,7 @@ program Recetario;
 handler widgetClicked;
 begin
 	if 1 = 0 then
-		return;
+	return;
 	#include Navegacion.iri
     #include Operaciones.iri
     end if;
@@ -35,7 +36,14 @@ LocalEntry : string;
 begin
 	LocalEntry := GetEntry;
 	if EventKey = EnterKey then
-		if	(g_PantallaActiva = tPntMantInsumo) then
+		if g_TipoMant=tipoMantEliminar then
+            pEliminarRegistroDB(g_IdItemActual);
+        elsif g_TipoMant=tipoMantEliminarItemReceta then
+            pDeleteItemTabla(CONST_DTRECETA_LABEL,g_IdItemRecetaAEliminar);
+			pMuestraItemsReceta;
+		elsif	(g_PantallaActiva = tPntMantInsumo) then
+			pMantenimientoDatos(LocalEntry);
+		elsif	(g_PantallaActiva = tPntMantBalanza) then
 			pMantenimientoDatos(LocalEntry);
 		elsif (g_PantallaActiva = tPntMantReceta) then
 			if (g_PasoNivelMantDeReceta=tNMDR_Detalle) then

@@ -6,10 +6,10 @@ id : integer;
 l_Nombretabla:string:="Insumo";
 begin
     id := fGetNextId(l_Nombretabla,CONST_MAX_DB_INSUMO);
-    sql := "Insert into Insumo (Id, Codigo, Nombre) values (";
+    sql := "Insert into Insumo (Id, Codigo, Nombre, Activo) values (";
     sql := sql + IntegerToString(id, 0) + ",";
     sql := sql + "'"+ entidad.Codigo + "', ";
-    sql := sql + "'" +entidad.Nombre + "')";
+    sql := sql + "'" +entidad.Nombre + "',1)";
 
     sResultado := DbExec(sql, conexion);
     if (sResultado <> SysOk) then
@@ -28,7 +28,7 @@ begin
 	sql:="Update Insumo set ";
 	sql:=sql + "codigo='" + entidad.Codigo+ "',";
 	sql:=sql + "nombre='" + entidad.Nombre + "' ";
-	sql:=sql + "where id="+IntegerToString(entidad.Id,0);
+	sql:=sql + "where id="+IntegerToString(g_IdItemActual,0);
 			
 	sResultado := DbExec(sql, conexion);
 	if (sResultado <> SysOk) then
@@ -79,7 +79,7 @@ sResultado : SysCode;
 listado : TypArrayInsumo;
 indice : integer;
 begin
-    sql := "select * from Insumo order by Id asc limit "+IntegerToString(g_ItemsPorPagina,0);
+    sql := "select * from Insumo where activo=1 order by Id asc limit "+IntegerToString(g_ItemsPorPagina,0);
     sql :=sql + " Offset "+IntegerToString(g_PaginaActual - 1, 0);
 
     sResultado := DbExec(sql, conexion);
@@ -145,7 +145,7 @@ conexion : integer;
 sResultado : SysCode;
 IdInsumo : integer:=0;
 begin
-    sql:="select Id from Insumo where Codigo='"+Codigo+"' limit 1";
+    sql:="select Id from Insumo where Activo=1 and Codigo='"+Codigo+"' limit 1";
     sResultado := DbExec(sql, conexion);
     --Primero verificamos que la consulta sea diferente de OK. Esto es error
     if(sResultado<>SysOk) then 
@@ -164,4 +164,22 @@ begin
     DbFinalize(conexion);
     pMostrarYLimpiar("Se obtuvo correctamente");
     return IdInsumo;
+end;
+
+procedure pDesactivarItemInsumo(id:integer);
+sql : string;
+conexion : integer;
+sResultado : SysCode;
+
+begin
+	sql:="Update Insumo set Activo=0 ";
+	sql:=sql + " where id="+ IntegerToString(id,0);
+
+	sResultado := DbExec(sql, conexion);
+	if (sResultado <> SysOk or conexion = 0) then
+		pLoggerDB("pDesactivarItemInsumo",DBErrMsg);
+		return;
+	end if;
+
+	pMostrarYLimpiar("Se Desactivo con éxito el registro con Id "+IntegerToString(id,0));
 end;

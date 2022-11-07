@@ -10,6 +10,11 @@ g_DtReceta: Stored TypDtReceta;
 t_DtReceta: TypDtReceta;
 g_ListaDtReceta: TypArrayDtReceta;
 
+g_Balanza: Stored TypBalanza;
+t_Balanza: TypBalanza;
+g_ListaBalanza: TypArrayBalanza;
+
+
 
 t_MantGenerico : TypMantGenerico;
 
@@ -21,7 +26,8 @@ type TypPantalla is (
 	tPntMantReceta,
 	tPntMantInsumo,
   	tPntMenuReportes,
-  	tPntConfiguracion
+  	tPntConfiguracion,
+	tPntMantBalanza
 	);
 
 g_PantallaActiva : TypPantalla;
@@ -39,8 +45,11 @@ g_TotalRegistros : integer;
 g_NombreMenuMantto : string;
 
 t_IdSeleccionadoDeTabla:integer:=0;
-g_IdRecetaActual:integer;
+g_TablaActual:string;
+g_TipoOperacionCRUD:string;
+g_IdItemActual : integer;
 
+g_IdItemRecetaAEliminar: integer;
 
 --variables para el llenado de los datos por grupos Mantenimientos
 
@@ -57,7 +66,8 @@ g_PasoMant : TypMantenimiento;
 Type TypTipoMantenimiento is (
 	tipoMantAgregar,
 	tipoMantEditar,
-	tipoMantEliminar
+	tipoMantEliminar,
+	tipoMantEliminarItemReceta
 );
 
 g_TipoMant : TypTipoMantenimiento;
@@ -81,9 +91,19 @@ type TypNivelMantDeReceta is (
 g_PasoNivelMantDeReceta : TypNivelMantDeReceta;
 
 
-g_embarcacion:string;
-g_especie:string;
-g_fecha:string;
-g_operacion:string;
-g_uso:string;
-g_tipotransporte:string;
+g_ItemDetReceta01:integer;
+g_ItemDetReceta02:integer;
+g_ItemDetReceta03:integer;
+g_ItemDetReceta04:integer;
+g_ItemDetReceta05:integer;
+g_ItemDetReceta06:integer;
+g_ItemDetReceta07:integer;
+g_ItemDetReceta08:integer;
+g_ItemDetReceta09:integer;
+g_ItemDetReceta10:integer;
+g_ItemDetReceta11:integer;
+g_ItemDetReceta12:integer;
+g_ItemDetReceta13:integer;
+g_ItemDetReceta14:integer;
+g_ItemDetReceta15:integer;
+

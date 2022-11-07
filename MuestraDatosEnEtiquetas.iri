@@ -8,7 +8,8 @@ begin
 		SetLabelText(lbl28,g_ListaReceta[g_IndexRegistro].Codigo);
 		SetLabelText(lbl29,g_ListaReceta[g_IndexRegistro].Nombre);
 	end if;
-	g_IdRecetaActual:=g_ListaReceta[g_IndexRegistro].Id;
+	g_IdItemActual:=g_ListaReceta[g_IndexRegistro].Id;
+	DisplayStatus("El Id es: "+IntegerToString(g_IdItemActual,0));
 end;
 
 
@@ -22,7 +23,25 @@ begin
 		SetLabelText(lbl35,g_ListaInsumo[g_IndexRegistro].Codigo);
 		SetLabelText(lbl36,g_ListaInsumo[g_IndexRegistro].Nombre);
 	end if;
+	g_IdItemActual:=g_ListaInsumo[g_IndexRegistro].Id;
+	DisplayStatus("El Id es: "+IntegerToString(g_IdItemActual,0));
 end;
+
+
+procedure pMuestraBalanza;
+begin
+	if (g_IndexRegistro<=0)   then
+		SetLabelText(lbl102,"");
+		SetLabelText(lbl103,"");
+	else
+		g_ListaBalanza:=fListaBalanza;
+		SetLabelText(lbl102,g_ListaBalanza[g_IndexRegistro].Numero);
+		SetLabelText(lbl103,g_ListaBalanza[g_IndexRegistro].Nombre);
+	end if;
+	g_IdItemActual:=g_ListaBalanza[g_IndexRegistro].Id;
+	DisplayStatus("El Id es: "+IntegerToString(g_IdItemActual,0));
+end;
+
 
 
 procedure pMuestraRegistroIngresado(Tabla:string);
@@ -91,8 +110,8 @@ l_CantidadItemReceta:integer;
 l_index:integer;
 begin
 	pLimpiarRegistrosDtReceta;
-	l_CantidadItemReceta:=fCantidadItemsEnDtReceta(g_IdRecetaActual);
-    g_ListaDtReceta:=fListaDtReceta(g_IdRecetaActual);
+	l_CantidadItemReceta:=fCantidadItemsEnDtReceta(g_IdItemActual);
+    g_ListaDtReceta:=fListaDtReceta(g_IdItemActual);
 
 	if (l_CantidadItemReceta<=0) then
 		pLimpiarRegistrosDtReceta;
@@ -101,6 +120,7 @@ begin
 		SetWidgetVisibility(lbl92,Von);
 		SetWidgetVisibility(lbl75,Von);
 		SetWidgetVisibility(lbl68,Von);
+			g_ItemDetReceta01:=g_ListaDtReceta[1].Id;
 			SetLabelText(lbl92,g_ListaDtReceta[1].CodInsumo);
 			SetLabelText(lbl75,g_ListaDtReceta[1].NombreInsumo);
 			SetLabelText(lbl68,RealToString(g_ListaDtReceta[1].Peso,4,4));
@@ -113,9 +133,11 @@ begin
 		SetWidgetVisibility(lbl91,Von);
 		SetWidgetVisibility(lbl74,Von);
 		SetWidgetVisibility(lbl64,Von);
+			g_ItemDetReceta01:=g_ListaDtReceta[1].Id;
 			SetLabelText(lbl92,g_ListaDtReceta[1].CodInsumo);
 			SetLabelText(lbl75,g_ListaDtReceta[1].NombreInsumo);
 			SetLabelText(lbl68,RealToString(g_ListaDtReceta[1].Peso,4,4));
+			g_ItemDetReceta02:=g_ListaDtReceta[2].Id;
 			SetLabelText(lbl91,g_ListaDtReceta[2].CodInsumo);
 			SetLabelText(lbl74,g_ListaDtReceta[2].NombreInsumo);
 			SetLabelText(lbl64,RealToString(g_ListaDtReceta[2].Peso,4,4));
@@ -134,12 +156,15 @@ begin
 		SetWidgetVisibility(lbl96,Von);
 		SetWidgetVisibility(lbl79,Von);
 		SetWidgetVisibility(lbl73,Von);
+			g_ItemDetReceta01:=g_ListaDtReceta[1].Id;
 			SetLabelText(lbl92,g_ListaDtReceta[1].CodInsumo);
 			SetLabelText(lbl75,g_ListaDtReceta[1].NombreInsumo);
 			SetLabelText(lbl68,RealToString(g_ListaDtReceta[1].Peso,4,4));
+			g_ItemDetReceta02:=g_ListaDtReceta[2].Id;
 			SetLabelText(lbl91,g_ListaDtReceta[2].CodInsumo);
 			SetLabelText(lbl74,g_ListaDtReceta[2].NombreInsumo);
 			SetLabelText(lbl64,RealToString(g_ListaDtReceta[2].Peso,4,4));
+			g_ItemDetReceta03:=g_ListaDtReceta[3].Id;
 			SetLabelText(lbl96,g_ListaDtReceta[3].CodInsumo);
 			SetLabelText(lbl79,g_ListaDtReceta[3].NombreInsumo);
 			SetLabelText(lbl73,RealToString(g_ListaDtReceta[3].Peso,4,4));
@@ -163,15 +188,19 @@ begin
 		SetWidgetVisibility(lbl95,Von);
 		SetWidgetVisibility(lbl78,Von);
 		SetWidgetVisibility(lbl72,Von);
+			g_ItemDetReceta01:=g_ListaDtReceta[1].Id;
 			SetLabelText(lbl92,g_ListaDtReceta[1].CodInsumo);
 			SetLabelText(lbl75,g_ListaDtReceta[1].NombreInsumo);
 			SetLabelText(lbl68,RealToString(g_ListaDtReceta[1].Peso,4,4));
+			g_ItemDetReceta02:=g_ListaDtReceta[2].Id;
 			SetLabelText(lbl91,g_ListaDtReceta[2].CodInsumo);
 			SetLabelText(lbl74,g_ListaDtReceta[2].NombreInsumo);
 			SetLabelText(lbl64,RealToString(g_ListaDtReceta[2].Peso,4,4));
+			g_ItemDetReceta03:=g_ListaDtReceta[3].Id;
 			SetLabelText(lbl96,g_ListaDtReceta[3].CodInsumo);
 			SetLabelText(lbl79,g_ListaDtReceta[3].NombreInsumo);
 			SetLabelText(lbl73,RealToString(g_ListaDtReceta[3].Peso,4,4));
+			g_ItemDetReceta04:=g_ListaDtReceta[4].Id;
 			SetLabelText(lbl95,g_ListaDtReceta[4].CodInsumo);
 			SetLabelText(lbl78,g_ListaDtReceta[4].NombreInsumo);
 			SetLabelText(lbl72,RealToString(g_ListaDtReceta[4].Peso,4,4));
@@ -199,18 +228,23 @@ begin
 		SetWidgetVisibility(lbl94,Von);
 		SetWidgetVisibility(lbl77,Von);
 		SetWidgetVisibility(lbl71,Von);
+			g_ItemDetReceta01:=g_ListaDtReceta[1].Id;
 			SetLabelText(lbl92,g_ListaDtReceta[1].CodInsumo);
 			SetLabelText(lbl75,g_ListaDtReceta[1].NombreInsumo);
 			SetLabelText(lbl68,RealToString(g_ListaDtReceta[1].Peso,4,4));
+			g_ItemDetReceta02:=g_ListaDtReceta[2].Id;
 			SetLabelText(lbl91,g_ListaDtReceta[2].CodInsumo);
 			SetLabelText(lbl74,g_ListaDtReceta[2].NombreInsumo);
 			SetLabelText(lbl64,RealToString(g_ListaDtReceta[2].Peso,4,4));
+			g_ItemDetReceta03:=g_ListaDtReceta[3].Id;
 			SetLabelText(lbl96,g_ListaDtReceta[3].CodInsumo);
 			SetLabelText(lbl79,g_ListaDtReceta[3].NombreInsumo);
 			SetLabelText(lbl73,RealToString(g_ListaDtReceta[3].Peso,4,4));
+			g_ItemDetReceta04:=g_ListaDtReceta[4].Id;
 			SetLabelText(lbl95,g_ListaDtReceta[4].CodInsumo);
 			SetLabelText(lbl78,g_ListaDtReceta[4].NombreInsumo);
 			SetLabelText(lbl72,RealToString(g_ListaDtReceta[4].Peso,4,4));
+			g_ItemDetReceta05:=g_ListaDtReceta[5].Id;
 			SetLabelText(lbl94,g_ListaDtReceta[5].CodInsumo);
 			SetLabelText(lbl77,g_ListaDtReceta[5].NombreInsumo);
 			SetLabelText(lbl71,RealToString(g_ListaDtReceta[5].Peso,4,4));
