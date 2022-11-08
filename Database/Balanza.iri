@@ -1,90 +1,91 @@
-procedure pPostReceta(entidad : TypMantGenerico);
+procedure pPostBalanza(entidad : TypMantGenerico);
 sql : string;
 conexion : integer;
 sResultado : SysCode;
 id : integer;
-l_Nombretabla:string:="Receta";
+l_Nombretabla:string:="Balanza";
 begin
-    id := fGetNextId(l_Nombretabla,CONST_MAX_DB_RECETA);
-    sql := "Insert into Receta (Id, Codigo, Nombre) values (";
+    id := fGetNextId(l_Nombretabla,CONST_MAX_DB_BALANZA);
+    sql := "Insert into Balanza (Id, Numero, Nombre) values (";
     sql := sql + IntegerToString(id, 0) + ",";
     sql := sql + "'"+ entidad.Codigo + "', ";
     sql := sql + "'" +entidad.Nombre + "')";
 
     sResultado := DbExec(sql, conexion);
     if (sResultado <> SysOk) then
-        pLoggerDB("pPostReceta",DBErrMsg);
+        pLoggerDB("pPostBalanza",DBErrMsg);
         return;
     end if;
     --pMostrarYLimpiar("Se agrego correctamente");
 end;
 
-
-procedure pPutReceta(entidad : TypMantGenerico);
+procedure pPutBalanza(entidad : TypMantGenerico);
 sql : string;
 conexion : integer;
 sResultado : SysCode;
 
 begin
-	sql:="Update Receta set ";
-	sql:=sql + "codigo='" + entidad.Codigo+ "',";
+	sql:="Update Balanza set ";
+	sql:=sql + "Numero='" + entidad.Codigo+ "',";
 	sql:=sql + "nombre='" + entidad.Nombre + "' ";
 	sql:=sql + "where id="+IntegerToString(g_IdItemActual,0);
 			
 	sResultado := DbExec(sql, conexion);
 	if (sResultado <> SysOk) then
-		pLoggerDB("pPutReceta",DBErrMsg);
+		pLoggerDB("pPutBalanza",DBErrMsg);
 		return;
 	end if;
 
 	pMostrarYLimpiar("Se actualizo con Éxito");
 end;
 
-function fGetReceta(Id : integer) : TypReceta;
+function fGetBalanza(Id : integer) : TypBalanza;
 sql : string;
 conexion : integer;
 sResultado : SysCode;
-Receta : TypReceta;
+Balanza : TypBalanza;
 begin
-    sql:="select * from Receta where id = ";
+    sql:="select * from Balanza where id = ";
     sql:=sql + IntegerToString(Id, 0);
 
     sResultado := DbExec(sql, conexion);
     --Primero verificamos que la consulta sea diferente de OK. Esto es error
     if(sResultado<>SysOk) then 
-        pLoggerDB("fGetReceta",DBErrMsg);
-        return Receta;
+        pLoggerDB("fGetBalanza",DBErrMsg);
+        return Balanza;
     end if;
     
     -- Luego verificamos que la conexión sea = 0. Eso quiere decir que no hay datos para recuperar
     if (conexion=0) then
-        return Receta;
+        return Balanza;
     end if;
 
     -- Caso contrario, tomamos los datos y los leemos.
-    DbColumnInt(conexion, 1, Receta.Id); 
-    DbColumnString(conexion, 2, Receta.Codigo); 
-    DbColumnString(conexion, 3, Receta.Nombre);  
+    DbColumnInt(conexion, 1, Balanza.Id); 
+    DbColumnString(conexion, 2, Balanza.Numero); 
+    DbColumnString(conexion, 3, Balanza.Nombre);  
     sResultado := DbNext(conexion);  
     DbFinalize(conexion);
-    --pMostrarYLimpiar("Se obtuvo correctamente");
-    return Receta;
+    pMostrarYLimpiar("Se obtuvo correctamente");
+    return Balanza;
 end;
 
-function fListaReceta : TypArrayReceta;
+
+
+function fListaBalanza : TypArrayBalanza;
 sql : string;
 conexion : integer;
 sResultado : SysCode;
-listado : TypArrayReceta;
+listado : TypArrayBalanza;
 indice : integer;
 begin
-    sql := "select * from Receta order by Id asc  limit "+IntegerToString(g_ItemsPorPagina,0);
+    sql := "select * from Balanza order by Id asc limit "+IntegerToString(g_ItemsPorPagina,0);
     sql :=sql + " Offset "+IntegerToString(g_PaginaActual - 1, 0);
 
     sResultado := DbExec(sql, conexion);
     --Primero verificamos que la consulta sea diferente de OK. Esto es error
     if(sResultado<>SysOk) then 
-    pLoggerDB("fListaReceta",DBErrMsg);
+        pLoggerDB("fListaBalanza",DBErrMsg);
         return listado;
     end if;
     
@@ -100,7 +101,7 @@ begin
     loop
         indice := indice +1;
         DbColumnInt(conexion, 1, listado[indice].Id); 
-        DbColumnString(conexion, 2, listado[indice].Codigo); 
+        DbColumnString(conexion, 2, listado[indice].Numero); 
         DbColumnString(conexion, 3, listado[indice].Nombre);  
         sResultado := DbNext(conexion);  
     end loop;
@@ -109,4 +110,27 @@ begin
     --pMostrarYLimpiar("Se listo correctamente");
 
     return listado;
+end;
+
+function fExisteCodigoBalanza (Numero:string) : BooleanType;
+sql : string;
+conexion : integer;
+sResultado : SysCode;
+cantidad :integer;
+begin
+	sql:="select count(1) from Balanza where Numero='"+Numero+"' ";
+	sResultado := DbExec(sql, conexion);
+	if (sResultado <> SysOk or conexion = 0) then
+			pLoggerDB("fExisteCodigoBalanza",DBErrMsg);
+			return BoolTrue;
+			
+	end if;
+
+	DbColumnInt(conexion,1,cantidad);
+	DbFinalize(conexion);
+	if (cantidad=0) then
+		return BoolFalse;
+	else
+		return BoolTrue;
+	end if;
 end;

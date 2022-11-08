@@ -11,8 +11,12 @@ elsif EventWidget=lbl24 then
     g_NombreMenuMantto:=CONST_INSUMO_LABEL;
     pMuestraPntMantenimientoInsumo;
     pMuestraInsumo;
+elsif EventWidget=lbl97 then
+    g_NombreMenuMantto:=CONST_BALANZA_LABEL;
+    pMuestraPntMantenimientoBalanza;
+    pMuestraBalanza;
 elsif EventWidget=lbl30 or EventWidget=lbl31 or 
-    EventWidget=lbl59 then
+    EventWidget=lbl59 or EventWidget=lbl98 then
     pMuestraPntMenuMantenimiento;
 elsif EventWidget=lbl60 then
     pMuestraPntProcesoDePesaje;
@@ -20,3 +24,6 @@ elsif EventWidget=lbl61 then
     pMuestraPntMenuReportes;
 elsif EventWidget=lbl63 then
     pMuestraPntConfiguracion;
+
+
+    

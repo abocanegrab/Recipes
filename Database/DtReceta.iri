@@ -85,7 +85,7 @@ sResultado : SysCode;
 listado : TypArrayDtReceta;
 indice : integer;
 begin
-    sql := "SELECT Insumo.Codigo,Receta.Codigo, Insumo.Nombre, DtReceta.Peso, DtReceta.Activo ";
+    sql := "SELECT DtReceta.Id,Insumo.Codigo,Receta.Codigo, Insumo.Nombre, DtReceta.Peso, DtReceta.Activo ";
     sql := sql + "FROM DtReceta INNER JOIN "; 
     sql := sql + "Insumo ON DtReceta.IdInsumo = Insumo.Id INNER JOIN ";
     sql := sql + "Receta ON DtReceta.IdReceta = receta.Id ";
@@ -111,11 +111,12 @@ begin
     while sResultado = SysOk 
     loop
         indice := indice +1;
-        DbColumnString(conexion, 1, listado[indice].CodInsumo); 
-        DbColumnString(conexion, 2, listado[indice].CodReceta); 
-        DbColumnString(conexion, 3, listado[indice].NombreInsumo); 
-        DbColumnReal(conexion, 4, listado[indice].Peso); 
-        DbColumnInt(conexion, 5, listado[indice].Activo);  
+        DbColumnInt(conexion, 1, listado[indice].Id); 
+        DbColumnString(conexion, 2, listado[indice].CodInsumo); 
+        DbColumnString(conexion, 3, listado[indice].CodReceta); 
+        DbColumnString(conexion, 4, listado[indice].NombreInsumo); 
+        DbColumnReal(conexion, 5, listado[indice].Peso); 
+        DbColumnInt(conexion, 6, listado[indice].Activo);  
         sResultado := DbNext(conexion);  
     end loop;
 
