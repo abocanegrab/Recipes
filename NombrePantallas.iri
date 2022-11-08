@@ -40,3 +40,9 @@ begin
 	SelectScreen(7);
 	g_PantallaActiva:=tPntConfiguracion;
 end;
+
+procedure pMuestraPntMantenimientoBalanza;
+begin
+	SelectScreen(8);
+	g_PantallaActiva:=tPntMantBalanza;
+end;

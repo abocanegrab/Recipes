@@ -37,6 +37,9 @@ begin
     elsif (g_PantallaActiva = tPntMantInsumo) then
         pNextItemBaseDatos("Insumo");
         pMuestraInsumo;
+    elsif (g_PantallaActiva = tPntMantBalanza) then
+        pNextItemBaseDatos("Balanza");
+        pMuestraBalanza;
     end if;
 end;
 
@@ -50,6 +53,9 @@ begin
     elsif (g_PantallaActiva = tPntMantInsumo) then
         pPrevItemBaseDatos("Insumo");
         pMuestraInsumo;
+    elsif (g_PantallaActiva = tPntMantBalanza) then
+        pPrevItemBaseDatos("Balanza");
+        pMuestraBalanza;
     end if;
 end;
 

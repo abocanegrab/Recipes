@@ -1,28 +1,28 @@
 procedure pValidaValorDeLinea (valor : string);
-NombreLinea:string;
+l_TipoOperacion:string;
+l_Insumo : TypMantGenerico;
 
 begin
-    if (Left$(valor, 3)="Uso") then
-        g_uso:=Right$(valor, Len(valor)-4);
-        --return g_uso;
-    elsif (Left$(valor, 7)="Especie") then
-        g_especie:=Right$(valor, Len(valor)-8);
-        --return g_especie;
-    elsif (Left$(valor, 11)="Embarcacion") then
-        g_embarcacion:=Right$(valor, Len(valor)-12);
-        --return g_embarcacion;
-    elsif (Left$(valor, 14)="TipoTransporte") then
-        g_tipotransporte:=Right$(valor, Len(valor)-15);
-        --return g_tipotransporte;
-    elsif (Left$(valor, 9)="Operacion") then
-        g_operacion:=Right$(valor, Len(valor)-10);
-        --return g_operacion;
-    elsif (Left$(valor, 5)="Fecha") then
-        g_fecha:=Right$(valor, Len(valor)-6);
-        --return g_fecha;
-    end if;
-	    
-	--return NombreLinea;
+	if Len(g_TipoOperacionCRUD)=0 then
+		g_TipoOperacionCRUD:=Right$(valor,Len(valor)-5);
+	end if;	
+	l_Insumo.Codigo:=Left$(valor, 4);
+	l_Insumo.Nombre:=Right$(valor,Len(valor)-5);
+	DisplayStatus(l_insumo.Nombre);
+	if g_TablaActual=CONST_RECETA_LABEL  and len(valor)>0 and l_Insumo.Codigo<>"COPE" then
+		if g_TipoOperacionCRUD="UPDATE" then
+			pPutReceta(l_Insumo);
+		elsif g_TipoOperacionCRUD="CREATE" then
+			pPostReceta(l_Insumo);
+		end if;
+	elsif g_TablaActual=CONST_INSUMO_LABEL  and len(valor)>0 and l_Insumo.Codigo<>"COPE" then
+		if g_TipoOperacionCRUD="UPDATE" then
+			pPutInsumo(l_Insumo);
+		elsif g_TipoOperacionCRUD="CREATE" then
+			pPostInsumo(l_Insumo);
+		end if;
+	end if;
+
 end;
 
 
@@ -37,11 +37,11 @@ begin
  end if;
 
 FileOpen(l_NombreArchivo,FTP,FileCreate);
-FileWriteLn("Operacion:"+ g_operacion);
-FileWriteLn("Especie:"+ g_especie);
-FileWriteLn("Uso:"+ g_uso);
-FileWriteLn("TipoTransporte:"+ g_tipotransporte);
-FileWriteLn("Embarcacion:"+ g_embarcacion);
+FileWriteLn("Operacion:");
+FileWriteLn("Especie:");
+FileWriteLn("Uso:");
+FileWriteLn("TipoTransporte:");
+FileWriteLn("Embarcacion:");
 
 FileClose;
 DisplayStatus("Se creo el archivo");

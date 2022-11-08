@@ -25,6 +25,7 @@ type InsumoDatabase is database ("Insumo")
         Id: Integer;
     Codigo: String;
     Nombre: String;
+    Activo: Integer;
 end database;
 type PesajeDatabase is database ("Pesaje")
         Id: Integer;
@@ -51,6 +52,11 @@ type LogDatabase is database ("Log")
      Error: String;
      Fecha: DateTime;
 end database;
+type BalanzaDatabase is database ("Balanza")
+        Id: Integer;
+    Numero: String;
+    Nombre: String;
+end database;
 
 Receta_Id       : constant integer := 1;
 Receta_Codigo   : constant integer := 2;
@@ -59,6 +65,7 @@ Receta_Nombre   : constant integer := 3;
 Insumo_Id       : constant integer := 1;
 Insumo_Codigo   : constant integer := 2;
 Insumo_Nombre   : constant integer := 3;
+Insumo_Activo   : constant integer := 4;
 
 Pesaje_Id       : constant integer := 1;
 Pesaje_IdReceta : constant integer := 2;
@@ -80,6 +87,10 @@ Log_Id       : constant integer := 1;
 Log_Origen   : constant integer := 2;
 Log_Error    : constant integer := 3;
 Log_Fecha    : constant integer := 4;
+
+Balanza_Id       : constant integer := 1;
+Balanza_Numero   : constant integer := 2;
+Balanza_Nombre   : constant integer := 3;
 
 
 
@@ -193,6 +204,16 @@ lbl93     : constant integer := 93;
 lbl94     : constant integer := 94;
 lbl95     : constant integer := 95;
 lbl96     : constant integer := 96;
+lbl97     : constant integer := 97;
+lbl98     : constant integer := 98;
+lbl99     : constant integer := 99;
+lbl100    : constant integer := 100;
+lbl101    : constant integer := 101;
+lbl102    : constant integer := 102;
+lbl103    : constant integer := 103;
+lbl104    : constant integer := 104;
+lbl105    : constant integer := 105;
+lbl106    : constant integer := 106;
 
 USBPRN    : constant string := "USBPRN";
 ADVPRN    : constant string := "ADVPRN";

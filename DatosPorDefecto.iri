@@ -90,6 +90,23 @@ begin
     
 end;
 
+procedure pAlmacenarDatosInicialBalanza;
+hayDatos: BooleanType;
+begin
+    hayDatos:=fExisteDatosEnTabla("Balanza");
+    if (hayDatos=BoolTrue) then
+        return;
+    end if;
+    t_MantGenerico.Codigo:="B001";
+    t_MantGenerico.Nombre:="BALANZA GRAMERA";
+    pPostBalanza(t_MantGenerico);
+    t_MantGenerico.Codigo:="B002";
+    t_MantGenerico.Nombre:="BALANZA PRECISA";
+    pPostBalanza(t_MantGenerico);
+    t_MantGenerico.Codigo:="B003";
+    t_MantGenerico.Nombre:="BALANZA PREMIUM";
+    pPostBalanza(t_MantGenerico);
+end;
 
 
 procedure pAlmacenarDatosInicial;
@@ -97,4 +114,5 @@ begin
 	pAlmacenarDatosInicialReceta;
 	pAlmacenarDatosInicialInsumo;
     pAlmacenarDatosInicialDtReceta;
+    pAlmacenarDatosInicialBalanza;
 end;

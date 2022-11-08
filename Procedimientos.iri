@@ -2,17 +2,28 @@ Procedure pMuestraPromptMant;
 l_entry : string;
 l_mensaje : string;
 begin
+t_Insumo:=fGetInsumo(g_IdItemActual);
+t_Receta:=fGetReceta(g_IdItemActual);
+t_Balanza:=fGetBalanza(g_IdItemActual);
 	if (g_PasoMant=tMantInicio) then
 		if (g_TipoMant = tipoMantAgregar) then
-			l_entry:="";
-			l_mensaje:="Ingrese Codigo de "+ g_NombreMenuMantto;
+			if (g_NombreMenuMantto = CONST_BALANZA_LABEL) then
+				l_entry:="";
+				l_mensaje:="Ingrese Numero de "+ g_NombreMenuMantto;
+			else
+				l_entry:="";
+				l_mensaje:="Ingrese Codigo de "+ g_NombreMenuMantto;
+			end if;
 		elsif (g_TipoMant = tipoMantEditar) then
 			if (g_NombreMenuMantto = CONST_RECETA_LABEL) then
-				l_entry := g_Receta.Codigo;
+				l_entry := t_Receta.Codigo;
 				l_mensaje:="Ingrese Codigo de "+ g_NombreMenuMantto;
 			elsif (g_NombreMenuMantto = CONST_INSUMO_LABEL) then
-				l_entry := g_Insumo.Codigo;
+				l_entry := t_Insumo.Codigo;
 				l_mensaje:="Ingrese Codigo de "+ g_NombreMenuMantto;
+			elsif (g_NombreMenuMantto = CONST_BALANZA_LABEL) then
+				l_entry := t_Balanza.Numero;
+				l_mensaje:="Ingrese Numero de "+ g_NombreMenuMantto;
 			end if;
 		end if;
 		SetEntry(l_entry);
@@ -24,10 +35,13 @@ begin
 			l_mensaje:="Ingrese Nombre de "+ g_NombreMenuMantto;
 		elsif (g_TipoMant = tipoMantEditar) then
 			if (g_NombreMenuMantto = CONST_RECETA_LABEL) then
-				l_entry := g_Receta.Nombre;
+				l_entry := t_Receta.Nombre;
 				l_mensaje:="Ingrese Nombre de "+ g_NombreMenuMantto;
 			elsif (g_NombreMenuMantto = CONST_INSUMO_LABEL) then
-				l_entry := g_Insumo.Nombre;
+				l_entry := t_Insumo.Nombre;
+				l_mensaje:="Ingrese Nombre de "+ g_NombreMenuMantto;
+			elsif (g_NombreMenuMantto = CONST_BALANZA_LABEL) then
+				l_entry := t_Balanza.Nombre;
 				l_mensaje:="Ingrese Nombre de "+ g_NombreMenuMantto;
 			end if;
 		end if;
@@ -43,18 +57,32 @@ begin
 		if g_TipoMant = tipoMantAgregar then
 			pPostReceta(t_MantGenerico);
 			pMuestraRegistroIngresado(CONST_RECETA_LABEL);
+			--pMuestraReceta;
 		elsif g_TipoMant = tipoMantEditar then
 			pPutReceta(t_MantGenerico);
+			pMuestraReceta;
 		end if;
-			--pMuestraReceta;
-			
+		pMuestraItemsReceta;
 	elsif g_NombreMenuMantto = CONST_INSUMO_LABEL then
 		if g_TipoMant = tipoMantAgregar then
 			pPostInsumo(t_MantGenerico);
 			pMuestraRegistroIngresado(CONST_INSUMO_LABEL);
+			--pMuestraInsumo;
 		elsif g_TipoMant = tipoMantEditar then
 			pPutInsumo(t_MantGenerico);
+			pMuestraInsumo;
 		end if;
+	elsif g_NombreMenuMantto = CONST_BALANZA_LABEL then
+		if g_TipoMant = tipoMantAgregar then
+			pPostBalanza(t_MantGenerico);
+			pMuestraRegistroIngresado(CONST_BALANZA_LABEL);
+			--pMuestraInsumo;
+		elsif g_TipoMant = tipoMantEditar then
+			pPutBalanza(t_MantGenerico);
+			pMuestraBalanza;
+		end if;
+		
+		
 	end if;
 end;
 
@@ -120,7 +148,7 @@ end;
 
 Procedure pGuardarTemporalItemReceta(valor:string);
 begin
-	t_DtReceta.IdReceta:=g_IdRecetaActual;
+	t_DtReceta.IdReceta:=g_IdItemActual;
 	if(g_PasoItemReceta = tMIR_Insumo) then 
 		t_DtReceta.IdInsumo:=StringToInteger(valor);
 	elsif(g_PasoItemReceta = tMIR_Peso) then 

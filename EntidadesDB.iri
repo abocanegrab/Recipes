@@ -11,16 +11,29 @@ type TypArrayReceta is array[10] of TypReceta;
 type TypInsumo is record
 	Id  :   integer;
 	Codigo: string;
-	Nombre: string; 
+	Nombre: string;
+  
 end record;
 
 type TypArrayInsumo is array[10] of TypInsumo;
+
+--*****************Tipo Usos*****************
+type TypBalanza is record
+	Id  :   integer;
+	Numero: string;
+	Nombre: string;
+  
+end record;
+
+type TypArrayBalanza is array[10] of TypBalanza;
+
 
 
 type TypMantGenerico is record
 	Id: integer;
 	Codigo : string;
 	Nombre: string;
+  
 end record;
 
 

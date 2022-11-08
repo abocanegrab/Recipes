@@ -29,13 +29,19 @@ begin
 	sql:=sql + " where id="+ IntegerToString(id,0);
 
 	sResultado := DbExec(sql, conexion);
-	if (sResultado <> SysOk or conexion = 0) then
+	if (sResultado <> SysOk) then
 		pLoggerDB("pDeleteItemTabla",DBErrMsg);
 		return;
 	end if;
 
+	if (conexion=0) then
+    pMostrarYLimpiar("No hay Datos para Mostrar");
+    end if;
+
+
 	pMostrarYLimpiar("Se eliminó con éxito el registro con Id "+IntegerToString(id,0));
 end;
+
 
 function fExisteDatosEnTabla (NombreTabla:string) : BooleanType;
 sql : string;
@@ -143,12 +149,23 @@ sql : string;
 conexion : integer;
 sResultado : SysCode;
 cantidad :integer;
+campoSql : string;
+l_activo : string;
 begin
-	sql:="select count(1) from "+ NombreTabla+" where Codigo='"+Codigo+"' ";
+	if g_NombreMenuMantto = CONST_BALANZA_LABEL then
+		campoSql:="Numero";
+		l_activo:=" activo=1 and  ";
+	else
+		campoSql:="Codigo";
+		l_activo:=" ";
+	end if;
+
+	sql:="select count(1) from "+ NombreTabla+" where" +l_activo+" "+campoSql+"='"+Codigo+"' ";
 	sResultado := DbExec(sql, conexion);
 	if (sResultado <> SysOk or conexion = 0) then
 			pLoggerDB("fExisteCodigoEnTabla",DBErrMsg);
-			--return BoolTrue;
+			return BoolTrue;
+			
 	end if;
 
 	DbColumnInt(conexion,1,cantidad);

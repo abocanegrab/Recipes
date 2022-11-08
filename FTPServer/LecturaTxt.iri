@@ -1,0 +1,58 @@
+procedure pValidaValorDeLinea (valor : string);
+begin
+    if Left$(valor, 6)="UPDATE" then
+        then code here
+    else
+        else code here
+    end if;
+
+
+
+
+    if Left$(valor, 3)="FCO" then
+        g_FechaOrden:=Right$(valor, Len(valor)-4);
+    elsif Left$(valor, 3)="FEO" then
+        g_FechaEntrega:=Right$(valor, Len(valor)-4);
+    elsif Left$(valor, 3)="NOP" then
+        g_NroOrdenPesado:=Right$(valor, Len(valor)-4);
+    elsif Left$(valor, 3)="NUR" then
+        g_NumeroReceta:=StringToInteger(Right$(valor, Len(valor)-4));
+    elsif Left$(valor, 3)="NOR" then
+        g_NombreReceta:=Right$(valor, Len(valor)-4);
+    elsif Left$(valor, 3)="C01" then
+        g_CodInsumo01:=Right$(valor, Len(valor)-4);
+        g_NombreInsumo01:=fGetNombreInsumoByCodigo(g_CodInsumo01);
+    elsif Left$(valor, 3)="Q01" then
+        g_Cantidad01:=StringToReal(Right$(valor, Len(valor)-4));
+    elsif Left$(valor, 3)="C02" then
+        g_CodInsumo02:=Right$(valor, Len(valor)-4);
+        g_NombreInsumo02:=fGetNombreInsumoByCodigo(g_CodInsumo02);
+    elsif Left$(valor, 3)="Q02" then
+        g_Cantidad02:=StringToReal(Right$(valor, Len(valor)-4));
+    elsif Left$(valor, 3)="C03" then
+        g_CodInsumo03:=Right$(valor, Len(valor)-4);
+        g_NombreInsumo03:=fGetNombreInsumoByCodigo(g_CodInsumo03);
+    elsif Left$(valor, 3)="Q03" then
+        g_Cantidad03:=StringToReal(Right$(valor, Len(valor)-4));
+    elsif Left$(valor, 3)="C04" then
+        g_CodInsumo04:=Right$(valor, Len(valor)-4);
+        g_NombreInsumo04:=fGetNombreInsumoByCodigo(g_CodInsumo04);
+    elsif Left$(valor, 3)="Q04" then
+        g_Cantidad04:=StringToReal(Right$(valor, Len(valor)-4));
+    elsif Left$(valor, 3)="C05" then
+        g_CodInsumo05:=Right$(valor, Len(valor)-4);
+        g_NombreInsumo05:=fGetNombreInsumoByCodigo(g_CodInsumo05);
+    elsif Left$(valor, 3)="Q05" then
+        g_Cantidad05:=StringToReal(Right$(valor, Len(valor)-4));
+    elsif Left$(valor, 3)="C06" then
+        g_CodInsumo06:=Right$(valor, Len(valor)-4);
+        g_NombreInsumo06:=fGetNombreInsumoByCodigo(g_CodInsumo06);
+    elsif Left$(valor, 3)="Q06" then
+        g_Cantidad06:=StringToReal(Right$(valor, Len(valor)-4));
+    elsif Left$(valor, 3)="C07" then
+        g_CodInsumo07:=Right$(valor, Len(valor)-4);
+        g_NombreInsumo07:=fGetNombreInsumoByCodigo(g_CodInsumo07);
+    elsif Left$(valor, 3)="Q07" then
+        g_Cantidad07:=StringToReal(Right$(valor, Len(valor)-4));
+    end if;
+end;
