@@ -149,24 +149,25 @@ sql : string;
 conexion : integer;
 sResultado : SysCode;
 cantidad :integer;
-campoSql : string;
-l_activo : string;
 begin
 	if g_NombreMenuMantto = CONST_BALANZA_LABEL then
-		campoSql:="Numero";
-		l_activo:=" activo=1 and  ";
+		sql:="select count(1) from balanza where Numero="+Codigo;
 	else
-		campoSql:="Codigo";
-		l_activo:=" ";
+		sql:="select count(1) from "+ NombreTabla+" where activo=1 and Codigo='"+Codigo+"'";
 	end if;
 
-	sql:="select count(1) from "+ NombreTabla+" where" +l_activo+" "+campoSql+"='"+Codigo+"' ";
 	sResultado := DbExec(sql, conexion);
-	if (sResultado <> SysOk or conexion = 0) then
+	if (sResultado <> SysOk) then --or conexion = 0) then
 			pLoggerDB("fExisteCodigoEnTabla",DBErrMsg);
-			return BoolTrue;
-			
+			pMostrarYLimpiar("Error en la Consulta");	
+			return boolTrue;
 	end if;
+
+	if (conexion=0) then
+        return BoolTrue;
+		pMostrarYLimpiar("No Hay Datos Para Mostrar");
+    end if;
+
 
 	DbColumnInt(conexion,1,cantidad);
 	DbFinalize(conexion);

@@ -6,8 +6,8 @@ if (g_PasoMant = tMantInicio) then
 elsif (g_PasoMant = tMantCodigo) then
 	if (fValidaDatoVacio(userInput)=boolfalse) then
 		if (g_TipoMant=tipoMantAgregar AND fExisteCodigoEnTabla(g_NombreMenuMantto,userInput)=booltrue) then
-			pMostrarYLimpiar("El Codigo Ingresado ya Existe");
-		return;
+			pMostrarYLimpiar("El Codigo "+userInput+" Ingresado ya Existe");
+			return;
 		end if;
 		pGuardarTemporal(userInput);
 		pMuestraPromptMant;
@@ -19,11 +19,25 @@ elsif (g_PasoMant = tMantCodigo) then
 elsif (g_PasoMant = tMantNombre) then
 	if (fValidaDatoVacio(userInput)=boolfalse) then
 		pGuardarTemporal(userInput);
-		pGuardaMant;
+		if g_NombreMenuMantto<>CONST_INSUMO_LABEL then
+			pGuardaMant;
+		else
+			pMuestraPromptMant;
+			g_PasoMant := tMantIdBalanza;
+		end if;
 	else
 		pMuestraPromptMant;
 		g_PasoMant:=tMantCodigo;
 	end if;
+elsif (g_PasoMant = tMantIdBalanza) then
+	if (fValidaDatoVacio(userInput)=boolfalse) then
+		pGuardarTemporal(userInput);
+		pGuardaMant;
+	else
+		pMuestraPromptMant;
+		g_PasoMant:=tMantNombre;
+	end if;
+
 end if;
 end;
 

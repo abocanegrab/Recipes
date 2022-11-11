@@ -8,7 +8,7 @@ begin
     id := fGetNextId(l_Nombretabla,CONST_MAX_DB_BALANZA);
     sql := "Insert into Balanza (Id, Numero, Nombre) values (";
     sql := sql + IntegerToString(id, 0) + ",";
-    sql := sql + "'"+ entidad.Codigo + "', ";
+    sql := sql + entidad.Codigo + ", ";
     sql := sql + "'" +entidad.Nombre + "')";
 
     sResultado := DbExec(sql, conexion);
@@ -26,7 +26,7 @@ sResultado : SysCode;
 
 begin
 	sql:="Update Balanza set ";
-	sql:=sql + "Numero='" + entidad.Codigo+ "',";
+	sql:=sql + "Numero=" + entidad.Codigo+ ",";
 	sql:=sql + "nombre='" + entidad.Nombre + "' ";
 	sql:=sql + "where id="+IntegerToString(g_IdItemActual,0);
 			
@@ -62,7 +62,7 @@ begin
 
     -- Caso contrario, tomamos los datos y los leemos.
     DbColumnInt(conexion, 1, Balanza.Id); 
-    DbColumnString(conexion, 2, Balanza.Numero); 
+    DbColumnInt(conexion, 2, Balanza.Numero); 
     DbColumnString(conexion, 3, Balanza.Nombre);  
     sResultado := DbNext(conexion);  
     DbFinalize(conexion);
@@ -101,7 +101,7 @@ begin
     loop
         indice := indice +1;
         DbColumnInt(conexion, 1, listado[indice].Id); 
-        DbColumnString(conexion, 2, listado[indice].Numero); 
+        DbColumnInt(conexion, 2, listado[indice].Numero); 
         DbColumnString(conexion, 3, listado[indice].Nombre);  
         sResultado := DbNext(conexion);  
     end loop;
@@ -112,13 +112,13 @@ begin
     return listado;
 end;
 
-function fExisteCodigoBalanza (Numero:string) : BooleanType;
+function fExisteCodigoBalanza (Numero:integer) : BooleanType;
 sql : string;
 conexion : integer;
 sResultado : SysCode;
 cantidad :integer;
 begin
-	sql:="select count(1) from Balanza where Numero='"+Numero+"' ";
+	sql:="select count(1) from Balanza where Numero="+IntegerToString(Numero,0)+" ";
 	sResultado := DbExec(sql, conexion);
 	if (sResultado <> SysOk or conexion = 0) then
 			pLoggerDB("fExisteCodigoBalanza",DBErrMsg);

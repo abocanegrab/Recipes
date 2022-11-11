@@ -6,11 +6,11 @@ id : integer;
 l_Nombretabla:string:="Insumo";
 begin
     id := fGetNextId(l_Nombretabla,CONST_MAX_DB_INSUMO);
-    sql := "Insert into Insumo (Id, Codigo, Nombre, Activo) values (";
+    sql := "Insert into Insumo (Id, Codigo, Nombre, Activo,NumBalan) values (";
     sql := sql + IntegerToString(id, 0) + ",";
     sql := sql + "'"+ entidad.Codigo + "', ";
-    sql := sql + "'" +entidad.Nombre + "',1)";
-
+    sql := sql + "'" +entidad.Nombre + "',1, ";
+    sql := sql + IntegerToString(entidad.NumBalanza,0) + ")";
     sResultado := DbExec(sql, conexion);
     if (sResultado <> SysOk) then
         pLoggerDB("pPostInsumo",DBErrMsg);
@@ -64,6 +64,8 @@ begin
     DbColumnInt(conexion, 1, Insumo.Id); 
     DbColumnString(conexion, 2, Insumo.Codigo); 
     DbColumnString(conexion, 3, Insumo.Nombre);  
+    DbColumnInt(conexion, 4, Insumo.Activo);  
+    DbColumnInt(conexion, 5, Insumo.NumBalanza); 
     sResultado := DbNext(conexion);  
     DbFinalize(conexion);
     pMostrarYLimpiar("Se obtuvo correctamente");
@@ -79,7 +81,11 @@ sResultado : SysCode;
 listado : TypArrayInsumo;
 indice : integer;
 begin
-    sql := "select * from Insumo where activo=1 order by Id asc limit "+IntegerToString(g_ItemsPorPagina,0);
+    sql := "select Insumo.Id, Insumo.Codigo, Insumo.Nombre, ";
+    sql := sql + " Insumo.NumBalan,Balanza.Nombre ";
+    sql := sql + " from Insumo left Join balanza ";
+    sql := sql + " on Insumo.NumBalan=Balanza.Id ";
+    sql := sql + " where Insumo.activo=1 order by Insumo.Id asc limit "+IntegerToString(g_ItemsPorPagina,0);
     sql :=sql + " Offset "+IntegerToString(g_PaginaActual - 1, 0);
 
     sResultado := DbExec(sql, conexion);
@@ -103,6 +109,8 @@ begin
         DbColumnInt(conexion, 1, listado[indice].Id); 
         DbColumnString(conexion, 2, listado[indice].Codigo); 
         DbColumnString(conexion, 3, listado[indice].Nombre);  
+        DbColumnInt(conexion, 4, listado[indice].NumBalanza); 
+        DbColumnString(conexion, 5, listado[indice].NBalanza);  
         sResultado := DbNext(conexion);  
     end loop;
 

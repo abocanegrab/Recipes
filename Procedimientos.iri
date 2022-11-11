@@ -22,7 +22,7 @@ t_Balanza:=fGetBalanza(g_IdItemActual);
 				l_entry := t_Insumo.Codigo;
 				l_mensaje:="Ingrese Codigo de "+ g_NombreMenuMantto;
 			elsif (g_NombreMenuMantto = CONST_BALANZA_LABEL) then
-				l_entry := t_Balanza.Numero;
+				l_entry := IntegerToString(t_Balanza.Numero,0);
 				l_mensaje:="Ingrese Numero de "+ g_NombreMenuMantto;
 			end if;
 		end if;
@@ -44,6 +44,15 @@ t_Balanza:=fGetBalanza(g_IdItemActual);
 				l_entry := t_Balanza.Nombre;
 				l_mensaje:="Ingrese Nombre de "+ g_NombreMenuMantto;
 			end if;
+		end if;
+		SetEntry(l_entry);
+		PromptUser(l_mensaje);
+	elsif(g_PasoMant=tMantNombre) then
+		l_mensaje:="Ingrese Numero de Balanza ";
+		if (g_TipoMant = tipoMantAgregar) then
+			l_entry:="";
+		elsif (g_TipoMant = tipoMantEditar) then
+			l_entry := IntegerToString(t_Insumo.NumBalanza,0);
 		end if;
 		SetEntry(l_entry);
 		PromptUser(l_mensaje);
@@ -88,10 +97,12 @@ end;
 
 Procedure pGuardarTemporal(valor:string);
 begin
-	if(g_PasoMant = tMantCodigo) then 
+	if(g_PasoMant = tMantCodigo) then
 		t_MantGenerico.Codigo:=valor;
 	elsif(g_PasoMant = tMantNombre) then
-		t_MantGenerico.Nombre:=valor;  
+		t_MantGenerico.Nombre:=valor;
+	elsif(g_PasoMant = tMantIdBalanza) then
+		t_MantGenerico.NumBalanza:=StringToInteger(valor);
 	end if;
 end;
 
