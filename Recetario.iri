@@ -26,6 +26,7 @@ type InsumoDatabase is database ("Insumo")
     Codigo: String;
     Nombre: String;
     Activo: Integer;
+  IdBalanz: Integer;
 end database;
 type PesajeDatabase is database ("Pesaje")
         Id: Integer;
@@ -66,6 +67,7 @@ Insumo_Id       : constant integer := 1;
 Insumo_Codigo   : constant integer := 2;
 Insumo_Nombre   : constant integer := 3;
 Insumo_Activo   : constant integer := 4;
+Insumo_IdBalanz : constant integer := 5;
 
 Pesaje_Id       : constant integer := 1;
 Pesaje_IdReceta : constant integer := 2;
@@ -214,6 +216,8 @@ lbl103    : constant integer := 103;
 lbl104    : constant integer := 104;
 lbl105    : constant integer := 105;
 lbl106    : constant integer := 106;
+lbl107    : constant integer := 107;
+lbl108    : constant integer := 108;
 
 USBPRN    : constant string := "USBPRN";
 ADVPRN    : constant string := "ADVPRN";

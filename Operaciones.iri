@@ -1,6 +1,6 @@
     --Programacion del Boton Agregar en Pantalla Mantenimientos Datos 
 
-    elsif EventWidget=lbl38 or EventWidget=lbl41 then
+    elsif EventWidget=lbl38 OR EventWidget=lbl41 then
 		g_TipoMant := tipoMantAgregar;
 		g_PasoMant := tMantInicio;
 		g_PasoNivelMantDeReceta:=tNMDR_Cabecera;

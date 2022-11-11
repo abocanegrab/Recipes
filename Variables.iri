@@ -56,7 +56,8 @@ g_IdItemRecetaAEliminar: integer;
 type TypMantenimiento is (
 	tMantInicio, 
 	tMantCodigo,
-	tMantNombre
+	tMantNombre,
+	tMantIdBalanza
 );
 
 g_PasoMant : TypMantenimiento;

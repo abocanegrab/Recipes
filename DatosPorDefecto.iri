@@ -28,24 +28,31 @@ begin
     end if;
         t_MantGenerico.Codigo:="INS001";
         t_MantGenerico.Nombre:="ARENA";
+        t_MantGenerico.NumBalanza:=1;
         pPostInsumo(t_MantGenerico);
         t_MantGenerico.Codigo:="INS002";
         t_MantGenerico.Nombre:="CEMENTO";
+        t_MantGenerico.NumBalanza:=2;
         pPostInsumo(t_MantGenerico);
         t_MantGenerico.Codigo:="INS003";
         t_MantGenerico.Nombre:="ESPEZANTE";
+        t_MantGenerico.NumBalanza:=1;
         pPostInsumo(t_MantGenerico);
         t_MantGenerico.Codigo:="INS004";
         t_MantGenerico.Nombre:="AGUA";
+        t_MantGenerico.NumBalanza:=2;
         pPostInsumo(t_MantGenerico);
         t_MantGenerico.Codigo:="INS005";
         t_MantGenerico.Nombre:="COLORANTE";
+        t_MantGenerico.NumBalanza:=3;
         pPostInsumo(t_MantGenerico);
         t_MantGenerico.Codigo:="INS006";
         t_MantGenerico.Nombre:="PIEDRA EN POLVO";
+        t_MantGenerico.NumBalanza:=2;
         pPostInsumo(t_MantGenerico);
         t_MantGenerico.Codigo:="INS007";
         t_MantGenerico.Nombre:="ADITIVOS";
+        t_MantGenerico.NumBalanza:=1;
         pPostInsumo(t_MantGenerico);
 end;
 
@@ -97,14 +104,11 @@ begin
     if (hayDatos=BoolTrue) then
         return;
     end if;
-    t_MantGenerico.Codigo:="B001";
+    t_MantGenerico.Codigo:="1";
     t_MantGenerico.Nombre:="BALANZA GRAMERA";
     pPostBalanza(t_MantGenerico);
-    t_MantGenerico.Codigo:="B002";
+    t_MantGenerico.Codigo:="2";
     t_MantGenerico.Nombre:="BALANZA PRECISA";
-    pPostBalanza(t_MantGenerico);
-    t_MantGenerico.Codigo:="B003";
-    t_MantGenerico.Nombre:="BALANZA PREMIUM";
     pPostBalanza(t_MantGenerico);
 end;
 
