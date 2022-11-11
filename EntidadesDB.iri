@@ -12,7 +12,9 @@ type TypInsumo is record
 	Id  :   integer;
 	Codigo: string;
 	Nombre: string;
-  
+    Activo: Integer;
+ NumBalanza: Integer;
+  NBalanza: String;
 end record;
 
 type TypArrayInsumo is array[10] of TypInsumo;
@@ -20,7 +22,7 @@ type TypArrayInsumo is array[10] of TypInsumo;
 --*****************Tipo Usos*****************
 type TypBalanza is record
 	Id  :   integer;
-	Numero: string;
+	Numero: integer;
 	Nombre: string;
   
 end record;
@@ -33,7 +35,7 @@ type TypMantGenerico is record
 	Id: integer;
 	Codigo : string;
 	Nombre: string;
-  
+	NumBalanza:Integer;
 end record;
 
 

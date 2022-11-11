@@ -18,10 +18,12 @@ begin
 	if (g_IndexRegistro<=0)   then
 		SetLabelText(lbl35,"");
 		SetLabelText(lbl36,"");
+		SetLabelText(lbl108,"");
 	else
 		g_ListaInsumo:=fListaInsumo;
 		SetLabelText(lbl35,g_ListaInsumo[g_IndexRegistro].Codigo);
 		SetLabelText(lbl36,g_ListaInsumo[g_IndexRegistro].Nombre);
+		SetLabelText(lbl108,g_ListaInsumo[g_IndexRegistro].NBalanza);
 	end if;
 	g_IdItemActual:=g_ListaInsumo[g_IndexRegistro].Id;
 	DisplayStatus("El Id es: "+IntegerToString(g_IdItemActual,0));
@@ -35,7 +37,7 @@ begin
 		SetLabelText(lbl103,"");
 	else
 		g_ListaBalanza:=fListaBalanza;
-		SetLabelText(lbl102,g_ListaBalanza[g_IndexRegistro].Numero);
+		SetLabelText(lbl102,IntegerToString(g_ListaBalanza[g_IndexRegistro].Numero,0));
 		SetLabelText(lbl103,g_ListaBalanza[g_IndexRegistro].Nombre);
 	end if;
 	g_IdItemActual:=g_ListaBalanza[g_IndexRegistro].Id;
