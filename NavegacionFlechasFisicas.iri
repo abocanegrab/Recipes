@@ -40,6 +40,10 @@ begin
     elsif (g_PantallaActiva = tPntMantBalanza) then
         pNextItemBaseDatos("Balanza");
         pMuestraBalanza;
+    elsif (g_PantallaActiva = tPntListaOrdenes) then
+        pNextItemBaseDatos("Ordenes");
+        g_NumeroPaginaOrdenes:=2;
+        pMuestraOrdenes;
     end if;
 end;
 
@@ -49,13 +53,16 @@ begin
         pPrevItemBaseDatos("Receta");
         pMuestraReceta;
         pMuestraItemsReceta;
-        
     elsif (g_PantallaActiva = tPntMantInsumo) then
         pPrevItemBaseDatos("Insumo");
         pMuestraInsumo;
     elsif (g_PantallaActiva = tPntMantBalanza) then
         pPrevItemBaseDatos("Balanza");
         pMuestraBalanza;
+    elsif (g_PantallaActiva = tPntListaOrdenes) then
+        pPrevItemBaseDatos("Ordenes");
+        g_NumeroPaginaOrdenes:=1;
+        pMuestraOrdenes;
     end if;
 end;
 

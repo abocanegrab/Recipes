@@ -64,3 +64,23 @@
 		g_TipoMant := tipoMantEliminarItemReceta;
 		g_IdItemRecetaAEliminar:=g_ItemDetReceta05;
 		pMuestraPromptEliminarItemReceta;
+
+--Botones de selecion de Ordenes;
+
+	elsif EventWidget=lbl112 then
+		g_IdOrdenElegida:=g_ListaOrdenes[1].Id;
+		pMostrarYLimpiar("SE eligio el numero : "+IntegerToString(g_IdOrdenElegida,0));
+		pMuestraPntProcesoDePesaje;
+	elsif EventWidget=lbl113 then
+		g_IdOrdenElegida:=g_ListaOrdenes[2].Id;
+		pMostrarYLimpiar("SE eligio el numero : "+IntegerToString(g_IdOrdenElegida,0));
+		pMuestraPntProcesoDePesaje;
+	elsif EventWidget=lbl114 then
+		g_IdOrdenElegida:=g_ListaOrdenes[3].Id;
+		pMostrarYLimpiar("SE eligio el numero : "+IntegerToString(g_IdOrdenElegida,0));
+		pMuestraPntProcesoDePesaje;
+	elsif EventWidget=lbl115 then
+		g_IdOrdenElegida:=g_ListaOrdenes[4].Id;
+		pMostrarYLimpiar("SE eligio el numero : "+IntegerToString(g_IdOrdenElegida,0));
+		pMuestraPntProcesoDePesaje;
+	

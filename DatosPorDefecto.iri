@@ -105,11 +105,56 @@ begin
         return;
     end if;
     t_MantGenerico.Codigo:="1";
-    t_MantGenerico.Nombre:="BALANZA GRAMERA";
+    t_MantGenerico.Nombre:="BALANZA GRAMERA 01";
     pPostBalanza(t_MantGenerico);
     t_MantGenerico.Codigo:="2";
-    t_MantGenerico.Nombre:="BALANZA PRECISA";
+    t_MantGenerico.Nombre:="BALANZA PRECISA 02";
     pPostBalanza(t_MantGenerico);
+end;
+
+procedure pAlmacenarDatosOrdenesInicial;
+hayDatos: BooleanType;
+begin
+    hayDatos:=fExisteDatosEnTabla("Ordenes");
+    if (hayDatos=BoolTrue) then
+        return;
+    end if;
+    t_MantOrdenes.Lote:="L123";
+    t_MantOrdenes.IdReceta:=1;
+    t_MantOrdenes.Prioridad:=1;
+    t_MantOrdenes.CodigoOperacion:="OP001";
+    t_MantOrdenes.PesoTotal:=150.00;
+    pPostOrdenes(t_MantOrdenes);
+    t_MantOrdenes.Lote:="L124";
+    t_MantOrdenes.IdReceta:=2;
+    t_MantOrdenes.Prioridad:=2;
+    t_MantOrdenes.CodigoOperacion:="OP010";
+    t_MantOrdenes.PesoTotal:=350.00;
+    pPostOrdenes(t_MantOrdenes);
+    t_MantOrdenes.Lote:="L130";
+    t_MantOrdenes.IdReceta:=2;
+    t_MantOrdenes.Prioridad:=3;
+    t_MantOrdenes.CodigoOperacion:="OP011";
+    t_MantOrdenes.PesoTotal:=550.00;
+    pPostOrdenes(t_MantOrdenes);
+    t_MantOrdenes.Lote:="L133";
+    t_MantOrdenes.IdReceta:=1;
+    t_MantOrdenes.Prioridad:=4;
+    t_MantOrdenes.CodigoOperacion:="OP001";
+    t_MantOrdenes.PesoTotal:=150.00;
+    pPostOrdenes(t_MantOrdenes);
+    t_MantOrdenes.Lote:="L144";
+    t_MantOrdenes.IdReceta:=2;
+    t_MantOrdenes.Prioridad:=5;
+    t_MantOrdenes.CodigoOperacion:="OP010";
+    t_MantOrdenes.PesoTotal:=350.00;
+    pPostOrdenes(t_MantOrdenes);
+    t_MantOrdenes.Lote:="L160";
+    t_MantOrdenes.IdReceta:=2;
+    t_MantOrdenes.Prioridad:=6;
+    t_MantOrdenes.CodigoOperacion:="OP011";
+    t_MantOrdenes.PesoTotal:=550.00;
+    pPostOrdenes(t_MantOrdenes);
 end;
 
 
@@ -119,4 +164,5 @@ begin
 	pAlmacenarDatosInicialInsumo;
     pAlmacenarDatosInicialDtReceta;
     pAlmacenarDatosInicialBalanza;
+    pAlmacenarDatosOrdenesInicial;
 end;

@@ -9,7 +9,7 @@ begin
 		SetLabelText(lbl29,g_ListaReceta[g_IndexRegistro].Nombre);
 	end if;
 	g_IdItemActual:=g_ListaReceta[g_IndexRegistro].Id;
-	DisplayStatus("El Id es: "+IntegerToString(g_IdItemActual,0));
+	DisplayStatus("El Id de Receta es: "+IntegerToString(g_IdItemActual,0));
 end;
 
 
@@ -26,7 +26,7 @@ begin
 		SetLabelText(lbl108,g_ListaInsumo[g_IndexRegistro].NBalanza);
 	end if;
 	g_IdItemActual:=g_ListaInsumo[g_IndexRegistro].Id;
-	DisplayStatus("El Id es: "+IntegerToString(g_IdItemActual,0));
+	DisplayStatus("El Id de Insumo es: "+IntegerToString(g_IdItemActual,0));
 end;
 
 
@@ -41,7 +41,7 @@ begin
 		SetLabelText(lbl103,g_ListaBalanza[g_IndexRegistro].Nombre);
 	end if;
 	g_IdItemActual:=g_ListaBalanza[g_IndexRegistro].Id;
-	DisplayStatus("El Id es: "+IntegerToString(g_IdItemActual,0));
+	DisplayStatus("El Numero es: "+IntegerToString(g_ListaBalanza[g_IndexRegistro].Numero,0));
 end;
 
 
@@ -263,3 +263,99 @@ begin
 		end if;
 	end if;
 end;
+
+
+procedure pMuestraOrdenes;
+begin
+	g_TotalRegistros:=fCantidadItemsEnTabla("Ordenes");
+	if (g_IndexRegistro<=0)   then
+		SetLabelText(lbl112,"");
+		SetLabelText(lbl113,"");
+		SetLabelText(lbl114,"");
+		SetLabelText(lbl115,"");
+	else
+		g_ListaOrdenes:=fListaOrdenes;
+		if g_NumeroPaginaOrdenes=1 then
+			g_IdOrdenEnProceso01:=g_ListaOrdenes[1].Id;
+			SetLabelText(lbl112,g_ListaOrdenes[1].DatosOrdenes);
+			g_IdOrdenEnProceso02:=g_ListaOrdenes[2].Id;
+			SetLabelText(lbl113,g_ListaOrdenes[2].DatosOrdenes);
+			g_IdOrdenEnProceso03:=g_ListaOrdenes[3].Id;
+			SetLabelText(lbl114,g_ListaOrdenes[3].DatosOrdenes);
+			g_IdOrdenEnProceso04:=g_ListaOrdenes[4].Id;
+			SetLabelText(lbl115,g_ListaOrdenes[4].DatosOrdenes);
+		elsif g_NumeroPaginaOrdenes=2 then
+			g_IdOrdenEnProceso01:=g_ListaOrdenes[5].Id;
+			SetLabelText(lbl112,g_ListaOrdenes[5].DatosOrdenes);
+			g_IdOrdenEnProceso02:=g_ListaOrdenes[6].Id;
+			SetLabelText(lbl113,g_ListaOrdenes[6].DatosOrdenes);
+			g_IdOrdenEnProceso03:=g_ListaOrdenes[7].Id;
+			SetLabelText(lbl114,g_ListaOrdenes[7].DatosOrdenes);
+			g_IdOrdenEnProceso04:=g_ListaOrdenes[8].Id;
+			SetLabelText(lbl115,g_ListaOrdenes[8].DatosOrdenes);
+		elsif g_NumeroPaginaOrdenes=3 then
+			g_IdOrdenEnProceso01:=g_ListaOrdenes[9].Id;
+			SetLabelText(lbl112,g_ListaOrdenes[9].DatosOrdenes);
+			g_IdOrdenEnProceso02:=g_ListaOrdenes[10].Id;
+			SetLabelText(lbl113,g_ListaOrdenes[10].DatosOrdenes);
+		end if;
+		
+
+		SetLabelText(lbl117,IntegerToString(4,0)+"/"+IntegerToString(g_TotalRegistros,0));
+	end if;
+	g_IdItemActual:=g_ListaOrdenes[g_IndexRegistro].Id;
+end;
+
+
+procedure pMuestraPantallaProceso(Id:integer);
+Cantidad: integer;
+begin
+	g_Ordenes:=fGetDtRecetaOrdenes(Id);
+		SetLabelText(lbl20,g_Ordenes.CodigoOperacion);
+		SetLabelText(lbl19,g_Ordenes.Lote);
+		SetLabelText(lbl18,g_Ordenes.NombreReceta);
+		SetLabelText(lbl2,IntegerToString(g_Ordenes.CantidadItemEnOrden,0));
+		Cantidad:=g_Ordenes.CantidadItemEnOrden;
+		SetLabelText(lbl15,RealToString(g_Ordenes.PesoTotal,4,2));
+
+	g_ListaDtReceta:=fGetDetalleOrdenes(g_Ordenes.IdReceta);
+
+
+	if (Cantidad=1) then
+		SetLabelText(lbl51,g_ListaDtReceta[1].NombreInsumo);
+		SetLabelText(lbl9,RealToString(g_ListaDtReceta[1].Peso,4,2));
+	elsif (Cantidad=2) then
+		SetLabelText(lbl51,g_ListaDtReceta[1].NombreInsumo);
+		SetLabelText(lbl9,RealToString(g_ListaDtReceta[1].Peso,4,2));
+		SetLabelText(lbl50,g_ListaDtReceta[2].NombreInsumo);
+		SetLabelText(lbl7,RealToString(g_ListaDtReceta[2].Peso,4,2));
+	elsif (Cantidad=3) then
+		SetLabelText(lbl51,g_ListaDtReceta[1].NombreInsumo);
+		SetLabelText(lbl9,RealToString(g_ListaDtReceta[1].Peso,4,2));
+		SetLabelText(lbl50,g_ListaDtReceta[2].NombreInsumo);
+		SetLabelText(lbl7,RealToString(g_ListaDtReceta[2].Peso,4,2));
+		SetLabelText(lbl55,g_ListaDtReceta[3].NombreInsumo);
+		SetLabelText(lbl48,RealToString(g_ListaDtReceta[3].Peso,4,2));
+	elsif (Cantidad=4) then
+		SetLabelText(lbl51,g_ListaDtReceta[1].NombreInsumo);
+		SetLabelText(lbl9,RealToString(g_ListaDtReceta[1].Peso,4,2));
+		SetLabelText(lbl50,g_ListaDtReceta[2].NombreInsumo);
+		SetLabelText(lbl7,RealToString(g_ListaDtReceta[2].Peso,4,2));
+		SetLabelText(lbl55,g_ListaDtReceta[3].NombreInsumo);
+		SetLabelText(lbl48,RealToString(g_ListaDtReceta[3].Peso,4,2));
+		SetLabelText(lbl54,g_ListaDtReceta[4].NombreInsumo);
+		SetLabelText(lbl46,RealToString(g_ListaDtReceta[4].Peso,4,2));
+	elsif (Cantidad=5) then
+		SetLabelText(lbl51,g_ListaDtReceta[1].NombreInsumo);
+		SetLabelText(lbl9,RealToString(g_ListaDtReceta[1].Peso,4,2));
+		SetLabelText(lbl50,g_ListaDtReceta[2].NombreInsumo);
+		SetLabelText(lbl7,RealToString(g_ListaDtReceta[2].Peso,4,2));
+		SetLabelText(lbl55,g_ListaDtReceta[3].NombreInsumo);
+		SetLabelText(lbl48,RealToString(g_ListaDtReceta[3].Peso,4,2));
+		SetLabelText(lbl54,g_ListaDtReceta[4].NombreInsumo);
+		SetLabelText(lbl46,RealToString(g_ListaDtReceta[4].Peso,4,2));
+		SetLabelText(lbl53,g_ListaDtReceta[5].NombreInsumo);
+		SetLabelText(lbl44,RealToString(g_ListaDtReceta[5].Peso,4,2));
+	end if;	
+end;
+

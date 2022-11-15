@@ -14,7 +14,11 @@ g_Balanza: Stored TypBalanza;
 t_Balanza: TypBalanza;
 g_ListaBalanza: TypArrayBalanza;
 
+g_Ordenes: Stored TypOrdenes;
+t_Ordenes: TypOrdenes;
+g_ListaOrdenes: TypArrayOrdenes;
 
+t_MantOrdenes : TypMantOrdenes;
 
 t_MantGenerico : TypMantGenerico;
 
@@ -27,7 +31,8 @@ type TypPantalla is (
 	tPntMantInsumo,
   	tPntMenuReportes,
   	tPntConfiguracion,
-	tPntMantBalanza
+	tPntMantBalanza,
+	tPntListaOrdenes
 	);
 
 g_PantallaActiva : TypPantalla;
@@ -50,6 +55,15 @@ g_TipoOperacionCRUD:string;
 g_IdItemActual : integer;
 
 g_IdItemRecetaAEliminar: integer;
+
+g_IdOrdenElegida:integer;
+g_NumeroPaginaOrdenes:integer:=1;
+
+g_IdOrdenEnProceso01:integer;
+g_IdOrdenEnProceso02:integer;
+g_IdOrdenEnProceso03:integer;
+g_IdOrdenEnProceso04:integer;
+
 
 --variables para el llenado de los datos por grupos Mantenimientos
 
