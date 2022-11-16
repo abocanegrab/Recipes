@@ -16,16 +16,26 @@ elsif EventWidget=lbl97 then
     pMuestraPntMantenimientoBalanza;
     pMuestraBalanza;
 elsif EventWidget=lbl30 or EventWidget=lbl31 or 
-    EventWidget=lbl59 or EventWidget=lbl98  or 
-    EventWidget=lbl109 then
+    EventWidget=lbl59 or EventWidget=lbl98  then
     pMuestraPntMenuMantenimiento;
 elsif EventWidget=lbl60 then
     pMuestraPntProcesoDePesaje;
+elsif EventWidget=lbl109 then 
+    if g_PantallaPresedente=1 then
+        pMuestraPntProcesoDePesaje;
+    elsif g_PantallaPresedente=2 then
+        pMuestraPntMenuMantenimiento;
+    end if;
 elsif EventWidget=lbl61 then
     pMuestraPntMenuReportes;
 elsif EventWidget=lbl63 then
     pMuestraPntConfiguracion;
 --Boton para dirigirse a la pantalla de Lista de Ordenes
 elsif EventWidget=lbl111 then
+    g_PantallaPresedente:=2;
+    pMuestraPntListaOrdenes;
+    pMuestraOrdenes;
+elsif EventWidget=lbl116 then
+    g_PantallaPresedente:=1;
     pMuestraPntListaOrdenes;
     pMuestraOrdenes;

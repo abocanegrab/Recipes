@@ -73,7 +73,7 @@ begin
     t_DtReceta.Peso:=200.20;
     t_DtReceta.Activo:=1;
     pPostDtReceta(t_DtReceta);
-    t_DtReceta.IdReceta:=2;
+    t_DtReceta.IdReceta:=3;
     t_DtReceta.IdInsumo:=3;
     t_DtReceta.Peso:=250.20;
     t_DtReceta.Activo:=1;
@@ -153,6 +153,25 @@ begin
     t_MantOrdenes.IdReceta:=2;
     t_MantOrdenes.Prioridad:=6;
     t_MantOrdenes.CodigoOperacion:="OP011";
+    t_MantOrdenes.PesoTotal:=550.00;
+    pPostOrdenes(t_MantOrdenes);
+
+    t_MantOrdenes.Lote:="L193";
+    t_MantOrdenes.IdReceta:=2;
+    t_MantOrdenes.Prioridad:=7;
+    t_MantOrdenes.CodigoOperacion:="OP901";
+    t_MantOrdenes.PesoTotal:=150.00;
+    pPostOrdenes(t_MantOrdenes);
+    t_MantOrdenes.Lote:="L194";
+    t_MantOrdenes.IdReceta:=1;
+    t_MantOrdenes.Prioridad:=8;
+    t_MantOrdenes.CodigoOperacion:="OP910";
+    t_MantOrdenes.PesoTotal:=350.00;
+    pPostOrdenes(t_MantOrdenes);
+    t_MantOrdenes.Lote:="L199";
+    t_MantOrdenes.IdReceta:=2;
+    t_MantOrdenes.Prioridad:=9;
+    t_MantOrdenes.CodigoOperacion:="OP911";
     t_MantOrdenes.PesoTotal:=550.00;
     pPostOrdenes(t_MantOrdenes);
 end;

@@ -65,7 +65,7 @@ type TypOrdenes is record
    DatosOrdenes:string;
 end record;
 
-type TypArrayOrdenes is array[10] of TypOrdenes;
+type TypArrayOrdenes is array[12] of TypOrdenes;
 
 
 type TypMantOrdenes is record

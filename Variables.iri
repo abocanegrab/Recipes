@@ -21,7 +21,9 @@ g_ListaOrdenes: TypArrayOrdenes;
 t_MantOrdenes : TypMantOrdenes;
 
 t_MantGenerico : TypMantGenerico;
-
+--Se usara para el boton Retornar de la Pantalla Ordenes
+g_PantallaPresedente:Integer:=0;  	--si tiene el valor 1 proviene de la Pantalla Proceso
+									--si tiene el valor 2 proviene de la Pantalla MenuMantenimiento
 
 type TypPantalla is (
 	tPntProcesoDePesaje,
@@ -46,6 +48,10 @@ g_TotalPaginas : integer;
 g_TieneDatos : BooleanType;
 g_TotalRegistros : integer;
 
+g_PaginaActualDeOrdenes : integer:=1;
+g_TotalPaginasDeOrdenes : integer:=1;
+g_ItemsPorPaginaDeOrdenes :integer:=4;
+
 
 g_NombreMenuMantto : string;
 
@@ -57,7 +63,6 @@ g_IdItemActual : integer;
 g_IdItemRecetaAEliminar: integer;
 
 g_IdOrdenElegida:integer;
-g_NumeroPaginaOrdenes:integer:=1;
 
 g_IdOrdenEnProceso01:integer;
 g_IdOrdenEnProceso02:integer;

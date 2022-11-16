@@ -3,6 +3,7 @@ procedure pMuestraPntProcesoDePesaje;
 begin
 	SelectScreen(1);
 	g_PantallaActiva:=tPntProcesoDePesaje;
+	pLimpiarEtiquetasProcesoDePesaje;
 	pMuestraPantallaProceso(g_IdOrdenElegida);
 end;
 

@@ -241,6 +241,7 @@ lbl113    : constant integer := 113;
 lbl114    : constant integer := 114;
 lbl115    : constant integer := 115;
 lbl117    : constant integer := 117;
+lbl116    : constant integer := 116;
 
 USBPRN    : constant string := "USBPRN";
 ADVPRN    : constant string := "ADVPRN";

@@ -268,44 +268,58 @@ end;
 procedure pMuestraOrdenes;
 begin
 	g_TotalRegistros:=fCantidadItemsEnTabla("Ordenes");
-	if (g_IndexRegistro<=0)   then
-		SetLabelText(lbl112,"");
-		SetLabelText(lbl113,"");
-		SetLabelText(lbl114,"");
-		SetLabelText(lbl115,"");
-	else
-		g_ListaOrdenes:=fListaOrdenes;
-		if g_NumeroPaginaOrdenes=1 then
-			g_IdOrdenEnProceso01:=g_ListaOrdenes[1].Id;
-			SetLabelText(lbl112,g_ListaOrdenes[1].DatosOrdenes);
-			g_IdOrdenEnProceso02:=g_ListaOrdenes[2].Id;
-			SetLabelText(lbl113,g_ListaOrdenes[2].DatosOrdenes);
-			g_IdOrdenEnProceso03:=g_ListaOrdenes[3].Id;
-			SetLabelText(lbl114,g_ListaOrdenes[3].DatosOrdenes);
-			g_IdOrdenEnProceso04:=g_ListaOrdenes[4].Id;
-			SetLabelText(lbl115,g_ListaOrdenes[4].DatosOrdenes);
-		elsif g_NumeroPaginaOrdenes=2 then
-			g_IdOrdenEnProceso01:=g_ListaOrdenes[5].Id;
-			SetLabelText(lbl112,g_ListaOrdenes[5].DatosOrdenes);
-			g_IdOrdenEnProceso02:=g_ListaOrdenes[6].Id;
-			SetLabelText(lbl113,g_ListaOrdenes[6].DatosOrdenes);
-			g_IdOrdenEnProceso03:=g_ListaOrdenes[7].Id;
-			SetLabelText(lbl114,g_ListaOrdenes[7].DatosOrdenes);
-			g_IdOrdenEnProceso04:=g_ListaOrdenes[8].Id;
-			SetLabelText(lbl115,g_ListaOrdenes[8].DatosOrdenes);
-		elsif g_NumeroPaginaOrdenes=3 then
-			g_IdOrdenEnProceso01:=g_ListaOrdenes[9].Id;
-			SetLabelText(lbl112,g_ListaOrdenes[9].DatosOrdenes);
-			g_IdOrdenEnProceso02:=g_ListaOrdenes[10].Id;
-			SetLabelText(lbl113,g_ListaOrdenes[10].DatosOrdenes);
-		end if;
-		
+	SetLabelText(lbl112,"");
+	SetLabelText(lbl113,"");
+	SetLabelText(lbl114,"");
+	SetLabelText(lbl115,"");
 
-		SetLabelText(lbl117,IntegerToString(4,0)+"/"+IntegerToString(g_TotalRegistros,0));
+	g_ListaOrdenes:=fListaOrdenes;
+	if g_PaginaActualDeOrdenes=1 then
+		g_IdOrdenEnProceso01:=g_ListaOrdenes[1].Id;
+		SetLabelText(lbl112,g_ListaOrdenes[1].DatosOrdenes);
+		g_IdOrdenEnProceso02:=g_ListaOrdenes[2].Id;
+		SetLabelText(lbl113,g_ListaOrdenes[2].DatosOrdenes);
+		g_IdOrdenEnProceso03:=g_ListaOrdenes[3].Id;
+		SetLabelText(lbl114,g_ListaOrdenes[3].DatosOrdenes);
+		g_IdOrdenEnProceso04:=g_ListaOrdenes[4].Id;
+		SetLabelText(lbl115,g_ListaOrdenes[4].DatosOrdenes);
+	elsif g_PaginaActualDeOrdenes=2 then
+		g_IdOrdenEnProceso01:=g_ListaOrdenes[5].Id;
+		SetLabelText(lbl112,g_ListaOrdenes[5].DatosOrdenes);
+		g_IdOrdenEnProceso02:=g_ListaOrdenes[6].Id;
+		SetLabelText(lbl113,g_ListaOrdenes[6].DatosOrdenes);
+		g_IdOrdenEnProceso03:=g_ListaOrdenes[7].Id;
+		SetLabelText(lbl114,g_ListaOrdenes[7].DatosOrdenes);
+		g_IdOrdenEnProceso04:=g_ListaOrdenes[8].Id;
+		SetLabelText(lbl115,g_ListaOrdenes[8].DatosOrdenes);
+	elsif g_PaginaActualDeOrdenes=3 then
+		g_IdOrdenEnProceso01:=g_ListaOrdenes[9].Id;
+		SetLabelText(lbl112,g_ListaOrdenes[9].DatosOrdenes);
+		g_IdOrdenEnProceso02:=g_ListaOrdenes[10].Id;
+		SetLabelText(lbl113,g_ListaOrdenes[10].DatosOrdenes);
+		g_IdOrdenEnProceso03:=g_ListaOrdenes[11].Id;
+		SetLabelText(lbl114,g_ListaOrdenes[11].DatosOrdenes);
+		g_IdOrdenEnProceso04:=g_ListaOrdenes[12].Id;
+		SetLabelText(lbl115,g_ListaOrdenes[12].DatosOrdenes);
 	end if;
-	g_IdItemActual:=g_ListaOrdenes[g_IndexRegistro].Id;
+
+	SetLabelText(lbl117,IntegerToString(g_PaginaActualDeOrdenes,0)+"/"+IntegerToString(g_TotalPaginasDeOrdenes,0));
 end;
 
+
+procedure pLimpiarEtiquetasProcesoDePesaje;
+begin
+	SetLabelText(lbl20,"");	SetLabelText(lbl19,"");	SetLabelText(lbl18,"");	
+	SetLabelText(lbl2,"");	SetLabelText(lbl15,"");
+
+	SetLabelText(lbl51,"");	SetLabelText(lbl9,"");	SetLabelText(lbl10,"");
+	SetLabelText(lbl50,"");	SetLabelText(lbl7,"");	SetLabelText(lbl8,"");
+	SetLabelText(lbl55,"");	SetLabelText(lbl48,"");	SetLabelText(lbl49,"");
+	SetLabelText(lbl54,"");	SetLabelText(lbl46,"");	SetLabelText(lbl47,"");
+	SetLabelText(lbl53,"");	SetLabelText(lbl44,"");	SetLabelText(lbl45,"");
+	SetLabelText(lbl56,"");	SetLabelText(lbl57,"");	SetLabelText(lbl58,"");
+
+end;
 
 procedure pMuestraPantallaProceso(Id:integer);
 Cantidad: integer;
@@ -319,8 +333,6 @@ begin
 		SetLabelText(lbl15,RealToString(g_Ordenes.PesoTotal,4,2));
 
 	g_ListaDtReceta:=fGetDetalleOrdenes(g_Ordenes.IdReceta);
-
-
 	if (Cantidad=1) then
 		SetLabelText(lbl51,g_ListaDtReceta[1].NombreInsumo);
 		SetLabelText(lbl9,RealToString(g_ListaDtReceta[1].Peso,4,2));

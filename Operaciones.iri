@@ -68,19 +68,43 @@
 --Botones de selecion de Ordenes;
 
 	elsif EventWidget=lbl112 then
-		g_IdOrdenElegida:=g_ListaOrdenes[1].Id;
-		pMostrarYLimpiar("SE eligio el numero : "+IntegerToString(g_IdOrdenElegida,0));
+		if g_PaginaActualDeOrdenes=1 then
+			g_IdOrdenElegida:=g_ListaOrdenes[1].Id;
+		elsif g_PaginaActualDeOrdenes=2 then
+			g_IdOrdenElegida:=g_ListaOrdenes[5].Id;
+		elsif g_PaginaActualDeOrdenes=3 then
+			g_IdOrdenElegida:=g_ListaOrdenes[9].Id;
+		end if;
+		pMostrarYLimpiar("Se eligio la Orden numero : "+IntegerToString(g_IdOrdenElegida,0));
 		pMuestraPntProcesoDePesaje;
 	elsif EventWidget=lbl113 then
-		g_IdOrdenElegida:=g_ListaOrdenes[2].Id;
-		pMostrarYLimpiar("SE eligio el numero : "+IntegerToString(g_IdOrdenElegida,0));
+		if g_PaginaActualDeOrdenes=1 then
+			g_IdOrdenElegida:=g_ListaOrdenes[2].Id;
+		elsif g_PaginaActualDeOrdenes=2 then
+			g_IdOrdenElegida:=g_ListaOrdenes[6].Id;
+		elsif g_PaginaActualDeOrdenes=3 then
+			g_IdOrdenElegida:=g_ListaOrdenes[10].Id;
+		end if;
+		pMostrarYLimpiar("Se eligio la Orden numero : "+IntegerToString(g_IdOrdenElegida,0));
 		pMuestraPntProcesoDePesaje;
 	elsif EventWidget=lbl114 then
-		g_IdOrdenElegida:=g_ListaOrdenes[3].Id;
-		pMostrarYLimpiar("SE eligio el numero : "+IntegerToString(g_IdOrdenElegida,0));
+		if g_PaginaActualDeOrdenes=1 then
+			g_IdOrdenElegida:=g_ListaOrdenes[3].Id;
+		elsif g_PaginaActualDeOrdenes=2 then
+			g_IdOrdenElegida:=g_ListaOrdenes[7].Id;
+		elsif g_PaginaActualDeOrdenes=3 then
+			g_IdOrdenElegida:=g_ListaOrdenes[11].Id;
+		end if;
+		pMostrarYLimpiar("Se eligio la Orden numero : "+IntegerToString(g_IdOrdenElegida,0));
 		pMuestraPntProcesoDePesaje;
 	elsif EventWidget=lbl115 then
-		g_IdOrdenElegida:=g_ListaOrdenes[4].Id;
-		pMostrarYLimpiar("SE eligio el numero : "+IntegerToString(g_IdOrdenElegida,0));
+		if g_PaginaActualDeOrdenes=1 then
+			g_IdOrdenElegida:=g_ListaOrdenes[4].Id;
+		elsif g_PaginaActualDeOrdenes=2 then
+			g_IdOrdenElegida:=g_ListaOrdenes[8].Id;
+		elsif g_PaginaActualDeOrdenes=3 then
+			g_IdOrdenElegida:=g_ListaOrdenes[12].Id;
+		end if;
+		pMostrarYLimpiar("Se eligio la Orden numero : "+IntegerToString(g_IdOrdenElegida,0));
 		pMuestraPntProcesoDePesaje;
 	
