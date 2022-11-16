@@ -1,0 +1,173 @@
+procedure pPostOrdenes(entidad : TypMantOrdenes);
+sql : string;
+conexion : integer;
+sResultado : SysCode;
+id : integer;
+l_Nombretabla:string:="Ordenes";
+begin
+    id := fGetNextId(l_Nombretabla,CONST_MAX_DB_ORDENES);
+    sql := "Insert into Ordenes (Id, Lote, IdReceta, Priorida,CodOpera,PesoTot) values (";
+    sql := sql + IntegerToString(id, 0) + ",";
+    sql := sql + "'"+ entidad.Lote + "', ";
+    sql := sql + IntegerToString(entidad.IdReceta,0) + ", ";
+    sql := sql + IntegerToString(entidad.Prioridad,0) + ", ";
+    sql := sql + "'" +entidad.CodigoOperacion + "', ";
+    sql := sql + RealToString(entidad.PesoTotal,4,2) + " )";
+    sResultado := DbExec(sql, conexion);
+    if (sResultado <> SysOk) then
+        pLoggerDB("pPostOrdenes",DBErrMsg);
+        return;
+    end if;
+    pMostrarYLimpiar("Se agrego correctamente");
+end;
+
+
+procedure pPutOrdenes(entidad : TypMantOrdenes);
+sql : string;
+conexion : integer;
+sResultado : SysCode;
+
+begin
+	sql:="Update Ordenes set ";
+	sql:=sql + "Lote='" + entidad.Lote+ "',";
+	sql:=sql + "IdReceta=" + IntegerToString(entidad.IdReceta,0) +" ," ;
+    sql:=sql + "Priorida=" + IntegerToString(entidad.Prioridad,0)+ ",";
+	sql:=sql + "CodOpera='" + entidad.CodigoOperacion + "' ";
+    sql:=sql + "PesoTot=" + RealToString(entidad.PesoTotal,4,2);
+	sql:=sql + "where id="+IntegerToString(g_IdItemActual,0);
+			
+	sResultado := DbExec(sql, conexion);
+	if (sResultado <> SysOk) then
+		pLoggerDB("pPutOrdenes",DBErrMsg);
+		return;
+	end if;
+
+	pMostrarYLimpiar("Se actualizo con Éxito");
+end;
+
+function fListaOrdenes : TypArrayOrdenes;
+sql : string;
+conexion : integer;
+sResultado : SysCode;
+listado : TypArrayOrdenes;
+indice : integer;
+begin
+    sql := "select Ordenes.Id,'Prioridad: '||Ordenes.Priorida||'  Orden Id: '|| Ordenes.Id|| '  Cod: '|| Ordenes.CodOpera || '  Lote: '||Ordenes.Lote || '  Receta: '||Receta.Nombre as DatosOrdenes ";
+    sql := sql + " from Ordenes left join Receta  on Ordenes.IdReceta=Receta.Id order by Ordenes.Priorida";
+
+    sResultado := DbExec(sql, conexion);
+    --Primero verificamos que la consulta sea diferente de OK. Esto es error
+    if(sResultado<>SysOk) then 
+        pLoggerDB("fListaOrdenes",DBErrMsg);
+        return listado;
+    end if;
+    
+    -- Luego verificamos que la conexión sea = 0. Eso quiere decir que no hay datos para recuperar
+    if (conexion=0) then
+        return listado;
+    end if;
+
+    -- Caso contrario, tomamos los datos y los leemos.
+
+    indice := 0;
+    while sResultado = SysOk 
+    loop
+        indice := indice +1;
+        DbColumnInt(conexion, 1, listado[indice].Id); 
+        DbColumnString(conexion, 2, listado[indice].DatosOrdenes); 
+        
+        sResultado := DbNext(conexion);  
+    end loop;
+
+    DbFinalize(conexion);
+    --pMostrarYLimpiar("Se listo correctamente");
+
+    return listado;
+end;
+
+function fGetDtRecetaOrdenes(IdOrden:integer) : TypOrdenes;
+sql : string;
+conexion : integer;
+sResultado : SysCode;
+Orden : TypOrdenes;
+begin
+    sql := "select Ordenes.Id, Ordenes.CodOpera, Ordenes.Lote,Ordenes.IdReceta, Receta.Nombre,";
+    sql := sql + " ( select COUNT(*) from  DtReceta inner join Insumo on DtReceta.IdInsumo=Insumo.Id ";
+    sql := sql + " and  IdReceta=Ordenes.IdReceta ) as TotalItemRecetaEnOrden,";
+
+    sql := sql + " ( select SUM(Peso) from  DtReceta inner join Insumo on DtReceta.IdInsumo=Insumo.Id ";
+    sql := sql + " and  IdReceta=Ordenes.IdReceta ) as TotalItemRecetaEnOrden";
+    sql := sql + " from Ordenes inner join Receta ";
+    sql := sql + " on ordenes.Idreceta=Receta.Id and Ordenes.Id="+IntegerToString(IdOrden,0);
+
+    sResultado := DbExec(sql, conexion);
+    --Primero verificamos que la consulta sea diferente de OK. Esto es error
+    if(sResultado<>SysOk) then 
+        pLoggerDB("fGetDtRecetaOrdenes",DBErrMsg);
+        return Orden;
+    end if;
+    
+    -- Luego verificamos que la conexión sea = 0. Eso quiere decir que no hay datos para recuperar
+    if (conexion=0) then
+        return Orden;
+    end if;
+
+    -- Caso contrario, tomamos los datos y los leemos.
+
+    DbColumnInt(conexion, 1, Orden.Id); 
+    DbColumnString(conexion, 2, Orden.CodigoOperacion); 
+    DbColumnString(conexion, 3, Orden.Lote); 
+    DbColumnInt(conexion, 4, Orden.IdReceta); 
+    DbColumnString(conexion, 5, Orden.NombreReceta); 
+    DbColumnInt(conexion, 6, Orden.CantidadItemEnOrden); 
+    DbColumnReal(conexion, 7, Orden.PesoTotal); 
+    sResultado := DbNext(conexion);  
+
+    DbFinalize(conexion);
+    --pMostrarYLimpiar("Se listo correctamente");
+
+    return Orden;
+end;
+
+
+function fGetDetalleOrdenes(IdReceta:integer) : TypArrayDtReceta;
+sql : string;
+conexion : integer;
+sResultado : SysCode;
+listado : TypArrayDtReceta;
+indice : integer;
+begin
+    sql := "select DtReceta.IdInsumo,Insumo.Nombre,DtReceta.Peso";
+    sql := sql + " from  DtReceta inner join Insumo on DtReceta.IdInsumo=Insumo.Id ";
+    sql := sql + " and IdReceta="+IntegerToString(IdReceta,0);
+
+    sResultado := DbExec(sql, conexion);
+    --Primero verificamos que la consulta sea diferente de OK. Esto es error
+    if(sResultado<>SysOk) then 
+        pLoggerDB("fGetDetalleOrdenes",DBErrMsg);
+        return listado;
+    end if;
+    
+    -- Luego verificamos que la conexión sea = 0. Eso quiere decir que no hay datos para recuperar
+    if (conexion=0) then
+        return listado;
+    end if;
+
+    -- Caso contrario, tomamos los datos y los leemos.
+
+    indice := 0;
+    while sResultado = SysOk 
+    loop
+        indice := indice +1;
+        DbColumnInt(conexion, 1, listado[indice].IdInsumo); 
+        DbColumnString(conexion, 2, listado[indice].NombreInsumo); 
+        DbColumnReal(conexion, 3, listado[indice].Peso); 
+        
+        sResultado := DbNext(conexion);  
+    end loop;
+
+    DbFinalize(conexion);
+    --pMostrarYLimpiar("Se listo correctamente");
+
+    return listado;
+end;

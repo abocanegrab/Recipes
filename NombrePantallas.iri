@@ -3,6 +3,8 @@ procedure pMuestraPntProcesoDePesaje;
 begin
 	SelectScreen(1);
 	g_PantallaActiva:=tPntProcesoDePesaje;
+	pLimpiarEtiquetasProcesoDePesaje;
+	pMuestraPantallaProceso(g_IdOrdenElegida);
 end;
 
 procedure pMuestraPntMenuMantenimiento;
@@ -45,4 +47,11 @@ procedure pMuestraPntMantenimientoBalanza;
 begin
 	SelectScreen(8);
 	g_PantallaActiva:=tPntMantBalanza;
+end;
+
+procedure pMuestraPntListaOrdenes;
+begin
+	SelectScreen(9);
+	g_PantallaActiva:=tPntListaOrdenes;
+	pMuestraOrdenes;
 end;

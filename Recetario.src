@@ -10,6 +10,7 @@ program Recetario;
 #include Database/Insumo.iri
 #include Database/Balanza.iri
 #include Database/DtReceta.iri
+#include Database/Ordenes.iri
 #include MuestraDatosEnEtiquetas.iri
 #include Database/ModificacionesDB.iri
 #include FTPServer/FTPServer.iri
@@ -58,7 +59,7 @@ end;
 begin
 	pStartServer;
     pAlmacenarDatosInicial;
-    pMuestraPntProcesoDePesaje;
+    pMuestraPntListaOrdenes;
     
 
     --DisplayStatus("ProgramaCargado");    

@@ -26,7 +26,7 @@ type InsumoDatabase is database ("Insumo")
     Codigo: String;
     Nombre: String;
     Activo: Integer;
-  IdBalanz: Integer;
+  NumBalan: Integer;
 end database;
 type PesajeDatabase is database ("Pesaje")
         Id: Integer;
@@ -55,8 +55,16 @@ type LogDatabase is database ("Log")
 end database;
 type BalanzaDatabase is database ("Balanza")
         Id: Integer;
-    Numero: String;
+    Numero: Integer;
     Nombre: String;
+end database;
+type OrdenesDatabase is database ("Ordenes")
+        Id: Integer;
+      Lote: String;
+  IdReceta: Integer;
+  Priorida: Integer;
+  CodOpera: String;
+   PesoTot: Real;
 end database;
 
 Receta_Id       : constant integer := 1;
@@ -67,7 +75,7 @@ Insumo_Id       : constant integer := 1;
 Insumo_Codigo   : constant integer := 2;
 Insumo_Nombre   : constant integer := 3;
 Insumo_Activo   : constant integer := 4;
-Insumo_IdBalanz : constant integer := 5;
+Insumo_NumBalan : constant integer := 5;
 
 Pesaje_Id       : constant integer := 1;
 Pesaje_IdReceta : constant integer := 2;
@@ -93,6 +101,13 @@ Log_Fecha    : constant integer := 4;
 Balanza_Id       : constant integer := 1;
 Balanza_Numero   : constant integer := 2;
 Balanza_Nombre   : constant integer := 3;
+
+Ordenes_Id       : constant integer := 1;
+Ordenes_Lote     : constant integer := 2;
+Ordenes_IdReceta : constant integer := 3;
+Ordenes_Priorida : constant integer := 4;
+Ordenes_CodOpera : constant integer := 5;
+Ordenes_PesoTot  : constant integer := 6;
 
 
 
@@ -218,6 +233,15 @@ lbl105    : constant integer := 105;
 lbl106    : constant integer := 106;
 lbl107    : constant integer := 107;
 lbl108    : constant integer := 108;
+lbl109    : constant integer := 109;
+lbl110    : constant integer := 110;
+lbl111    : constant integer := 111;
+lbl112    : constant integer := 112;
+lbl113    : constant integer := 113;
+lbl114    : constant integer := 114;
+lbl115    : constant integer := 115;
+lbl117    : constant integer := 117;
+lbl116    : constant integer := 116;
 
 USBPRN    : constant string := "USBPRN";
 ADVPRN    : constant string := "ADVPRN";
