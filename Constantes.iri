@@ -4,9 +4,13 @@ CONST_MAX_DB_INSUMO: integer := 1000;
 CONST_MAX_DB_PESAJE: integer := 1000;
 CONST_MAX_DB_BALANZA: integer := 100;
 CONST_MAX_DB_DETALLERECETA: integer := 1000;
+CONST_MAX_DB_ORDENES:integer:=1000;
+
 
 
 CONST_RECETA_LABEL : string := "Receta";
 CONST_INSUMO_LABEL : string := "Insumo";
 CONST_BALANZA_LABEL : string := "Balanza";
 CONST_DTRECETA_LABEL : string := "DtReceta";
+CONST_ORDENES_LABEL : string := "Ordenes";
+

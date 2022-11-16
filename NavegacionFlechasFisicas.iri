@@ -24,6 +24,38 @@ begin
     end if;
 end;
 
+--*********Carrusel de la lista de Ordenes****************--
+
+procedure pPrevItemBaseDatosListaOrdenes(nombreTabla : string);
+begin
+    g_TotalRegistros:=fCantidadItemsEnTabla(nombreTabla);
+    g_TotalPaginasDeOrdenes := g_TotalRegistros / g_ItemsPorPaginaDeOrdenes;
+	if (g_TotalRegistros mod g_ItemsPorPaginaDeOrdenes>0) then
+        g_TotalPaginasDeOrdenes := g_TotalPaginasDeOrdenes + 1;
+    end if;
+
+    if (g_PaginaActualDeOrdenes <= 1) then
+        g_PaginaActualDeOrdenes := g_TotalPaginasDeOrdenes;
+    else
+        g_PaginaActualDeOrdenes:= g_PaginaActualDeOrdenes - 1;
+    end if;
+end;
+
+procedure pNextItemBaseDatosListaOrdenes(nombreTabla : string);
+begin
+    g_TotalRegistros:=fCantidadItemsEnTabla(nombreTabla);
+    g_TotalPaginasDeOrdenes := g_TotalRegistros / g_ItemsPorPaginaDeOrdenes;
+	if (g_TotalRegistros mod g_ItemsPorPaginaDeOrdenes>0) then
+        g_TotalPaginasDeOrdenes := g_TotalPaginasDeOrdenes + 1;
+    end if;
+    
+    if (g_PaginaActualDeOrdenes >= g_TotalPaginasDeOrdenes) then
+        g_PaginaActualDeOrdenes := 1;
+    else
+        g_PaginaActualDeOrdenes:= g_PaginaActualDeOrdenes + 1;
+    end if;
+end;
+
 
 --*********Procedimientos de Ir adelante y atras
 
@@ -40,6 +72,10 @@ begin
     elsif (g_PantallaActiva = tPntMantBalanza) then
         pNextItemBaseDatos("Balanza");
         pMuestraBalanza;
+    elsif (g_PantallaActiva = tPntListaOrdenes) then
+        pNextItemBaseDatosListaOrdenes("Ordenes");
+        --g_NumeroPaginaOrdenes:=2;
+        pMuestraOrdenes;
     end if;
 end;
 
@@ -49,13 +85,16 @@ begin
         pPrevItemBaseDatos("Receta");
         pMuestraReceta;
         pMuestraItemsReceta;
-        
     elsif (g_PantallaActiva = tPntMantInsumo) then
         pPrevItemBaseDatos("Insumo");
         pMuestraInsumo;
     elsif (g_PantallaActiva = tPntMantBalanza) then
         pPrevItemBaseDatos("Balanza");
         pMuestraBalanza;
+    elsif (g_PantallaActiva = tPntListaOrdenes) then
+        pPrevItemBaseDatosListaOrdenes("Ordenes");
+        --g_NumeroPaginaOrdenes:=1;
+        pMuestraOrdenes;
     end if;
 end;
 

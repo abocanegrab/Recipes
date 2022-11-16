@@ -52,3 +52,28 @@ type TypDtReceta is record
 end record;
 
 type TypArrayDtReceta is array[10] of TypDtReceta;
+
+type TypOrdenes is record
+		Id: Integer;
+      Lote: String;
+  IdReceta: Integer;
+  NombreReceta: string;
+  Prioridad: Integer;
+  CodigoOperacion: String;
+   PesoTotal: Real;
+   CantidadItemEnOrden:integer;
+   DatosOrdenes:string;
+end record;
+
+type TypArrayOrdenes is array[12] of TypOrdenes;
+
+
+type TypMantOrdenes is record
+	Id: Integer;
+      Lote: String;
+  IdReceta: Integer;
+  Prioridad: Integer;
+  CodigoOperacion: String;
+   PesoTotal: Real;
+end record;
+
