@@ -41,7 +41,7 @@ type DtRecetaDatabase is database ("DtReceta")
         Id: Integer;
   IdReceta: Integer;
   IdInsumo: Integer;
-      Peso: Real;
+  Prcntaje: Real;
     Activo: Integer;
 end database;
 type ConfigDatabase is database ("Config")
@@ -66,6 +66,16 @@ type OrdenesDatabase is database ("Ordenes")
   CodOpera: String;
    PesoTot: Real;
 end database;
+type DtPesajeDatabase is database ("DtPesaje")
+        Id: Integer;
+  IdPesaje: Integer;
+  IdInsumo: Integer;
+  PesoObje: Real;
+  PesoCapt: Real;
+  PropSoli: Real;
+  PropObte: Real;
+     Fecha: DateTime;
+end database;
 
 Receta_Id       : constant integer := 1;
 Receta_Codigo   : constant integer := 2;
@@ -88,7 +98,7 @@ Pesaje_PesoTot  : constant integer := 7;
 DtReceta_Id       : constant integer := 1;
 DtReceta_IdReceta : constant integer := 2;
 DtReceta_IdInsumo : constant integer := 3;
-DtReceta_Peso     : constant integer := 4;
+DtReceta_Prcntaje : constant integer := 4;
 DtReceta_Activo   : constant integer := 5;
 
 Config_Id       : constant integer := 1;
@@ -108,6 +118,15 @@ Ordenes_IdReceta : constant integer := 3;
 Ordenes_Priorida : constant integer := 4;
 Ordenes_CodOpera : constant integer := 5;
 Ordenes_PesoTot  : constant integer := 6;
+
+DtPesaje_Id       : constant integer := 1;
+DtPesaje_IdPesaje : constant integer := 2;
+DtPesaje_IdInsumo : constant integer := 3;
+DtPesaje_PesoObje : constant integer := 4;
+DtPesaje_PesoCapt : constant integer := 5;
+DtPesaje_PropSoli : constant integer := 6;
+DtPesaje_PropObte : constant integer := 7;
+DtPesaje_Fecha    : constant integer := 8;
 
 
 
@@ -240,8 +259,20 @@ lbl112    : constant integer := 112;
 lbl113    : constant integer := 113;
 lbl114    : constant integer := 114;
 lbl115    : constant integer := 115;
-lbl117    : constant integer := 117;
 lbl116    : constant integer := 116;
+lbl117    : constant integer := 117;
+lbl118    : constant integer := 118;
+lbl119    : constant integer := 119;
+lbl120    : constant integer := 120;
+lbl121    : constant integer := 121;
+lbl122    : constant integer := 122;
+lbl123    : constant integer := 123;
+lbl124    : constant integer := 124;
+lbl125    : constant integer := 125;
+lbl126    : constant integer := 126;
+lbl127    : constant integer := 127;
+lbl128    : constant integer := 128;
+lbl129    : constant integer := 129;
 
 USBPRN    : constant string := "USBPRN";
 ADVPRN    : constant string := "ADVPRN";

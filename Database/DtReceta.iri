@@ -6,11 +6,11 @@ id : integer;
 l_Nombretabla:string:="DtReceta";
 begin
     id := fGetNextId(l_Nombretabla,CONST_MAX_DB_DETALLERECETA);
-    sql := "Insert into DtReceta (Id, IdReceta,IdInsumo,Peso,Activo) values (";
+    sql := "Insert into DtReceta (Id, IdReceta,IdInsumo,Prcntaje,Activo) values (";
     sql := sql + IntegerToString(id, 0) + ",";
     sql := sql + IntegerToString(entidad.IdReceta,0) + ", ";
     sql := sql + IntegerToString(entidad.IdInsumo,0) + ", ";
-    sql := sql + RealToString(entidad.Peso,0,4) + ", ";
+    sql := sql + RealToString(entidad.Porcentaje,4,2) + ", ";
     sql := sql + IntegerToString(entidad.Activo,0) + ")";
 
     sResultado := DbExec(sql, conexion);
@@ -30,7 +30,7 @@ begin
 	sql:="Update DtReceta set ";
 	sql:=sql + "IdReceta='" + IntegerToString(entidad.IdReceta,0)+ "',";
     sql:=sql + "IdInsumo='" + IntegerToString(entidad.IdInsumo,0)+ "',";
-    sql:=sql + "Peso='" + RealToString(entidad.Peso,0,4)+ "',";
+    sql:=sql + "Prcntaje='" + RealToString(entidad.Porcentaje,4,2)+ "',";
     sql:=sql + "Activo='" + IntegerToString(entidad.Activo,0)+ "',";
     sql:=sql + "where id="+IntegerToString(entidad.Id,0);
 			
@@ -68,7 +68,7 @@ begin
     DbColumnInt(conexion, 1, DtReceta.Id); 
     DbColumnInt(conexion, 2, DtReceta.IdReceta); 
     DbColumnInt(conexion, 3, DtReceta.IdInsumo);  
-    DbColumnReal(conexion, 4, DtReceta.Peso); 
+    DbColumnReal(conexion, 4, DtReceta.Porcentaje); 
     DbColumnInt(conexion, 5, DtReceta.Activo);  
     sResultado := DbNext(conexion);  
     DbFinalize(conexion);
@@ -85,7 +85,7 @@ sResultado : SysCode;
 listado : TypArrayDtReceta;
 indice : integer;
 begin
-    sql := "SELECT DtReceta.Id,Insumo.Codigo,Receta.Codigo, Insumo.Nombre, DtReceta.Peso, DtReceta.Activo ";
+    sql := "SELECT DtReceta.Id,Insumo.Codigo,Receta.Codigo, Insumo.Nombre, DtReceta.Prcntaje, DtReceta.Activo ";
     sql := sql + "FROM DtReceta INNER JOIN "; 
     sql := sql + "Insumo ON DtReceta.IdInsumo = Insumo.Id INNER JOIN ";
     sql := sql + "Receta ON DtReceta.IdReceta = receta.Id ";
@@ -115,7 +115,7 @@ begin
         DbColumnString(conexion, 2, listado[indice].CodInsumo); 
         DbColumnString(conexion, 3, listado[indice].CodReceta); 
         DbColumnString(conexion, 4, listado[indice].NombreInsumo); 
-        DbColumnReal(conexion, 5, listado[indice].Peso); 
+        DbColumnReal(conexion, 5, listado[indice].Porcentaje); 
         DbColumnInt(conexion, 6, listado[indice].Activo);  
         sResultado := DbNext(conexion);  
     end loop;
