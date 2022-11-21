@@ -52,7 +52,7 @@ sResultado : SysCode;
 listado : TypArrayOrdenes;
 indice : integer;
 begin
-    sql := "select Ordenes.Id,'Prioridad: '||Ordenes.Priorida||'  Orden Id: '|| Ordenes.Id|| '  Cod: '|| Ordenes.CodOpera || '  Lote: '||Ordenes.Lote || '  Receta: '||Receta.Nombre as DatosOrdenes ";
+    sql := "select Ordenes.Id,'Prioridad: '||Ordenes.Priorida||'  Orden Id: '|| Ordenes.Id|| '  Cod: '|| Ordenes.CodOpera || '  Lote: '||Ordenes.Lote || '  Receta: '||Receta.Nombre || ' PesoTotal: '||Ordenes.PesoTot as DatosOrdenes ";
     sql := sql + " from Ordenes left join Receta  on Ordenes.IdReceta=Receta.Id order by Ordenes.Priorida";
 
     sResultado := DbExec(sql, conexion);
@@ -95,8 +95,8 @@ begin
     sql := sql + " ( select COUNT(*) from  DtReceta inner join Insumo on DtReceta.IdInsumo=Insumo.Id ";
     sql := sql + " and  IdReceta=Ordenes.IdReceta ) as TotalItemRecetaEnOrden,";
 
-    sql := sql + " ( select SUM(Peso) from  DtReceta inner join Insumo on DtReceta.IdInsumo=Insumo.Id ";
-    sql := sql + " and  IdReceta=Ordenes.IdReceta ) as TotalItemRecetaEnOrden";
+    sql := sql + " ( select SUM(Prcntaje) from  DtReceta inner join Insumo on DtReceta.IdInsumo=Insumo.Id ";
+    sql := sql + " and  IdReceta=Ordenes.IdReceta ) as TotalItemRecetaEnOrden, Ordenes.PesoTot";
     sql := sql + " from Ordenes inner join Receta ";
     sql := sql + " on ordenes.Idreceta=Receta.Id and Ordenes.Id="+IntegerToString(IdOrden,0);
 
@@ -120,7 +120,8 @@ begin
     DbColumnInt(conexion, 4, Orden.IdReceta); 
     DbColumnString(conexion, 5, Orden.NombreReceta); 
     DbColumnInt(conexion, 6, Orden.CantidadItemEnOrden); 
-    DbColumnReal(conexion, 7, Orden.PesoTotal); 
+    DbColumnReal(conexion, 7, Orden.PorcentajeTotal); 
+    DbColumnReal(conexion, 8, Orden.PesoTotal); 
     sResultado := DbNext(conexion);  
 
     DbFinalize(conexion);
@@ -137,7 +138,7 @@ sResultado : SysCode;
 listado : TypArrayDtReceta;
 indice : integer;
 begin
-    sql := "select DtReceta.IdInsumo,Insumo.Nombre,DtReceta.Peso";
+    sql := "select DtReceta.IdInsumo,Insumo.Nombre,DtReceta.Prcntaje";
     sql := sql + " from  DtReceta inner join Insumo on DtReceta.IdInsumo=Insumo.Id ";
     sql := sql + " and IdReceta="+IntegerToString(IdReceta,0);
 
@@ -161,7 +162,7 @@ begin
         indice := indice +1;
         DbColumnInt(conexion, 1, listado[indice].IdInsumo); 
         DbColumnString(conexion, 2, listado[indice].NombreInsumo); 
-        DbColumnReal(conexion, 3, listado[indice].Peso); 
+        DbColumnReal(conexion, 3, listado[indice].Porcentaje); 
         
         sResultado := DbNext(conexion);  
     end loop;

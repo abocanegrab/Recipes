@@ -125,10 +125,10 @@ begin
 	elsif (g_PasoItemReceta=tMIR_Insumo) then
 		if (g_TipoMant = tipoMantAgregar) then
 			l_entry:="";
-			l_mensaje:="Ingrese el Peso del Insumo";
+			l_mensaje:="Ingrese el Porcentaje del Insumo";
 		elsif (g_TipoMant = tipoMantEditar) then
-			l_entry := RealToString(g_DtReceta.Peso,0,4);
-			l_mensaje:="Ingrese el Peso del Insumo";
+			l_entry := RealToString(g_DtReceta.Porcentaje,4,2);
+			l_mensaje:="Ingrese el Porcentaje del Insumo";
 		end if;
 		SetEntry(l_entry);
 		PromptUser(l_mensaje);
@@ -163,7 +163,7 @@ begin
 	if(g_PasoItemReceta = tMIR_Insumo) then 
 		t_DtReceta.IdInsumo:=StringToInteger(valor);
 	elsif(g_PasoItemReceta = tMIR_Peso) then 
-		t_DtReceta.Peso:=StringToReal(valor);
+		t_DtReceta.Porcentaje:=StringToReal(valor);
 	elsif(g_PasoItemReceta = tMIR_Activo) then 
 		t_DtReceta.Activo:=StringToInteger(valor);
 	end if;
