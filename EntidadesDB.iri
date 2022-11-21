@@ -47,7 +47,7 @@ type TypDtReceta is record
   IdInsumo: Integer;
   CodInsumo: String;
   NombreInsumo : String;
-      Peso: Real;
+      Porcentaje: Real;
     Activo: Integer;
 end record;
 
@@ -60,6 +60,7 @@ type TypOrdenes is record
   NombreReceta: string;
   Prioridad: Integer;
   CodigoOperacion: String;
+   PorcentajeTotal: Real;
    PesoTotal: Real;
    CantidadItemEnOrden:integer;
    DatosOrdenes:string;
@@ -76,4 +77,17 @@ type TypMantOrdenes is record
   CodigoOperacion: String;
    PesoTotal: Real;
 end record;
+
+type TypDtPesaje is record
+    Id: Integer;
+    IdPesaje: Integer;
+    IdInsumo: Integer;
+    PesoObjetivo: Real;
+    PesoCapturado: Real;
+    ProporcionSolicitado: Real;
+    ProporcionObtenido: Real;
+    Fecha: DateTime;
+end record;
+
+type TypArrayDtPesaje is array[10] of TypDtPesaje;
 
