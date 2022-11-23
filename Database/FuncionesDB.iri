@@ -42,6 +42,27 @@ begin
 	pMostrarYLimpiar("Se eliminó con éxito el registro con Id "+IntegerToString(id,0));
 end;
 
+--UPDATE
+procedure pUpdateItemTabla (NombreTabla:string; id:integer;Porcentaje:real);
+sql : string;
+conexion : integer;
+sResultado : SysCode;
+
+begin
+	sql:="Update DtReceta set ";
+	sql:=sql + "Prcntaje=" + RealToString(Porcentaje,4,2)+ " ";
+    sql:=sql + "where id="+IntegerToString(id,0);
+			
+	sResultado := DbExec(sql, conexion);
+	if (sResultado <> SysOk) then
+		pLoggerDB("pUpdateItemTabla",DBErrMsg);
+		return;
+	end if;
+
+	pMostrarYLimpiar("Se actualizo El Nuevo Porcentaje");
+end;
+
+
 
 function fExisteDatosEnTabla (NombreTabla:string) : BooleanType;
 sql : string;

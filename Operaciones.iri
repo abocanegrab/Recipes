@@ -40,32 +40,61 @@
 		g_PasoNivelMantDeReceta:=tNMDR_Detalle;
 		pMantenimientoItemReceta("");
     
+	--Programacion del Boton Eliminar Item de Insumo en la Pantalla Mantenimientos Receta
+
 	elsif EventWidget=lbl86 then
 		g_TipoMant := tipoMantEliminarItemReceta;
 		g_IdItemRecetaAEliminar:=g_ItemDetReceta01;
-		pMuestraPromptEliminarItemReceta;
+		pMuestraPromptEditarEliminarItemReceta;
 		
 	elsif EventWidget=lbl85 then
 		g_TipoMant := tipoMantEliminarItemReceta;
 		g_IdItemRecetaAEliminar:=g_ItemDetReceta02;
-		pMuestraPromptEliminarItemReceta;
+		pMuestraPromptEditarEliminarItemReceta;
 		
 	elsif EventWidget=lbl89 then
 		g_TipoMant := tipoMantEliminarItemReceta;
 		g_IdItemRecetaAEliminar:=g_ItemDetReceta03;
-		pMuestraPromptEliminarItemReceta;
+		pMuestraPromptEditarEliminarItemReceta;
 	
 	elsif EventWidget=lbl88 then
 		g_TipoMant := tipoMantEliminarItemReceta;
 		g_IdItemRecetaAEliminar:=g_ItemDetReceta04;
-		pMuestraPromptEliminarItemReceta;
+		pMuestraPromptEditarEliminarItemReceta;
 
 	elsif EventWidget=lbl87 then
 		g_TipoMant := tipoMantEliminarItemReceta;
 		g_IdItemRecetaAEliminar:=g_ItemDetReceta05;
-		pMuestraPromptEliminarItemReceta;
+		pMuestraPromptEditarEliminarItemReceta;
 
---Botones de selecion de Ordenes;
+	--Programacion del Boton Eliminar Item de Insumo en la Pantalla Mantenimientos Receta
+
+	elsif EventWidget=lbl80 then
+		g_TipoMant := tipoMantEditarItemReceta;
+		g_IdItemRecetaAEditar:=g_ItemDetReceta01;
+		pMuestraPromptEditarEliminarItemReceta;
+	elsif EventWidget=lbl81 then
+		g_TipoMant := tipoMantEditarItemReceta;
+		g_IdItemRecetaAEditar:=g_ItemDetReceta02;
+		pMuestraPromptEditarEliminarItemReceta;
+	elsif EventWidget=lbl82 then
+		g_TipoMant := tipoMantEditarItemReceta;
+		g_IdItemRecetaAEditar:=g_ItemDetReceta03;
+		pMuestraPromptEditarEliminarItemReceta;
+	elsif EventWidget=lbl83 then
+		g_TipoMant := tipoMantEditarItemReceta;
+		g_IdItemRecetaAEditar:=g_ItemDetReceta04;
+		pMuestraPromptEditarEliminarItemReceta;
+	elsif EventWidget=lbl84 then
+		g_TipoMant := tipoMantEditarItemReceta;
+		g_IdItemRecetaAEditar:=g_ItemDetReceta05;
+		pMuestraPromptEditarEliminarItemReceta;
+	
+	
+
+
+
+	--Botones de selecion de Ordenes;
 
 	elsif EventWidget=lbl112 then
 		if g_PaginaActualDeOrdenes=1 then

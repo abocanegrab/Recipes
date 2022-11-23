@@ -9,10 +9,12 @@ if (g_TipoMant = tipoMantEliminar) then
 end if;
 end;
 
-Procedure pMuestraPromptEliminarItemReceta;
+Procedure pMuestraPromptEditarEliminarItemReceta;
 begin
 	if (g_TipoMant = tipoMantEliminarItemReceta) then
 		PromptUser("¿Desea eliminar el Item de la Receta?");
+	elsif (g_TipoMant = tipoMantEditarItemReceta) then
+		PromptUser("Coloque el Nuevo Porcentaje");
 	end if;
 end;
 

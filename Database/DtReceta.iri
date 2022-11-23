@@ -126,3 +126,70 @@ begin
     return listado;
 end;
 
+function fTotalPorcentajeDtReceta(IdReceta:integer) : Real;
+sql : string;
+conexion : integer;
+sResultado : SysCode;
+TotalPrcntaje : Real;
+indice : integer;
+begin
+    sql := "SELECT Sum(DtReceta.Prcntaje), DtReceta.Activo ";
+    sql := sql + "FROM DtReceta INNER JOIN "; 
+    sql := sql + "Insumo ON DtReceta.IdInsumo = Insumo.Id INNER JOIN ";
+    sql := sql + "Receta ON DtReceta.IdReceta = receta.Id ";
+    sql := sql + "WHERE (dtReceta.Activo = 1) AND (Receta.Id ="+IntegerToString(IdReceta,0)+")";
+    sql := sql + "Group by DtReceta.Activo ";
+    --sql :=sql + " Offset "+IntegerToString(g_PaginaActual - 1, 0);
+
+    sResultado := DbExec(sql, conexion);
+    --Primero verificamos que la consulta sea diferente de OK. Esto es error
+    if(sResultado<>SysOk) then 
+        pLoggerDB("fTotalPorcentajeDtReceta",DBErrMsg);
+        return 0;
+    end if;
+    
+    -- Luego verificamos que la conexión sea = 0. Eso quiere decir que no hay datos para recuperar
+    if (conexion=0) then
+        return 0;
+    end if;
+
+        DbColumnReal(conexion, 1, TotalPrcntaje); 
+        sResultado := DbNext(conexion);  
+        DbFinalize(conexion);
+        return TotalPrcntaje;
+end;
+
+
+function fTotalPorcentajeDtRecetaMenosItem(IdReceta:integer;IdDtReceta:integer) : Real;
+sql : string;
+conexion : integer;
+sResultado : SysCode;
+TotalPrcntaje : Real;
+indice : integer;
+begin
+    sql := "SELECT Sum(DtReceta.Prcntaje), DtReceta.Activo ";
+    sql := sql + "FROM DtReceta INNER JOIN "; 
+    sql := sql + "Insumo ON DtReceta.IdInsumo = Insumo.Id INNER JOIN ";
+    sql := sql + "Receta ON DtReceta.IdReceta = receta.Id ";
+    sql := sql + "WHERE (dtReceta.Activo = 1) AND (Receta.Id ="+IntegerToString(IdReceta,0)+") and DtReceta.Id<>"+IntegerToString(IdDtReceta,0);
+    sql := sql + " Group by DtReceta.Activo ";
+    --sql :=sql + " Offset "+IntegerToString(g_PaginaActual - 1, 0);
+
+    sResultado := DbExec(sql, conexion);
+    --Primero verificamos que la consulta sea diferente de OK. Esto es error
+    if(sResultado<>SysOk) then 
+        pLoggerDB("fTotalPorcentajeDtRecetaMenosItem",DBErrMsg);
+        return 0;
+    end if;
+    
+    -- Luego verificamos que la conexión sea = 0. Eso quiere decir que no hay datos para recuperar
+    if (conexion=0) then
+        return 0;
+    end if;
+
+        DbColumnReal(conexion, 1, TotalPrcntaje); 
+        sResultado := DbNext(conexion);  
+        DbFinalize(conexion);
+        return TotalPrcntaje;
+end;
+
