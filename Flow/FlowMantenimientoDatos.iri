@@ -62,11 +62,20 @@ begin
 			end if;
 		end if;
 	elsif (g_PasoItemReceta = tMIR_Peso) then
-		pGuardarTemporalItemReceta(userInput);
-		pMuestraPromptMantItemReceta;
-		g_PasoItemReceta := tMIR_Activo;
+		if fTotalPorcentajeDtReceta(g_IdItemActual)+StringToReal(userInput)<=g_PorcentajeTotalPorReceta then
+			pGuardarTemporalItemReceta(userInput);
+			pMuestraPromptMantItemReceta;
+			g_PasoItemReceta := tMIR_Activo;
+		else
+			pMostrarYLimpiar("Porcentaje Total Excede EL 100 % ");
+			return;
+		end if;
+		--pGuardarTemporalItemReceta(userInput);
+		--pMuestraPromptMantItemReceta;
+		--g_PasoItemReceta := tMIR_Activo;
 	elsif (g_PasoItemReceta = tMIR_Activo) then
 		pGuardarTemporalItemReceta(userInput);
 		pGuardaMantItemReceta;
 	end if;
+pMostrarYLimpiar("Porcentaje Total: "+RealToString(fTotalPorcentajeDtReceta(g_IdItemActual),4,2));
 end;

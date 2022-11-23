@@ -4,7 +4,7 @@
   <IndicatorModel value="1280" />
   <IndicatorVersion value="2.00" />
   <ChildAssembly value="rev1280.v306.dll" />
-  <ConfigHash value="173 146 62 227 40 32 105 163 3 195 28 148 34 0 170 135 62 223 232 138 " />
+  <ConfigHash value="93 83 144 37 181 178 80 72 133 138 42 53 205 9 153 102 248 209 222 255 " />
   <CODFile value="E:\ProyectosPesacon\Proy_Recipes\Recetario.cod" />
   <Config>SC.TOTAL.DP.MATCH.SOURCE#1=NO
 SC.TOTAL.SUM.INTERNAL.RESOLUTION#1=NO
@@ -884,7 +884,7 @@ FEATUREPWD=
 CALPWD=
 CFGPWD=
 SPPWD=
-FTP.PASSWORD=12345678
+FTP.PASSWORD=123456
 FTP.ENABLED=ON
 KYBDLK=OFF
 OSKYPD=ON

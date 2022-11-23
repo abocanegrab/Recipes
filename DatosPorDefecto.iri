@@ -44,7 +44,7 @@ begin
         pPostInsumo(t_MantGenerico);
         t_MantGenerico.Codigo:="INS005";
         t_MantGenerico.Nombre:="COLORANTE";
-        t_MantGenerico.NumBalanza:=3;
+        t_MantGenerico.NumBalanza:=2;
         pPostInsumo(t_MantGenerico);
         t_MantGenerico.Codigo:="INS006";
         t_MantGenerico.Nombre:="PIEDRA EN POLVO";

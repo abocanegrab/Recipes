@@ -61,6 +61,7 @@ g_TipoOperacionCRUD:string;
 g_IdItemActual : integer;
 
 g_IdItemRecetaAEliminar: integer;
+g_IdItemRecetaAEditar: integer;
 
 g_IdOrdenElegida:integer;
 
@@ -68,6 +69,8 @@ g_IdOrdenEnProceso01:integer;
 g_IdOrdenEnProceso02:integer;
 g_IdOrdenEnProceso03:integer;
 g_IdOrdenEnProceso04:integer;
+
+g_PorcentajeTotalPorReceta:real:=1.00;
 
 
 --variables para el llenado de los datos por grupos Mantenimientos
@@ -87,7 +90,8 @@ Type TypTipoMantenimiento is (
 	tipoMantAgregar,
 	tipoMantEditar,
 	tipoMantEliminar,
-	tipoMantEliminarItemReceta
+	tipoMantEliminarItemReceta,
+	tipoMantEditarItemReceta
 );
 
 g_TipoMant : TypTipoMantenimiento;
