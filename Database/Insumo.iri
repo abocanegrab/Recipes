@@ -27,7 +27,8 @@ sResultado : SysCode;
 begin
 	sql:="Update Insumo set ";
 	sql:=sql + "codigo='" + entidad.Codigo+ "',";
-	sql:=sql + "nombre='" + entidad.Nombre + "' ";
+	sql:=sql + "nombre='" + entidad.Nombre + "', ";
+    sql:=sql + "NumBalan=" +IntegerToString(entidad.NumBalanza,0) + " ";
 	sql:=sql + "where id="+IntegerToString(g_IdItemActual,0);
 			
 	sResultado := DbExec(sql, conexion);

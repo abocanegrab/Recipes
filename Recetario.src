@@ -42,6 +42,14 @@ begin
         elsif g_TipoMant=tipoMantEliminarItemReceta then
             pDeleteItemTabla(CONST_DTRECETA_LABEL,g_IdItemRecetaAEliminar);
 			pMuestraItemsReceta;
+		elsif g_TipoMant=tipoMantEditarItemReceta then
+            if fTotalPorcentajeDtRecetaMenosItem(g_IdItemActual,g_IdItemRecetaAEditar)+StringToReal(LocalEntry)<=g_PorcentajeTotalPorReceta then
+				pUpdateItemTabla(CONST_DTRECETA_LABEL,g_IdItemRecetaAEditar,StringToReal(LocalEntry));
+				pMuestraItemsReceta;
+			else
+				pMostrarYLimpiar("% Total Excederia mas del 100 %");
+				return;
+			end if;
 		elsif	(g_PantallaActiva = tPntMantInsumo) then
 			pMantenimientoDatos(LocalEntry);
 		elsif	(g_PantallaActiva = tPntMantBalanza) then
@@ -60,7 +68,4 @@ begin
 	pStartServer;
     pAlmacenarDatosInicial;
     pMuestraPntListaOrdenes;
-    
-
-    --DisplayStatus("ProgramaCargado");    
 end Recetario;
